@@ -58,3 +58,9 @@ frontend/node_modules
 backend/env
 backend/environments
 backend/old
+
+
+# db
+
+db/*
+!db/.gitkeep

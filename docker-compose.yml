@@ -1,24 +1,29 @@
 version: '3.1'
 
 services:
-  db:
+  database:
     image: "postgres:alpine"
     volumes:
-      - .db:/var/lib/postgresql/data
+      - ./db:/var/lib/postgresql/data
+    env_file:
+      - ./db/.env.db
+    ports:
+      - "5432:5432"
 
   broker:
     image: "rabbitmq:alpine"
 
-  result:
+  redis:
     image: "redis:alpine"
 
   frontend:
     build:
       dockerfile: frontend/Dockerfile
       context: .
+    stdin_open: true
     volumes:
-      - .:/app/
-      - /app/node_modules
+      - ./frontend:/home/user/app/frontend
+      - ./frontend:/home/user/app/frontend/node_modules
     ports:
       - "3000:3000"
 
@@ -26,26 +31,48 @@ services:
     build:
       dockerfile: backend/Dockerfile
       context: .
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
     volumes:
-      - ./:/home/user/app/
+      - ./backend/:/home/user/app/backend
     env_file: backend/.env
     depends_on:
-      - db
+      - database
       - broker
-      - result
+      - redis
       - frontend
 
   celery:
     build:
       dockerfile: backend/Dockerfile
       context: .
-    command: python manage.py celery
-    volumes:
-      - ./backend/:/home/user/app/
+    command: celery -A wonderhumans worker -l INFO
     env_file: backend/.env
     depends_on:
-      - db
+      - database
       - broker
-      - result
+      - redis
+
+  flower:
+    image: mher/flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=8888
+    command: ["flower", "--broker=redis://redis:6379/0", "--port=5555"]
+    ports:
+      - 5555:5555
+
+
+  # celery-beat:
+  #   build:
+  #     dockerfile: backend/Dockerfile
+  #     context: .
+  #   command: celery -A wonderhumans beat -l INFO
+  #   # volumes:
+  #   #   - ./project/:/usr/src/app/
+  #   env_file: backend/.env
+  #   depends_on:
+  #     - database
+  #     - broker
+  #     - redis
