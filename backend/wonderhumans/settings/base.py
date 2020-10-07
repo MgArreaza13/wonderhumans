@@ -15,7 +15,7 @@ import raven
 from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../")) 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -142,7 +142,7 @@ MEDIA_ROOT = 'media'
 MEDIA_URL='/media/'
 
 
-#REST SETTINGS 
+#REST SETTINGS
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -152,13 +152,13 @@ REST_FRAMEWORK = {
 
 
 
-# CORS SETTINGS 
+# CORS SETTINGS
 CORS_EXPOSE_HEADERS = (
     'Access-Control-Allow-Origin: *',
     "Access-Control-Allow-Credentials: true",
     "Access-Control-Allow-Methods: GET,HEAD,OPTIONS,POST,PUT",
     "Access-Control-Allow-Headers : Access-Control-Allow-Orgin,XMLHttpRequest,Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Mx-ReqToken,X-Requested-With"
-   
+
 )
 # Cors Configurations
 CORS_ORIGIN_ALLOW_ALL = True
@@ -176,7 +176,7 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'access-control-allow-origin',
 )
-CORS_ORIGIN_WHITELIST = ['*']
+# CORS_ORIGIN_WHITELIST = ['*']
 
 CORS_ALLOW_METHODS = (
     'DELETE',
