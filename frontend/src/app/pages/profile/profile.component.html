@@ -1,0 +1,129 @@
+<main class="profile-page">
+  <section class="section-profile-cover section-shaped my-0">
+    <!-- Circles background -->
+    <div class="shape shape-style-1 shape-primary alpha-4">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- SVG separator -->
+    <div class="separator separator-bottom separator-skew">
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+      </svg>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card card-profile shadow mt--300">
+        <div class="px-4">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 order-lg-2">
+              <div class="card-profile-image">
+                <a href="javascript:void(0)">
+                  <img src="./assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+              <div class="card-profile-actions py-4 mt-lg-0 d-flex">
+                <a [routerLink]="['/new-homeless']"class="btn btn-sm btn-info mr-4">Register new homeless</a>
+                <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default ">Message</a> -->
+                <a [routerLink]="['/edit-profile']" class="btn btn-sm btn-warning float-right">Edit profile</a>
+              </div>
+            </div>
+            <div class="col-lg-4 order-lg-1">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Friends</span>
+                </div>
+                <div>
+                  <span class="heading">10</span>
+                  <span class="description">Donations</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Volunteer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <h3>{{user.first_name}} {{user.last_name}}
+            </h3>
+            <ng-container *ngIf="profile" >
+              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{profile.phone}}</div>
+              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{user.email}}</div>
+              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{profile.country}}, {{profile.state}}, {{profile.city}}</div>
+            </ng-container>
+            <!-- <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+            </div>
+            <div><i class="ni education_hat mr-2"></i>University of Computer Science</div> -->
+
+            <div *ngIf="!profile">
+              <a [routerLink]="['/edit-profile']" class="btn btn-lg btn-warning">Complete profile</a>
+            </div>
+          </div>
+          <div class="mt-5 py-5 border-top text-center" *ngIf="profile">
+            <div class="row justify-content-center">
+              <div class="col-lg-9">
+                <p>{{profile.aboutYou}}</p>
+                <!-- <a href="javascript:void(0)">Show more</a> -->
+              </div>
+            </div>
+            <div>
+              <!-- PHOTOS -->
+              <section id="team" class="pb-5" *ngIf="userHomeless">
+                <div class="container">
+                  <div class="row">
+                    <!-- Photo -->
+                    <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let homeless of userHomeless" >
+                      <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                        <div class="mainflip">
+                          <div class="frontside">
+                            <div class="card">
+                              <div class="card-body text-center">
+                                <p><img class=" img-fluid"
+                                    src="https://images.unsplash.com/photo-1509059852496-f3822ae057bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1112&q=80"
+                                    alt="card image"></p>
+                                <h4 class="card-title">{{homeless.firstName}} {{homeless.lastName}}</h4>
+                                <p class="card-text">{{homeless.occupation}}</p>
+                                <p class="card-text">{{homeless.phone}}</p>
+                                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="backside">
+                            <div class="card">
+                              <div class="card-body text-center mt-4">
+                                <h4 class="card-title">{{homeless.firstName}} {{homeless.lastName}}</h4>
+                                <p class="card-text">{{homeless.aboutYou}}</p>
+                                <div>
+                                  <a routerLink="/homeless-profile/{{homeless.id}}" class="btn btn-sm btn-warning">Ver profile</a>
+               
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ./Photo -->
+
+                  </div>
+                </div>
+              </section>
+              <!-- PHOTOS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
