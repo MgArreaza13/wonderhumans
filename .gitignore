@@ -64,3 +64,6 @@ backend/old
 
 db/*
 !db/.gitkeep
+
+!backend/media/.gitkeep
+backend/media/profile/
