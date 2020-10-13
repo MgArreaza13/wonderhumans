@@ -45,21 +45,29 @@ def validate_length(field:str, validate: str, min_length: int, max_length: int):
         :return: bool
         :raises: ValueError
     """
-    print(len(validate))
-    print(max_length)
     if ( len(validate) < min_length ) or ( len(validate) > max_length ):
         raise ValueError(str(_(field + " is not within the range of characters allowed")))
     return True
 
 def validate_user_profile(user:accounts_models.User):
+    """
+        Method to verify if user have profile
 
-    print("Entro en la validacion del profile")
+        :param user: user to validat if have profile
+        :type user: accounts_models.User
+        :return: bool
+    """
     if Profile.objects.filter(user=user).exists():
         return True
     return False
 
 def validate_birth(birth:dict):
+    """
+        Method to put bitrh date a correct form
 
-    print(birth)
+        :param birth: date of brith
+        :type birth: dict
+        :return: bool
+    """
     birth = str(birth.get('year')) + '-' + str(birth.get('month')) + '-' + str(birth.get('day'))
     return birth

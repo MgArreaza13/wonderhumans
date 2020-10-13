@@ -119,9 +119,8 @@ class ManagementUserProfileViewSet(APIView):
 	def put(self, request):
 		body_unicode = request.body.decode('utf-8')
 		body = json.loads(body_unicode)
-		profile = accounts_models.Profile.objects.get(user= request.user)		
 		try:
-			user = accounts_services.change_profile(body, profile)
+			user = accounts_services.change_profile(body,  request.user)
 		except ValueError as e:
 			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		except PermissionDenied as e:

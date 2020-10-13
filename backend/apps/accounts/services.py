@@ -161,7 +161,7 @@ def get_profile(user: accounts_models.User) -> Profile:
 		# Obtain profile from database if exist
 		profile = Profile.objects.get(Q(user__id=user.id))
 	except Profile.DoesNotExist as e:
-		raise ValueError(str(_("El usuario no tiene perfil")))
+		raise ValueError(str(_("User dont have profile")))
 	return profile
 
 
@@ -179,9 +179,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 	profile_exists = accounts_validations.validate_user_profile(user)
 	if profile_exists == True:
 		raise ValueError(str(_("Profile already exist")))
-	print("EL profile no existe")
 	# Edit user account
-	print("Ya tengo el user")
 	if data.get("firstName") is not None:
 		accounts_validations.validate_length("First Name",data.get("firstName"),5,10)
 		user.first_name = data.get("firstName")
@@ -195,8 +193,24 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 	# valitation of data profile
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
-		print(birth)
-		print(type(birth))
+	else:
+		raise ValueError(str(_("Data of birth field is required")))
+	if data.get("occupation") is not None:
+		accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
+	else:
+		raise ValueError(str(_("Occupation field is required")))
+	if data.get("city") is not None:
+		accounts_validations.validate_length("city",data.get("city"),3,15)
+	else:
+		raise ValueError(str(_("City field is required")))
+	if data.get("country") is not None:
+		accounts_validations.validate_length("country",data.get("country"),4,25)
+	else:
+		raise ValueError(str(_("Country field is required")))
+	if data.get("aboutYou") is not None:
+		accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
+	else:
+		raise ValueError(str(_("About you field is required")))
 	with transaction.atomic():
 		try:
 			profile_registered = Profile.objects.create(
@@ -212,7 +226,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 			raise ValueError(str(_("An error occurred while saving the user")))
 	return profile_registered
 
-def change_profile(data: dict, user: Profile) -> Profile:
+def change_profile(data: dict, user: accounts_models.User) -> Profile:
 	"""
 		Method to change profile name, lastname or profile.
 		raises exception if profile does not exist or the data sent is empty
@@ -224,19 +238,40 @@ def change_profile(data: dict, user: Profile) -> Profile:
 		:return: user
 		:raises: ValueError
 	"""
-	print(data)
-	# user.photo = updateImage(data.get("photo", None))
-	user.occupation =data.get('occupation')
-	# user.phone = data.get('phone')
-	# user.address = 'Las Cayenas' #data.get('address')
-	user.city =data.get('city')
-	# user.state = data.get('state')
-	user.country =data.get('country')
-	# user.dateOfBirth =data.get('dateOfBirth')
-	user.aboutYou =data.get('aboutYou')
+	profile_exists = accounts_validations.validate_user_profile(user)
+	if profile_exists == False:
+		raise ValueError(str(_("Profile not exist")))
+	# Edit user account
+	if data.get("firstName") is not None:
+		accounts_validations.validate_length("First Name",data.get("firstName"),5,10)
+		user.first_name = data.get("firstName")
+	if data.get("lastName") is not None:
+		accounts_validations.validate_length("Last Name",data.get("lastName"),5,10)
+		user.last_name = data.get("lastName")
+	if data.get("email") is not None:
+		accounts_validations.validate_length("Email",data.get("email"),5,30)
+		user.email = data.get("email")
 	user.save()
+	# Edit profile
+	profile = Profile.objects.get(user=user)
+	# valitation of data profile
+	if data.get("dateOfBirth") is not None:
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		profile.dateOfBirth = birth
+	if data.get("occupation") is not None:
+		accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
+		profile.occupation = data.get("occupation")
+	if data.get("city") is not None:
+		accounts_validations.validate_length("City",data.get("city"),3,15)
+		profile.city = data.get("city")
+	if data.get("country") is not None:
+		accounts_validations.validate_length("country",data.get("country"),4,25)
+		profile.country = data.get("country")
+	if data.get("aboutYou") is not None:
+		profile.aboutYou = data.get("aboutYou")
+	profile.save()
    # logger.debug("profile has been changed correctly in account of %s" % user.username)
-	return user
+	return profile
 
 
 
