@@ -100,7 +100,10 @@ class ManagementUserProfileViewSet(APIView):
 		body_unicode = request.body.decode('utf-8')
 		body = json.loads(body_unicode)
 		try:
+			print(body)
 			profile = accounts_services.create_profile(body, request.user)
+			print("Salio del servicio aqui el retorno del profile")
+			print(profile)
 			# if(len(profile) == 0):
 			# 	 return Response({'detail': 'no profile'}, status=status.HTTP_404_NOT_FOUND)
 		except ValueError as e:
@@ -110,6 +113,7 @@ class ManagementUserProfileViewSet(APIView):
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = accounts_serializers.UserProfileSerializers(profile, many=False).data
+		print(serializer)
 		return Response(serializer, status=status.HTTP_200_OK)
 
 	def put(self, request):

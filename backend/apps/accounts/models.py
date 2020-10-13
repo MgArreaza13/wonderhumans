@@ -19,7 +19,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=50, blank=True)
     country = models.CharField(max_length=100, blank=True)
-    dateOfBirth = models.DateTimeField(auto_now_add=True)
+    dateOfBirth = models.DateTimeField(auto_now_add=False)
     aboutYou = models.TextField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

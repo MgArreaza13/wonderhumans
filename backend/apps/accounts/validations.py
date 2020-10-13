@@ -1,5 +1,6 @@
 from django.contrib.auth import models as accounts_models
 from django.utils.translation import gettext as _
+from .models import Profile
 
 def validate_email(email: str):
     """
@@ -49,3 +50,16 @@ def validate_length(field:str, validate: str, min_length: int, max_length: int):
     if ( len(validate) < min_length ) or ( len(validate) > max_length ):
         raise ValueError(str(_(field + " is not within the range of characters allowed")))
     return True
+
+def validate_user_profile(user:accounts_models.User):
+
+    print("Entro en la validacion del profile")
+    if Profile.objects.filter(user=user).exists():
+        return True
+    return False
+
+def validate_birth(birth:dict):
+
+    print(birth)
+    birth = str(birth.get('year')) + '-' + str(birth.get('month')) + '-' + str(birth.get('day'))
+    return birth

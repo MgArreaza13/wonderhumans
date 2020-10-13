@@ -52,8 +52,12 @@ def login(data: dict) -> accounts_models.User:
 	password = data.get("password", None)
 	if username is None or not username:
 		raise ValueError(str(_("The username cannot be empty")))
+	else:
+		accounts_validations.validate_length('Username',username,3,10)
 	if password is None or not password:
 		raise ValueError(str(_("The password cannot be empty")))
+	else:
+		accounts_validations.validate_length('Password',password,5,8)
 	try:
 		# Obtain user from database if exist
 		user = accounts_models.User.objects.get(Q(username=username) | Q(email=username.lower()))
@@ -171,42 +175,42 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		:return: user.
 		:raises: ValueError, PermissionDenied.
 	"""
-	occupation: str = data.get("occupation", None)
-	# phone: str = data.get("phone", None)
-	# address: str = data.get("address", None)
-	city: str = data.get("city", None)
-	# state: str = data.get("state", None)
-	country: str = data.get("country", None)
-	# dateOfBirth: str = data.get("dateOfBirth", None)
-	aboutYou: str = data.get("aboutYou", None)
-	profile: Profile = Profile.objects.filter(user = user)
-	if (len(profile) > 0):
-		# has profile
-		raise ValueError(str(_("El usuario tiene perfil")))
-	else:
-		# create profile
-		# Verify is user is active
-		if not user.is_active:
-			raise PermissionDenied(str(_("Cuenta bloqueada, contacte a los administradores.")))
+	# Validate profile dont exist
+	profile_exists = accounts_validations.validate_user_profile(user)
+	if profile_exists == True:
+		raise ValueError(str(_("Profile already exist")))
+	print("EL profile no existe")
+	# Edit user account
+	print("Ya tengo el user")
+	if data.get("firstName") is not None:
+		accounts_validations.validate_length("First Name",data.get("firstName"),5,10)
+		user.first_name = data.get("firstName")
+	if data.get("lastName") is not None:
+		accounts_validations.validate_length("Last Name",data.get("lastName"),5,10)
+		user.last_name = data.get("lastName")
+	if data.get("email") is not None:
+		accounts_validations.validate_length("Email",data.get("email"),5,30)
+		user.email = data.get("email")
+	user.save()
+	# valitation of data profile
+	if data.get("dateOfBirth") is not None:
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		print(birth)
+		print(type(birth))
+	with transaction.atomic():
 		try:
-			profile: Profile =  Profile.objects.create(
-
+			profile_registered = Profile.objects.create(
 				user = user,
-				photo = getImage(data.get("photo", None)),
-				#Additional information personal
-				occupation = occupation,
-				# phone = '0414850780',
-				# address = 'las cayenas',
-				city = city,
-				# state = 'Monagas',
-				country = country,
-				# dateOfBirth = '1994/04/1994',
-				aboutYou = aboutYou,
+				occupation = data.get("occupation"),
+				city = data.get("city"),
+				country = data.get("country"),
+				dateOfBirth = birth,
+				aboutYou = data.get("aboutYou")
 			)
 		except Exception as e:
 			print(e)
-			raise ValueError(str(_("Se produjo un error al guardar el perfil.")))
-		return profile
+			raise ValueError(str(_("An error occurred while saving the user")))
+	return profile_registered
 
 def change_profile(data: dict, user: Profile) -> Profile:
 	"""
