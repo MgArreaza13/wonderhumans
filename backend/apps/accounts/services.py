@@ -102,19 +102,42 @@ def register_user(data: dict, user: accounts_models.User):
 	email = data.get('email')
 	# validate email
 	if email is not None:
+		accounts_validations.validate_length('Email',email,6,30)
 		accounts_validations.validate_email(email)
 	else:
-		email = ""
+		raise ValueError(str(_("Email field is required")))
 	# validate username
 	if data.get('username') is not None:
+		accounts_validations.validate_length('Username', data.get('username'),3,10)
 		accounts_validations.validate_username(data.get('username'))
-	# validate password
+	else:
+		raise ValueError(str(_("Username field is required")))
+	# validate password1
+	if data.get('password1') is not None:
+		accounts_validations.validate_length('Password',data.get('password1'),5,8)
+	else:
+		raise ValueError(str(_("Password field is required")))
+	# validate password2
+	if data.get('password2') is not None:
+		accounts_validations.validate_length('Password confirmation',data.get('password2'),5,8)
+	else:
+		raise ValueError(str(_("Password confirmation field is required")))
+	# validate first name
+	if data.get('first_name') is not None:
+		accounts_validations.validate_length('First Name',data.get('first_name'),3,10)
+	else:
+		raise ValueError(str(_("First name field is required")))
+	# validate last name
+	if data.get('last_name') is not None:
+		accounts_validations.validate_length('Last Name',data.get('last_name'),3,10)
+	else:
+		raise ValueError(str(_("Last name confirmation field is required")))
 	if data.get('password1') != data.get('password2'):
 		raise ValueError(str(_("An error occurred while saving the user, Passwords do not match")))
 	with transaction.atomic():
 		try:
 			user_registered = accounts_models.User.objects.create(
-				username=data.get('username'),
+				username=data.get('username').lower(),
 				first_name=data.get('first_name'),
 				last_name=data.get('last_name'),
 				email=email,
@@ -197,7 +220,7 @@ def change_profile(data: dict, user: Profile) -> Profile:
 		:return: user
 		:raises: ValueError
 	"""
-
+	print(data)
 	# user.photo = updateImage(data.get("photo", None))
 	user.occupation =data.get('occupation')
 	# user.phone = data.get('phone')
