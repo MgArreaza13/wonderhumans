@@ -93,7 +93,6 @@ class ManagementUserProfileViewSet(APIView):
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = accounts_serializers.UserProfileSerializers(profile, many=False).data
-		print(serializer)
 		return Response(serializer, status=status.HTTP_200_OK)
 
 	def post(self, request):
@@ -115,9 +114,8 @@ class ManagementUserProfileViewSet(APIView):
 	def put(self, request):
 		body_unicode = request.body.decode('utf-8')
 		body = json.loads(body_unicode)
-		profile = accounts_models.Profile.objects.get(user= request.user)		
 		try:
-			user = accounts_services.change_profile(body, profile)
+			user = accounts_services.change_profile(body,  request.user)
 		except ValueError as e:
 			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		except PermissionDenied as e:
@@ -125,7 +123,7 @@ class ManagementUserProfileViewSet(APIView):
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = accounts_serializers.UserProfileSerializers(user, many=False).data
-		serializer['detail'] = str(_("Su perfil ha cambiado con éxito."))
+		serializer['detail'] = str(_("You have updated a profile correctly"))
 
 		return Response(serializer, status=status.HTTP_200_OK)
 
@@ -154,11 +152,7 @@ class ManagementHomelessProfileViewSet(APIView):
 		print(serializer)
 		return Response(serializer, status=status.HTTP_200_OK)
 
-
-
-
 	def post(self, request):
-		print(request)
 		body_unicode = request.body.decode('utf-8')
 		body = json.loads(body_unicode)
 		try:
@@ -172,7 +166,8 @@ class ManagementHomelessProfileViewSet(APIView):
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		# serializer = accounts_serializers.UserProfileSerializers(profile, many=False).data
-		return Response('datos guardados exitosamente', status=status.HTTP_200_OK)
+		serializer = str(_("You have register a homeless correctly"))
+		return Response(serializer, status=status.HTTP_200_OK)
 
 
 
