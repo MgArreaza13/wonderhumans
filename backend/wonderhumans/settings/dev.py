@@ -12,3 +12,4 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['49eb4e1e1152.ngrok.io']

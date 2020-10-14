@@ -69,5 +69,7 @@ def validate_birth(birth:dict):
         :type birth: dict
         :return: bool
     """
+    if type(birth) is not dict:
+        raise ValueError(str(("Data birth should be json, not str")))
     birth = str(birth.get('year')) + '-' + str(birth.get('month')) + '-' + str(birth.get('day'))
     return birth

@@ -10,7 +10,4 @@ urlpatterns = [
     path('homelessProfile/', views.ManagementHomelessProfileViewSet.as_view(), name='homeless-profile'),
     path('myHomelessProfile/', views.ManagementMyHomelessProfileViewSet.as_view(), name='my-homeless-profile'),
     path('homelessProfile/<int:id_homeless>', views.ManagementHomelessProfileViewSet.as_view(), name='homeless-profile-detail'),
-    
-    
-
 ]
