@@ -15,6 +15,7 @@ from apps.accounts.models import HomelessProfile
 from apps.utils.qr import saveQrCode
 
 
+"""---- Services Of Image :"""
 
 def getImage(ur):
     import base64
@@ -37,6 +38,8 @@ def updateImage(ur):
     ext = format.split('/')[-1]  # guess file extension
     return ContentFile(base64.b64decode(imgstr), name='profileimg.' + ext)
     #return ur
+
+"""---- Services Of User :"""
 
 def login(data: dict) -> accounts_models.User:
 	"""
@@ -154,7 +157,7 @@ def register_user(data: dict, user: accounts_models.User):
 			raise ValueError(str(_("An error occurred while saving the user")))
 	return user_registered
 
-
+"""---- Services Of Profile :"""
 
 def get_profile(user: accounts_models.User) -> Profile:
 	try:
@@ -224,6 +227,9 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		except Exception as e:
 			print(e)
 			raise ValueError(str(_("An error occurred while saving the user")))
+	if data.get("photo") is not None:
+		profile_registered.photo = updateImage(data.get("photo"))
+		profile_registered.save()
 	return profile_registered
 
 def change_profile(data: dict, user: accounts_models.User) -> Profile:
@@ -269,24 +275,28 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		profile.country = data.get("country")
 	if data.get("aboutYou") is not None:
 		profile.aboutYou = data.get("aboutYou")
+	if data.get("photo") is not None:
+		profile.photo = updateImage(data.get("photo"))
 	profile.save()
    # logger.debug("profile has been changed correctly in account of %s" % user.username)
 	return profile
 
 
+"""---- Services Of Homeless :"""
 
 def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	"""
 		Get access user into.
 		Raise exception if user or password are incorrect or user does not exist.
 
-		:param data: user, photo, position, phone, address, city, state, country, zipcode
+		:param data: data of homeless
 		:type: dict.
-		:return: user.
-		:raises: ValueError, PermissionDenied.
+		:param user: user in system
+		:type: accounts_models.User.
+		:return: homeless profile.
+		:raises: ValueError.
 	"""
 	userRegisterer = accounts_models.User.objects.get(id=user.id)
-	print(data)
 	typeUser: str = 'homeless'
 	if data.get("firstName") is not None:
 		accounts_validations.validate_length("First Name",data.get("firstName"),3,10)
@@ -347,9 +357,16 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		profile.save()
 	return profile
 
-
-
 def get_profile_homeless(id_homeless: int) -> HomelessProfile:
+	"""
+		Get data of Homeless Profile.
+		Raise exception if homeless profile does not exist.
+
+		:param id_homeless: id of homeless.
+		:type: int.
+		:return: Homeless Profile.
+		:raises: ValueError.
+	"""
 	try:
 		# Obtain profile from database if exist
 		profile = HomelessProfile.objects.get(Q(id= id_homeless))
@@ -359,6 +376,13 @@ def get_profile_homeless(id_homeless: int) -> HomelessProfile:
 
 
 def filterMyHomelessProfile(user: accounts_models.User):
+	"""
+		Get data of homeless profile related whit a user.
+
+		:param user: user in system
+		:type: accounts_models.User.
+		:return: dict of homeless
+	"""
 	#todo ponerle las validaciones
 	data = []
 	profiles = HomelessProfile.objects.filter(userRegisterer__id = user.id)
