@@ -21,7 +21,7 @@ export class LandingComponent implements AfterViewInit {
 
   marker = new google.maps.Marker({
     position: this.coordinates,
-    map: this.map,
+    // map: this.map,
   });
 
   ngAfterViewInit() {

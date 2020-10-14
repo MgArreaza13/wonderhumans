@@ -4,3 +4,7 @@
 .white-font{
     color: white;
 }
+.text-danger{
+    font-variant: small-caps;
+    font-size: small;
+}
