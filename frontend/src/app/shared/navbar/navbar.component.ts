@@ -3,6 +3,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
     public location: Location,
     private router: Router,
     private lsService: LocalStorageService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -65,5 +67,13 @@ export class NavbarComponent implements OnInit {
   }
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('wonderHumanUser');
+    // tslint:disable-next-line: no-unused-expression
+    this.router.navigateByUrl('/login');
+    this.toastr.success('Ud cerrado sesión de forma exitosa!');
   }
 }

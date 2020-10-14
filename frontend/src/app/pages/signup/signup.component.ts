@@ -19,6 +19,7 @@ export class SignupComponent implements OnInit {
     public registerForm: FormGroup;
     public user: User = {};
     public submitted = false;
+    validatePass: boolean;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -39,26 +40,32 @@ export class SignupComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             username: ['', [
                 Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(10),
             ]],
             first_name: ['', [
                 Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(10),
             ]],
             last_name: ['', [
                 Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(10),
             ]],
             email: ['', [
                 Validators.required,
+                Validators.email
             ]],
             password1: ['', [
                 Validators.required,
-                Validators.minLength(6),
-                Validators.maxLength(30),
+                Validators.minLength(5),
+                Validators.maxLength(8),
             ]],
             password2: ['', [
-                Validators.required,
-                Validators.minLength(6),
-                Validators.maxLength(30),
-            ]],
+                Validators.required]],
+        }, {
+            validators: this.password.bind(this)
         });
     }
 
@@ -89,6 +96,16 @@ export class SignupComponent implements OnInit {
             },
             err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
         );
+    }
+
+
+    password(registerForm: FormGroup) {
+        const { value: password } = registerForm.get('password1');
+        const { value: confirmPassword } = registerForm.get('password2');
+        console.log(password)
+        console.log(confirmPassword)
+        this.validatePass = (password === confirmPassword) ? true : false;
+        return password === confirmPassword ? null : { passwordNotMatch: true };
     }
 
 }

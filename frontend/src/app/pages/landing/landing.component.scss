@@ -5,3 +5,19 @@
     height: 500px;
     width: 100%;
    }
+.flex-center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h4{
+        font-variant: small-caps;
+    }
+    p{
+        text-align: center;
+    }
+}
+.float-imgs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}

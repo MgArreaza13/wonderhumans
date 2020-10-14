@@ -40,14 +40,14 @@ export class LoginComponent implements OnInit {
 
     // Build form
     this.loginForm = this.formBuilder.group({
-      username: ['', [
-        Validators.required,
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.maxLength(30),
-      ]],
+      username: [
+        "",
+        Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])
+      ],
+      password: [
+        "",
+        [Validators.required, Validators.minLength(5), Validators.maxLength(8)]
+      ]
     });
   }
 
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
         this.toastr.success('Welcome', 'login success');
         this.router.navigateByUrl('/user-profile')
       },
-      err => {console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide();}
+      err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
     );
   }
 
