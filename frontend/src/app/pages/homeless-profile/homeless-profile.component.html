@@ -14,8 +14,24 @@
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <div class="card bg-secondary shadow border-0">
-            <button (click)="openModal(template)" id="add-event-btn" type="button"
-              class="btn btn-outline-success btn-sm float-right"><i class="ni ni-fat-add"></i> Add event</button>
+            <span class="button-action">
+              <button
+                (click)="back()"
+                id="add-event-btn"
+                type="button"
+                class="btn btn-outline-warning btn-sm "
+              >
+                <i class="fa fa-arrow-left"></i> Back
+              </button>
+              <button
+                (click)="openModal(template)"
+                id="add-event-btn"
+                type="button"
+                class="btn btn-outline-success btn-sm "
+              >
+                <i class="ni ni-fat-add"></i> Add event
+              </button>
+            </span>
             <div class="card-header bg-white pb-2">
               <div class="text-muted text-center mb-3">
                 <small>Homeless Profile</small>
@@ -23,55 +39,96 @@
               <div class="btn-wrapper text-center">
                 <img
                   src="https://images.unsplash.com/photo-1519430044529-9a9a57177865?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=761&q=80"
-                  alt="" class="img-fluid rounded-circle shadow-lg">
+                  alt=""
+                  class="img-fluid rounded-circle shadow-lg"
+                />
               </div>
             </div>
             <div class="card-body px-lg-2">
               <div class="col-12">
                 <!-- Tabs with icons -->
                 <div class="mb-3">
-                  <h5 class="text-uppercase font-weight-bold text-center">{{homelessProfile?.firstName}}
-                    {{homelessProfile?.lastName}}</h5>
-                  <small *ngIf="homelessProfile?.email" class="font-weight-bold text-center d-block">Email:
-                    {{homelessProfile?.email}}</small>
-                  <small *ngIf="homelessProfile?.phone" class="font-weight-bold text-center d-block">Phone Number:
-                    {{homelessProfile?.phone}}</small>
-                  <small *ngIf="homelessProfile?.dateOfBirth" class="font-weight-bold text-center d-block">Date of
-                    Birth: {{homelessProfile?.dateOfBirth | date}}</small>
-                  <small *ngIf="homelessProfile?.occupation" class="font-weight-bold text-center d-block">Occupation:
-                    {{homelessProfile?.occupation}}</small>
-
+                  <h5 class="text-uppercase font-weight-bold text-center">
+                    {{ homelessProfile?.firstName }}
+                    {{ homelessProfile?.lastName }}
+                  </h5>
+                  <small
+                    *ngIf="homelessProfile?.email"
+                    class="font-weight-bold text-center d-block"
+                    >Email: {{ homelessProfile?.email }}</small
+                  >
+                  <small
+                    *ngIf="homelessProfile?.phone"
+                    class="font-weight-bold text-center d-block"
+                    >Phone Number: {{ homelessProfile?.phone }}</small
+                  >
+                  <small
+                    *ngIf="homelessProfile?.dateOfBirth"
+                    class="font-weight-bold text-center d-block"
+                    >Date of Birth:
+                    {{ homelessProfile?.dateOfBirth | date }}</small
+                  >
+                  <small
+                    *ngIf="homelessProfile?.occupation"
+                    class="font-weight-bold text-center d-block"
+                    >Occupation: {{ homelessProfile?.occupation }}</small
+                  >
                 </div>
-                <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills"
-                  id="navCustom2">
+                <ngb-tabset
+                  [justify]="'center'"
+                  class="custom-tab-content flex-column flex-md-row"
+                  type="pills"
+                  id="navCustom2"
+                >
                   <ngb-tab>
                     <ng-template ngbTabTitle>
                       <i class="ni ni-books mr-2"></i> My Story
                     </ng-template>
                     <ng-template ngbTabContent>
-                      <p class="description">{{homelessProfile?.aboutYou}}</p>
+                      <p class="description">{{ homelessProfile?.aboutYou }}</p>
                       <!-- comments -->
                       <div class="review p-3" *ngFor="let comment of comments">
                         <div class="row d-flex">
-                          <div class="profile-pic"><img src="https://i.imgur.com/Mcd6HIg.jpg" width="60px"
-                              height="60px"></div>
+                          <div class="profile-pic">
+                            <img
+                              src="https://i.imgur.com/Mcd6HIg.jpg"
+                              width="60px"
+                              height="60px"
+                            />
+                          </div>
                           <div class="d-flex flex-column pl-3">
-                            <h4>{{comment.user.first_name}} {{comment.user.last_name}}</h4>
-                            <p class="grey-text">{{comment.created_at | date}}</p>
+                            <h4>
+                              {{ comment.user.first_name }}
+                              {{ comment.user.last_name }}
+                            </h4>
+                            <p class="grey-text">
+                              {{ comment.created_at | date }}
+                            </p>
                           </div>
                         </div>
                         <div class="row pb-3">
-                          <p>{{comment.comment}}</p>
+                          <p>{{ comment.comment }}</p>
                         </div>
                       </div>
                       <!-- end comments -->
                       <!-- comments box -->
                       <div class="row">
                         <div class="col-12">
-                          <textarea name="comentarios" [(ngModel)]="comment" rows="5" id="text-comments"
-                            placeholder="Write your comments"></textarea>
-                          <button type="button" [disabled]="ifSendComment" (click)="newComment()"
-                            class="btn btn-success float-right">Send</button>
+                          <textarea
+                            name="comentarios"
+                            [(ngModel)]="comment"
+                            rows="5"
+                            id="text-comments"
+                            placeholder="Write your comments"
+                          ></textarea>
+                          <button
+                            type="button"
+                            [disabled]="ifSendComment"
+                            (click)="newComment()"
+                            class="btn btn-success float-right"
+                          >
+                            Send
+                          </button>
                         </div>
                       </div>
                     </ng-template>
@@ -85,9 +142,15 @@
                         <h3 class="text-center w-100">Portfolio</h3>
                       </div>
                       <div class="row">
-                        <div class="col-sm" *ngFor="let image of portfolio; let i=index">
-                          <img src="http://localhost:8000{{image.image}}" (click)="openM(image.image)"
-                            class="img-portfolio" />
+                        <div
+                          class="col-sm"
+                          *ngFor="let image of portfolio; let i = index"
+                        >
+                          <img
+                            src="http://localhost:8000{{ image.image }}"
+                            (click)="openM(image.image)"
+                            class="img-portfolio"
+                          />
                         </div>
                       </div>
                     </ng-template>
@@ -97,8 +160,13 @@
                       <i class="ni ni-money-coins mr-2"></i> Donations
                     </ng-template>
                     <ng-template ngbTabContent>
-                      <p class="description">{{homelessProfile?.aboutYou}}</p>
-                      <button class="btn btn-warning float-right" (click)="open(classic)">Show more</button>
+                      <p class="description">{{ homelessProfile?.aboutYou }}</p>
+                      <button
+                        class="btn btn-warning float-right"
+                        (click)="open(classic)"
+                      >
+                        Show more
+                      </button>
                     </ng-template>
                   </ngb-tab>
                 </ngb-tabset>
@@ -125,12 +193,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <h6 class="modal-title" id="modal-title-default">Donations list</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="d('Cross click')"
+        >
           <span aria-hidden="true">×</span>
         </button>
       </div>
       <div class="modal-body">
-        <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills" id="navCustom">
+        <ngb-tabset
+          [justify]="'center'"
+          class="custom-tab-content flex-column flex-md-row"
+          type="pills"
+          id="navCustom"
+        >
           <ngb-tab>
             <ng-template ngbTabTitle>
               <i class="ni ni-calendar-grid-58 mr-2"></i> Recaudaciones
@@ -153,28 +232,27 @@
                       <th scope="row">
                         <div class="media align-items-center">
                           <a href="#" class="avatar rounded-circle mr-3">
-                            <img alt="Image placeholder"
-                              src="https://images.unsplash.com/photo-1519430044529-9a9a57177865?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=761&q=80">
+                            <img
+                              alt="Image placeholder"
+                              src="https://images.unsplash.com/photo-1519430044529-9a9a57177865?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=761&q=80"
+                            />
                           </a>
                           <div class="media-body">
-                            <span class="mb-0 text-sm">{{item.user.first_name}} {{item.user.last_name}}</span>
+                            <span class="mb-0 text-sm"
+                              >{{ item.user.first_name }}
+                              {{ item.user.last_name }}</span
+                            >
                           </div>
                         </div>
                       </th>
                       <td>
-                        {{item.event.name}}
+                        {{ item.event.name }}
                       </td>
 
-                      <td>
-                        {{item.mount}}$
-                      </td>
+                      <td>{{ item.mount }}$</td>
 
-                      <td>
-                        {{item.event.rest}}$
-                      </td>
-                      <td>
-                        {{item.event.total}}$
-                      </td>
+                      <td>{{ item.event.rest }}$</td>
+                      <td>{{ item.event.total }}$</td>
                     </tr>
                   </tbody>
                 </table>
@@ -192,23 +270,35 @@
                   <ngb-tabset type="pills" id="pillsCustom">
                     <ngb-tab *ngFor="let event of eventsList">
                       <ng-template ngbTabTitle>
-                        <span class="nav-link-icon d-block"><i class="ni ni-support-16"></i> {{event.name}}</span>
+                        <span class="nav-link-icon d-block"
+                          ><i class="ni ni-support-16"></i>
+                          {{ event.name }}</span
+                        >
                       </ng-template>
                     </ngb-tab>
                   </ngb-tabset>
-                </div>           
+                </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <h3>Formulario para donación</h3>
-                  <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"
-                    (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
+                  <ngx-stripe-card
+                    [options]="cardOptions"
+                    [elementsOptions]="elementsOptions"
+                    (change)="cardUpdated($event)"
+                    (error)="error = $event"
+                  ></ngx-stripe-card>
                   <div class="error">
-                    {{error?.message}}
+                    {{ error?.message }}
                   </div>
                   <div class="mt-3">
-                    <button class="btn btn-success btn-sm float-right" (click)="getCardToken()" [disabled]="!complete">Get Card Token</button>
-
+                    <button
+                      class="btn btn-success btn-sm float-right"
+                      (click)="getCardToken()"
+                      [disabled]="!complete"
+                    >
+                      Get Card Token
+                    </button>
                   </div>
                 </div>
               </div>
@@ -216,37 +306,59 @@
           </ngb-tab>
         </ngb-tabset>
       </div>
- 
     </div>
   </ng-template>
 
   <ng-template #template>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Add Event</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <button
+        type="button"
+        class="close pull-right"
+        aria-label="Close"
+        (click)="modalRef.hide()"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-
       <div class="form-group">
         <label>Name of event</label>
-        <input type="text" class="form-control" aria-describedby="nameevent" placeholder="Enter name event"
-          [(ngModel)]="name">
-        <small id="nameevent" class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.</small>
+        <input
+          type="text"
+          class="form-control"
+          aria-describedby="nameevent"
+          placeholder="Enter name event"
+          [(ngModel)]="name"
+        />
+        <small id="nameevent" class="form-text text-muted"
+          >Lorem ipsum dolor sit amet consectetur adipisicing elit.</small
+        >
       </div>
       <div class="form-group">
         <label>Mount</label>
-        <input type="number" class="form-control" placeholder="$ 00,00" [(ngModel)]="total">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="$ 00,00"
+          [(ngModel)]="total"
+        />
       </div>
       <div class="form-group">
         <label>Description</label>
-        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Description"
-          [(ngModel)]="description"></textarea>
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="4"
+          class="form-control"
+          placeholder="Description"
+          [(ngModel)]="description"
+        ></textarea>
       </div>
-      <button class="btn btn-success float-right" (click)="newEvent()">Submit</button>
-
+      <button class="btn btn-success float-right" (click)="newEvent()">
+        Submit
+      </button>
     </div>
   </ng-template>
 </main>

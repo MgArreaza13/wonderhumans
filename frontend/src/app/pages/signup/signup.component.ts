@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
             username: ['', [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(10),
+                Validators.maxLength(25),
             ]],
             first_name: ['', [
                 Validators.required,
@@ -59,8 +59,8 @@ export class SignupComponent implements OnInit {
             ]],
             password1: ['', [
                 Validators.required,
-                Validators.minLength(5),
-                Validators.maxLength(8),
+                Validators.minLength(8),
+                Validators.maxLength(25),
             ]],
             password2: ['', [
                 Validators.required]],
@@ -102,8 +102,6 @@ export class SignupComponent implements OnInit {
     password(registerForm: FormGroup) {
         const { value: password } = registerForm.get('password1');
         const { value: confirmPassword } = registerForm.get('password2');
-        console.log(password)
-        console.log(confirmPassword)
         this.validatePass = (password === confirmPassword) ? true : false;
         return password === confirmPassword ? null : { passwordNotMatch: true };
     }

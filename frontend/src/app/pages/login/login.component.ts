@@ -42,11 +42,11 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: [
         "",
-        Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])
+        Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25)])
       ],
       password: [
         "",
-        [Validators.required, Validators.minLength(5), Validators.maxLength(8)]
+        [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
       ]
     });
   }

@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService
   ) {
-    this.user = JSON.parse(localStorage.getItem('wonderHumanUser'))
+    this.user = JSON.parse(localStorage.getItem('wonderHumanUser'));
   }
 
   ngOnInit() {
@@ -31,7 +31,8 @@ export class ProfileComponent implements OnInit {
         this.profile = data;
       },
       (error) => {
-        if (error.error.detail === 'El usuario no tiene perfil') {
+        console.log(error)
+        if (error.error.detail === 'User dont have profile') {
           this.profile = null;
         }
       }
@@ -39,9 +40,9 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  getMyHomelessProfile(){
+  getMyHomelessProfile() {
     this.userService.getMyHomelessProfile().subscribe(
-      (data:any)=>{
+      (data: any) => {
         this.userHomeless = data;
       },
       err => {
