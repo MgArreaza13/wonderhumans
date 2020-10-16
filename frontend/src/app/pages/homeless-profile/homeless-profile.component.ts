@@ -7,6 +7,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { StripeService, StripeCardComponent, Element as StripeElement, ElementOptions, ElementsOptions } from "@nomadreservations/ngx-stripe";
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -59,7 +61,9 @@ export class HomelessProfileComponent implements OnInit {
     private _lightbox: Lightbox,
     private bmodalService: BsModalService,
     private _stripe: StripeService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService
   ) {
     this.idHomeless = this.route.snapshot.paramMap.get('idHomeless');
     this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
@@ -191,9 +195,10 @@ export class HomelessProfileComponent implements OnInit {
   }
 
   createComment(id) {
+    this.spinner.show();
     const body = {
       comment: this.comment
-    }
+    };
     this.ifSendComment = true;
 
     this.homelessService.newComment(id, body).subscribe(
@@ -202,20 +207,34 @@ export class HomelessProfileComponent implements OnInit {
         this.ifSendComment = false;
         this.comment = '';
         this.comments = data;
+        this.spinner.hide();
+        this.toastr.success('Comment added successfully')
       },
       error => {
         this.ifSendComment = false;
         console.log(error);
+        this.comment = '';
+        this.toastr.error(error);
+        this.spinner.hide();
+
       }
-    )
+    );
 
   }
 
   newEvent() {
-    this.createEvent(this.idHomeless);
+    console.log(this.total)
+    console.log(this.description)
+    console.log(this.name)
+    if (this.name === undefined || this.description === undefined || this.total === undefined) {
+      this.toastr.error('Empty fields');
+    } else {
+      this.createEvent(this.idHomeless);
+    }
   }
 
-  createEvent(id) {
+  async createEvent(id) {
+    await this.spinner.show();
     const body = {
       name: this.name,
       total: this.total,
@@ -223,16 +242,26 @@ export class HomelessProfileComponent implements OnInit {
     };
     console.log(body);
     this.homelessService.newEvent(id, body).subscribe(
-      (data: any) => {
+      async (data: any) => {
         console.log(data);
         this.closemodal();
-
-
+        await this.spinner.hide();
+        this.toastr.success('Event added successfully');
+        this.total = '';
+        this.description = '';
+        this.name = '';
+        await this.getEventList(this.idHomeless);
       },
-      error => {
+      async error => {
         console.log(error);
+        await this.spinner.hide();
+        this.toastr.error(error);
+        this.total = '';
+        this.description = '';
+        this.name = '';
+        this.closemodal();
       }
-    )
+    );
   }
 
   closemodal() {
