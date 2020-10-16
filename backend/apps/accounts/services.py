@@ -56,11 +56,11 @@ def login(data: dict) -> accounts_models.User:
 	if username is None or not username:
 		raise ValueError(str(_("The username cannot be empty")))
 	else:
-		accounts_validations.validate_length('Username',username,3,10)
+		accounts_validations.validate_length('Username',username,3,25)
 	if password is None or not password:
 		raise ValueError(str(_("The password cannot be empty")))
 	else:
-		accounts_validations.validate_length('Password',password,5,8)
+		accounts_validations.validate_length('Password',password,5,25)
 	try:
 		# Obtain user from database if exist
 		user = accounts_models.User.objects.get(Q(username=username) | Q(email=username.lower()))
@@ -115,18 +115,18 @@ def register_user(data: dict, user: accounts_models.User):
 		raise ValueError(str(_("Email field is required")))
 	# validate username
 	if data.get('username') is not None:
-		accounts_validations.validate_length('Username', data.get('username'),3,10)
+		accounts_validations.validate_length('Username', data.get('username'),3,25)
 		accounts_validations.validate_username(data.get('username'))
 	else:
 		raise ValueError(str(_("Username field is required")))
 	# validate password1
 	if data.get('password1') is not None:
-		accounts_validations.validate_length('Password',data.get('password1'),5,8)
+		accounts_validations.validate_length('Password',data.get('password1'),5,25)
 	else:
 		raise ValueError(str(_("Password field is required")))
 	# validate password2
 	if data.get('password2') is not None:
-		accounts_validations.validate_length('Password confirmation',data.get('password2'),5,8)
+		accounts_validations.validate_length('Password confirmation',data.get('password2'),5,25)
 	else:
 		raise ValueError(str(_("Password confirmation field is required")))
 	# validate first name

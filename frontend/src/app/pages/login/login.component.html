@@ -35,7 +35,7 @@
             </div> -->
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
+                <small>Sign in with credentials</small>
               </div>
               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div
@@ -67,7 +67,7 @@
                     *3 is the minimum characters allowed
                   </section>
                   <section class="m-2 text-danger" *ngIf="f['username'].hasError('maxlength') && (f['username'].touched || f['username'].dirty)">
-                    *10 is the maximum characters allowed
+                    *25 is the maximum characters allowed
                   </section>
                 </div>
                 <div
@@ -95,10 +95,10 @@
                     *Required field
                   </section>
                   <section class="m-2 text-danger" *ngIf="f['password'].hasError('minlength')">
-                    *5 is the minimum characters allowed
+                    *8 is the minimum characters allowed
                   </section>
                   <section class="m-2 text-danger" *ngIf="f['password'].hasError('maxlength')">
-                    *8 is the maximum characters allowed
+                    *25 is the maximum characters allowed
                   </section>
                 </div>
                 <div

@@ -25,38 +25,50 @@ export class NewHomelessComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private homelessService: HomelessService
-    ) { }
+  ) { }
 
   ngOnInit() {
-    this.initForm()
+    this.initForm();
   }
 
-  initForm(){
+  initForm(dataUser?) {
     // Build form
     this.newHomelessForm = this.formBuilder.group({
-      firstName: ['', [
+      firstName: [(dataUser) ? dataUser.user.first_name : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10),
       ]],
-      lastName: ['', [
+      lastName: [(dataUser) ? dataUser.user.last_name : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10),
       ]],
-      email: ['', [
-        Validators.required,
+      email: [(dataUser) ? dataUser.user.email : '', [
+        Validators.required, Validators.email
       ]],
-      occupation: ['', [
+      occupation: [(dataUser) ? dataUser.occupation : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
       ]],
-      city: ['', [
+      city: [(dataUser) ? dataUser.city : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
       ]],
-      country: ['', [
+      country: [(dataUser) ? dataUser.country : '', [
         Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(25),
       ]],
       dateOfBirth: ['', [
         Validators.required,
       ]],
-      aboutYou: ['', [
+      aboutYou: [(dataUser) ? dataUser.aboutYou : '', [
         Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(100),
       ]],
     });
   }
@@ -65,35 +77,35 @@ export class NewHomelessComponent implements OnInit {
 
 
   onSubmit() {
-    this.spinner.show();
-    this.submitted = true;
-    if (this.newHomelessForm.invalid) {
-      this.spinner.hide();
-      return;
-    }
-
-    console.log(this.newHomelessForm);
-
-    // Set object
+    this.newHomeless = {} as NewHomeless;
     this.newHomeless.firstName = this.newHomelessForm.get('firstName').value;
     this.newHomeless.lastName = this.newHomelessForm.get('lastName').value;
     this.newHomeless.email = this.newHomelessForm.get('email').value;
     this.newHomeless.occupation = this.newHomelessForm.get('occupation').value;
     this.newHomeless.city = this.newHomelessForm.get('city').value;
     this.newHomeless.country = this.newHomelessForm.get('country').value;
-    this.newHomeless.dateOfBirth = new Date(this.newHomelessForm.get('dateOfBirth').value);
+    this.newHomeless.dateOfBirth = (this.newHomelessForm.get('dateOfBirth').value);
     this.newHomeless.aboutYou = this.newHomelessForm.get('aboutYou').value;
-
-
     console.log(this.newHomeless);
+    this.newHomelessCreate(this.newHomeless)
+
+  }
+
+  async newHomelessCreate(dataHomeless) {
     // Send request
-    this.homelessService.newHomeless(this.newHomeless).subscribe(
-      (data: any) => {
+    await this.spinner.show();
+    this.homelessService.newHomeless(dataHomeless).subscribe(
+      async (data: any) => {
         console.log(data);
-        this.spinner.hide();
+        await this.spinner.hide();
         this.toastr.success('Welcome', 'Registro satisfactorio');
+        await this.router.navigateByUrl('/user-profile');
       },
-      err => {console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide();}
+      async err => {
+        console.log(err);
+        this.toastr.error('Error', err.error.detail);
+        await this.spinner.hide();
+      }
     );
   }
 

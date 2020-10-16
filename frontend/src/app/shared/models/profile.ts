@@ -5,6 +5,6 @@ export interface Profile {
     occupation?: string;
     city?: string;
     country?: string;
-    dateOfBirth?: string;
+    dateOfBirth?: any;
     aboutYou?: string;
 }
