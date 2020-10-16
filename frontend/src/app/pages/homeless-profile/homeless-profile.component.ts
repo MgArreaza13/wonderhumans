@@ -58,7 +58,8 @@ export class HomelessProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private _lightbox: Lightbox,
     private bmodalService: BsModalService,
-    private _stripe: StripeService
+    private _stripe: StripeService,
+    private router: Router
   ) {
     this.idHomeless = this.route.snapshot.paramMap.get('idHomeless');
     this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
@@ -236,5 +237,9 @@ export class HomelessProfileComponent implements OnInit {
 
   closemodal() {
     this.modalRef.hide();
+  }
+
+  async back() {
+    await this.router.navigateByUrl('/user-profile');
   }
 }

@@ -14,11 +14,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
-  hasProfile: boolean = false;
-  submitted: boolean;
-  profileForm: FormGroup;;
+  hasProfile = false;
+  submitted = false;
+  profileForm: FormGroup;
   user: User;
   profile: Profile = {};
+  date: { year: number; month: number; day: number; };
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
@@ -30,24 +31,38 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('wonderHumanUser'))
+    this.user = JSON.parse(localStorage.getItem('wonderHumanUser'));
     this.getProfile();
   }
 
 
-  getProfile() {
+  async getProfile() {
     this.userService.getProfile().subscribe(
-      (data: any) => {
+      async (data: any) => {
+        console.log(data)
         this.hasProfile = true;
-        this.initForm(data)
+        const d = new Date(data.dateOfBirth);
+        this.date = {
+          day: d.getDate() + 1,
+          month: d.getMonth() + 1,
+          year: d.getFullYear()
+        };
+        if (this.date) {
+          this.initForm(data);
+
+        }
+        console.log(this.date);
+        console.log(this.hasProfile);
       },
-      (error) => {
-        if (error.error.detail === 'El usuario no tiene perfil') {
+      async (error) => {
+        if (error.error.detail === 'User dont have profile') {
           this.hasProfile = false;
+          console.log(this.hasProfile);
           this.initForm();
         }
       }
-    )
+    );
+
   }
 
 
@@ -56,23 +71,33 @@ export class EditProfileComponent implements OnInit {
     this.profileForm = this.formBuilder.group({
       firstName: [(dataUser) ? dataUser.user.first_name : this.user.first_name, [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10),
       ]],
       lastName: [(dataUser) ? dataUser.user.last_name : this.user.last_name, [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(10),
       ]],
       email: [(dataUser) ? dataUser.user.email : this.user.email, [
-        Validators.required,
+        Validators.required, Validators.email
       ]],
       occupation: [(dataUser) ? dataUser.occupation : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
       ]],
       city: [(dataUser) ? dataUser.city : '', [
         Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(25),
       ]],
       country: [(dataUser) ? dataUser.country : '', [
         Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(25),
       ]],
-      dateOfBirth: [(dataUser) ? dataUser.dateOfBirth : '', [
+      dateOfBirth: [(dataUser) ? this.date : '', [
         Validators.required,
       ]],
       aboutYou: [(dataUser) ? dataUser.aboutYou : '', [
@@ -87,12 +112,7 @@ export class EditProfileComponent implements OnInit {
   onSubmit() {
     this.spinner.show();
     this.submitted = true;
-    // if (this.profileForm.invalid) {
-    //   this.spinner.hide();
-    //   return;
-    // }
-
-    // Set object
+    this.profile = {} as Profile;
     this.profile.firstName = this.profileForm.get('firstName').value;
     this.profile.lastName = this.profileForm.get('lastName').value;
     this.profile.email = this.profileForm.get('email').value;
@@ -101,33 +121,45 @@ export class EditProfileComponent implements OnInit {
     this.profile.country = this.profileForm.get('country').value;
     this.profile.dateOfBirth = this.profileForm.get('dateOfBirth').value;
     this.profile.aboutYou = this.profileForm.get('aboutYou').value;
-
-    (this.hasProfile)? this.updateProfile(this.profile) : this.createProfile(this.profile);
+    console.log(this.profile);
+    if (this.hasProfile === false) {
+      this.createProfile(this.profile)
+    } else if (this.hasProfile === true) {
+      this.updateProfile(this.profile);
+    }
 
   }
 
-
-
   createProfile(profile) {
-    // Send request
+    console.log('crear')
     this.userService.newProfile(profile).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-        this.toastr.success('Success', 'New Profile');
-        this.router.navigateByUrl('/user-profile')
+      async (data: any) => {
+        await this.spinner.hide();
+        await this.toastr.success('Success', 'New Profile');
+        await this.router.navigateByUrl('/user-profile');
+        console.log(data);
       },
-      err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
+      err => {
+        console.log(err);
+        this.toastr.error('Error', err.error.detail);
+        this.spinner.hide();
+      }
     );
   }
 
   updateProfile(update) {
+    console.log('actualizar')
     this.userService.updateProfile(update).subscribe(
-      (data: any) => {
-        this.spinner.hide();
-        this.toastr.success('Success', 'Update Profile');
-        this.router.navigateByUrl('/user-profile')
+      async (data: any) => {
+        await this.spinner.hide();
+        await this.toastr.success('Success', 'Update Profile');
+        await this.router.navigateByUrl('/user-profile');
       },
-      err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
+      err => {
+        console.log(err);
+        this.toastr.error('Error', err.error.detail);
+        this.spinner.hide();
+      }
     );
   }
 

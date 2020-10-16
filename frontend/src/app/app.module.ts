@@ -32,6 +32,8 @@ import { SidebarModule } from 'ng-sidebar';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +69,7 @@ import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
     ModalModule.forRoot(),
     FileUploadModule,
     NgxStripeModule.forRoot('pk_test_HvwgwPUBp4MDNtNzAblZKClz00L9KZljOT'),
+    BsDatepickerModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
