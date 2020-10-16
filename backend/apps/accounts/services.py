@@ -56,11 +56,11 @@ def login(data: dict) -> accounts_models.User:
 	if username is None or not username:
 		raise ValueError(str(_("The username cannot be empty")))
 	else:
-		accounts_validations.validate_length('Username',username,3,10)
+		accounts_validations.validate_length('Username',username,3,25)
 	if password is None or not password:
 		raise ValueError(str(_("The password cannot be empty")))
 	else:
-		accounts_validations.validate_length('Password',password,5,8)
+		accounts_validations.validate_length('Password',password,5,25)
 	try:
 		# Obtain user from database if exist
 		user = accounts_models.User.objects.get(Q(username=username) | Q(email=username.lower()))
