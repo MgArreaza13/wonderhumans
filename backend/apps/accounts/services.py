@@ -194,6 +194,10 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		user.email = data.get("email")
 	user.save()
 	# valitation of data profile
+	if data.get("show_email") is not None:
+		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
+	else:
+		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 	else:
@@ -218,6 +222,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		try:
 			profile_registered = Profile.objects.create(
 				user = user,
+				show_email = data.get("show_email"),
 				occupation = data.get("occupation"),
 				city = data.get("city"),
 				country = data.get("country"),
@@ -261,6 +266,9 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 	# Edit profile
 	profile = Profile.objects.get(user=user)
 	# valitation of data profile
+	if data.get("show_email") is not None:
+		show_email = accounts_validations.validate_show_email(data.get("show_email"))
+		profile.show_email = show_email
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 		profile.dateOfBirth = birth
@@ -311,6 +319,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_email(data.get("email"))
 	else:
 		raise ValueError(str(_("Email field is required")))
+	if data.get("show_email") is not None:
+		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
+	else:
+		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 	else:
@@ -331,6 +343,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
 	else:
 		raise ValueError(str(_("About you field is required")))
+	if data.get("location_detail") is not None:
+		accounts_validations.validate_length("Loation detail",data.get("location_detail"),3,50)
+	else:
+		raise ValueError(str(_("Location detail field is required")))
 	try:
 		profile: Profile =  HomelessProfile.objects.create(
 
@@ -339,12 +355,14 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			lastName = data.get("lastName"),
 			typeUser = typeUser,
 			email = data.get("email"),
+			show_email = data.get("show_email"),
 			#Additional information personal
 			occupation = data.get("occupation"),
 			# phone = phone,
 			# address = address,
 			city = data.get("city"),
 			country = data.get("country"),
+			location_detail = data.get("location_detail"),
 			dateOfBirth = birth,
 			aboutYou = data.get("aboutYou"),
 		)
@@ -398,6 +416,7 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'firstName': p.firstName,
 				'lastName' : p.lastName,
 				'email' : p.email,
+				'show_email': p.show_email,
 				# 'photo' : p.photo,
 				# Additional information personal
 				'occupation' : p.occupation,
@@ -405,6 +424,7 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'address' : p.address,
 				'city' : p.city,
 				'state' : p.state,
+				'location_detail': p.location_detail,
 				'country' : p.country,
 				'dateOfBirth' : p.dateOfBirth,
 				'aboutYou' : p.aboutYou,

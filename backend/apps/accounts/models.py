@@ -11,6 +11,7 @@ TYPE_USER = (
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    show_email = models.BooleanField(default=True)
     photo = models.ImageField(upload_to='profile', blank=True, null=True)
     # Additional information personal
     occupation = models.CharField(max_length=100, blank=True)
@@ -33,6 +34,7 @@ class HomelessProfile(models.Model):
     firstName = models.CharField(max_length=100, blank=True)
     lastName = models.CharField(max_length=100, blank=True)
     email = models.CharField(max_length=100, blank=True)
+    show_email = models.BooleanField(default=True)
     typeUser = models.CharField(max_length=30, choices=TYPE_USER , null= True)
     photo = models.ImageField(upload_to='profile', blank=True, null=True)
     # Additional information personal
@@ -44,6 +46,7 @@ class HomelessProfile(models.Model):
     country = models.CharField(max_length=100, blank=True, null= True)
     dateOfBirth = models.DateTimeField(auto_now_add=False, null= True)
     aboutYou = models.TextField(blank=True, null= True)
+    location_detail = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -19,6 +19,7 @@ class UserProfileSerializers(serpy.Serializer):
 	user = UserSerializers()
 	# information personal
 	id = serpy.Field()
+	show_email = serpy.Field()
 	photo = serpy.MethodField()
 	# Additional information personal
 	occupation = serpy.Field()
@@ -54,6 +55,7 @@ class HomelessProfileSerializers(serpy.Serializer):
 	firstName = serpy.Field()
 	lastName = serpy.Field()
 	email = serpy.Field()
+	show_email = serpy.Field()
 	typeUser = serpy.Field()
 	# photo = models.ImageField(upload_to='profile', blank=True, null=True)
 	# Additional information personal

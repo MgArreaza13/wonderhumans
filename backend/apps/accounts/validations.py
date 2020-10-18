@@ -16,6 +16,21 @@ def validate_email(email: str):
         raise ValueError(str(_("Email registered please try with another")))
     return True
 
+def validate_show_email(show:str):
+    """
+        Method to verify if a variable have a right value
+
+        :param show_email: show_email of a user
+        :type_show: str
+        return: bool
+        :raises: ValueError
+    """
+    if show != "True" and show != "False":
+        raise ValueError(str(_("Show email field only can be 'True" 'or' 'False')))
+    if show == "True":
+        return True
+    return False
+
 def validate_username(username: str):
     """
         Method to verify if username of user exists
