@@ -64,6 +64,7 @@ class HomelessProfileSerializers(serpy.Serializer):
 	address = serpy.Field()
 	city = serpy.Field()
 	state = serpy.Field()
+	location_detail = serpy.Field()
 	country = serpy.Field()
 	dateOfBirth = serpy.Field()
 	aboutYou = serpy.Field()
