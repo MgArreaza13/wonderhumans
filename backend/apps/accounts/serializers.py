@@ -20,7 +20,7 @@ class UserProfileSerializers(serpy.Serializer):
 	# information personal
 	id = serpy.Field()
 	show_email = serpy.Field()
-	photo = serpy.MethodField()
+	photo = serpy.MethodField('get_photo')
 	# Additional information personal
 	occupation = serpy.Field()
 	phone = serpy.Field()
@@ -57,7 +57,7 @@ class HomelessProfileSerializers(serpy.Serializer):
 	email = serpy.Field()
 	show_email = serpy.Field()
 	typeUser = serpy.Field()
-	# photo = models.ImageField(upload_to='profile', blank=True, null=True)
+	photo = serpy.MethodField('get_photo')
 	# Additional information personal
 	occupation = serpy.Field()
 	phone = serpy.Field()
@@ -68,3 +68,16 @@ class HomelessProfileSerializers(serpy.Serializer):
 	dateOfBirth = serpy.Field()
 	aboutYou = serpy.Field()
 	created_at = serpy.Field()
+
+	def get_photo(self, obj):
+		"""
+			With this method obtain phone number of the user
+
+			:param obj: object User
+			:type obj: Model User
+			:return: if phone number is None return None
+			:return: phone number
+		"""
+		if obj.photo:
+			return obj.photo.url
+		return None

@@ -410,14 +410,12 @@ def filterMyHomelessProfile(user: accounts_models.User):
 	elif (len(profiles) > 0):
 
 		for p in profiles:
-			data.append(
-				{
+			values = {
 				'id': p.id,
 				'firstName': p.firstName,
 				'lastName' : p.lastName,
 				'email' : p.email,
 				'show_email': p.show_email,
-				# 'photo' : p.photo,
 				# Additional information personal
 				'occupation' : p.occupation,
 				'phone' : p.phone,
@@ -430,5 +428,9 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'aboutYou' : p.aboutYou,
 				'created_at' : p.created_at
 				}
-			)
+			if p.photo:
+				values['photo'] = p.photo.url
+			else:
+				values['photo'] = ''
+			data.append(values)
 		return data
