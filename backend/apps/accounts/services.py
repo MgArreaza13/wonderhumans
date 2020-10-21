@@ -374,6 +374,9 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
 		profile.save()
+	url = 'http://localhost:4200/homeless-profile/' + str(profile.id)
+	name = str(profile.firstName) + '' + str(profile.lastName)
+	saveQrCode(url,name)
 	if data.get("portfolio") is not None:
 		portfolio = data.get("portfolio")
 		for photo in portfolio:
