@@ -12,6 +12,7 @@ from apps.accounts import tasks as accounts_task
 from apps.accounts.tasks import welcome_email
 from apps.accounts.models import Profile
 from apps.accounts.models import HomelessProfile
+from apps.portfolio import models as portfolio_models
 from apps.utils.qr import saveQrCode
 
 
@@ -373,6 +374,14 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
 		profile.save()
+	if data.get("portfolio") is not None:
+		portfolio = data.get("portfolio")
+		for photo in portfolio:
+			portfolio_user = portfolio_models.HomelessPortfolio.objects.create(
+				homeless = profile,
+				userRegisterer = userRegisterer,
+				image = updateImage(photo.get("photo"))
+			)
 	return profile
 
 def get_profile_homeless(id_homeless: int) -> HomelessProfile:
