@@ -5,10 +5,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Lightbox } from 'ngx-lightbox';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-
+import Swal from 'sweetalert2';
 import { StripeService, StripeCardComponent, Element as StripeElement, ElementOptions, ElementsOptions } from "@nomadreservations/ngx-stripe";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -54,6 +55,8 @@ export class HomelessProfileComponent implements OnInit {
   description;
   album: any = [];
   comments;
+  imageUrl: string;
+  homelessPhoto: any;
   constructor(
     private modalService: NgbModal,
     private homelessService: HomelessService,
@@ -66,10 +69,7 @@ export class HomelessProfileComponent implements OnInit {
     private toastr: ToastrService
   ) {
     this.idHomeless = this.route.snapshot.paramMap.get('idHomeless');
-    this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
-    this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
-    this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
-    this.album.push({ 'src': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80', 'caption': 'Imag1', 'thumb': 'https://images.unsplash.com/photo-1581501171910-a6394cff12b7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' });
+    this.imageUrl = environment.apiRoot;
   }
 
   ngOnInit() {
@@ -91,18 +91,45 @@ export class HomelessProfileComponent implements OnInit {
   }
 
   getCardToken() {
-    this._stripe.createToken(this.element, {
-      name: 'tested_ca',
-      address_line1: '123 A Place',
-      address_line2: 'Suite 100',
-      address_city: 'Irving',
-      address_state: 'BC',
-      address_zip: 'VOE 1H0',
-      address_country: 'CA'
-    }).subscribe(result => {
-      // Pass token to service for purchase.
-      console.log(result);
+    Swal.fire({
+      input: 'number',
+      title: 'Amount to donate',
+      text: `Enter the amount please`,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Ok'
+    }).then((result) => {
+      if (result.value) {
+        const mount = result.value;
+        this._stripe.createToken(this.element, {
+          name: 'tested_ca',
+          address_line1: '123 A Place',
+          address_line2: 'Suite 100',
+          address_city: 'Irving',
+          address_state: 'BC',
+          address_zip: 'VOE 1H0',
+          address_country: 'CA'
+        }).subscribe(result => {
+          // Pass   token to service for purchase.
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'You have donated successfully!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.closemodal();
+          console.log(result);
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error',
+        });
+      }
     });
+
   }
   open(classic) {
     this.modalService.open(classic, { size: 'lg', centered: true });
@@ -124,6 +151,8 @@ export class HomelessProfileComponent implements OnInit {
       (data) => {
         console.log(data);
         this.homelessProfile = data;
+        // tslint:disable-next-line: max-line-length
+        this.homelessPhoto = (this.homelessProfile.photo) ? `${this.imageUrl}${this.homelessProfile.photo}` : 'https://lh3.googleusercontent.com/proxy/MwlVugXgLdVUNuSXNfNEQd_jKgFJC3Zt0uRxpV9Nle2GuREJpmKWLzxpplOVkiUvwoMLe-Oa6rYouAS_gziG8PdbkjXJ65a62wgAsTqlJ5PBJCsIOZqBpt8wrR8bS6E'
       },
       error => {
         console.log(error)
@@ -180,6 +209,8 @@ export class HomelessProfileComponent implements OnInit {
     this.homelessService.getPortfolio(id).subscribe(
       (data: any) => {
         this.portfolio = data;
+        console.log(this.portfolio)
+
       },
       error => {
         console.log(error);

@@ -70,10 +70,11 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
+    this.user = null;
     localStorage.removeItem('token');
     localStorage.removeItem('wonderHumanUser');
     // tslint:disable-next-line: no-unused-expression
     this.router.navigateByUrl('/login');
-    this.toastr.success('Ud cerrado sesión de forma exitosa!');
+    this.toastr.success('Successful logout');
   }
 }

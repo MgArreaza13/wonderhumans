@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from './../../core/services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,6 +13,7 @@ export class ProfileComponent implements OnInit {
   user: User
   profile;
   userHomeless;
+  imageUrl: any;
   constructor(
     private userService: UserService
   ) {
@@ -29,6 +31,7 @@ export class ProfileComponent implements OnInit {
       (data: any) => {
         console.log(data);
         this.profile = data;
+        this.imageUrl = (data.photo) ? `${environment.apiRoot}${data.photo}` : null;
       },
       (error) => {
         console.log(error)

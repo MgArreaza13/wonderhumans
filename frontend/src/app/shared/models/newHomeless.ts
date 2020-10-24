@@ -15,4 +15,7 @@ export interface NewHomeless {
     dateOfBirth?: Date;
     aboutYou?: string;
     created_at?: string;
+    show_email?: string;
+    location_detail?: string;
+    portfolio?: any;
 }
