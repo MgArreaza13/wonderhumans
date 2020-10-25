@@ -1,10 +1,25 @@
-.mb-10{
-    margin-bottom: 10rem;
+.mb-10 {
+  margin-bottom: 10rem;
 }
 .section-shaped .shape-style-1.shape-primary {
-    background: linear-gradient(150deg, #cf3a9e 15%, #ff6240 70%, #fbaa4f 94%) !important;
+  background: linear-gradient(
+    150deg,
+    #cf3a9e 15%,
+    #ff6240 70%,
+    #fbaa4f 94%
+  ) !important;
 }
-.text-danger{
-    font-variant: small-caps;
-    font-size: small;
+.text-danger {
+  font-variant: small-caps;
+  font-size: small;
+}
+.imagen-para-archivo input {
+  display: none;
+}
+.imageU {
+  border-radius: 50% !important;
+  width: 180px !important;
+  max-width: 180px !important;
+  height: 180px !important;
+  object-fit: cover !important;
 }

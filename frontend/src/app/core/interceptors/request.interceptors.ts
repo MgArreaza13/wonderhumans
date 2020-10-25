@@ -11,7 +11,7 @@ export class RequestInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Get token
     const user: User = JSON.parse(localStorage.getItem('wonderHumanUser'));
-    const token = (user)? user.token: null;
+    const token = (user) ? user.token : null;
 
     // Set Headers
     if (token) {

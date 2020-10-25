@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/models/user';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class EditProfileComponent implements OnInit {
   user: User;
   profile: Profile = {};
   date: { year: number; month: number; day: number; };
+  imageURL: string;
+  imageDefaul: string;
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
@@ -40,6 +43,8 @@ export class EditProfileComponent implements OnInit {
     this.userService.getProfile().subscribe(
       async (data: any) => {
         console.log(data)
+        // tslint:disable-next-line: max-line-length
+        this.imageDefaul = (data.photo) ? `${environment.apiRoot}${data.photo}` : 'https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png';
         this.hasProfile = true;
         const d = new Date(data.dateOfBirth);
         this.date = {
@@ -103,6 +108,8 @@ export class EditProfileComponent implements OnInit {
       aboutYou: [(dataUser) ? dataUser.aboutYou : '', [
         Validators.required,
       ]],
+      show_email: [(dataUser) ? dataUser.show_email : false],
+      photo: [null],
     });
   }
 
@@ -110,6 +117,7 @@ export class EditProfileComponent implements OnInit {
 
 
   onSubmit() {
+    const show = this.profileForm.get('show_email').value;
     this.spinner.show();
     this.submitted = true;
     this.profile = {} as Profile;
@@ -121,6 +129,8 @@ export class EditProfileComponent implements OnInit {
     this.profile.country = this.profileForm.get('country').value;
     this.profile.dateOfBirth = this.profileForm.get('dateOfBirth').value;
     this.profile.aboutYou = this.profileForm.get('aboutYou').value;
+    this.profile.show_email = (show === true) ? 'True' : 'False';
+    this.profile.photo = this.imageURL;
     console.log(this.profile);
     if (this.hasProfile === false) {
       this.createProfile(this.profile)
@@ -163,4 +173,27 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
+  photoAdd(event) {
+    console.log(event)
+    console.log('aqui para poner foto de perfil');
+    this.showPreview(event);
+  }
+
+  // Image Preview
+  showPreview(event) {
+    console.log(event)
+    const file = (event.target as HTMLInputElement).files[0];
+    console.log(file)
+    this.profileForm.patchValue({
+      photo: file
+    });
+    this.profileForm.get('photo').updateValueAndValidity();
+
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageURL = reader.result as string;
+    }
+    reader.readAsDataURL(file)
+  }
 }

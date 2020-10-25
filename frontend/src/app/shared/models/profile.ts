@@ -7,4 +7,6 @@ export interface Profile {
     country?: string;
     dateOfBirth?: any;
     aboutYou?: string;
+    show_email?: string;
+    photo?: string;
 }
