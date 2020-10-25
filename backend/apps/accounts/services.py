@@ -12,6 +12,7 @@ from apps.accounts import tasks as accounts_task
 from apps.accounts.tasks import welcome_email
 from apps.accounts.models import Profile
 from apps.accounts.models import HomelessProfile
+from apps.portfolio import models as portfolio_models
 from apps.utils.qr import saveQrCode
 
 
@@ -194,6 +195,10 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		user.email = data.get("email")
 	user.save()
 	# valitation of data profile
+	if data.get("show_email") is not None:
+		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
+	else:
+		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 	else:
@@ -218,6 +223,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		try:
 			profile_registered = Profile.objects.create(
 				user = user,
+				show_email = data.get("show_email"),
 				occupation = data.get("occupation"),
 				city = data.get("city"),
 				country = data.get("country"),
@@ -261,6 +267,9 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 	# Edit profile
 	profile = Profile.objects.get(user=user)
 	# valitation of data profile
+	if data.get("show_email") is not None:
+		show_email = accounts_validations.validate_show_email(data.get("show_email"))
+		profile.show_email = show_email
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 		profile.dateOfBirth = birth
@@ -311,6 +320,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_email(data.get("email"))
 	else:
 		raise ValueError(str(_("Email field is required")))
+	if data.get("show_email") is not None:
+		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
+	else:
+		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
 		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
 	else:
@@ -331,6 +344,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
 	else:
 		raise ValueError(str(_("About you field is required")))
+	if data.get("location_detail") is not None:
+		accounts_validations.validate_length("Loation detail",data.get("location_detail"),3,50)
+	else:
+		raise ValueError(str(_("Location detail field is required")))
 	try:
 		profile: Profile =  HomelessProfile.objects.create(
 
@@ -339,12 +356,14 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			lastName = data.get("lastName"),
 			typeUser = typeUser,
 			email = data.get("email"),
+			show_email = data.get("show_email"),
 			#Additional information personal
 			occupation = data.get("occupation"),
 			# phone = phone,
 			# address = address,
 			city = data.get("city"),
 			country = data.get("country"),
+			location_detail = data.get("location_detail"),
 			dateOfBirth = birth,
 			aboutYou = data.get("aboutYou"),
 		)
@@ -355,6 +374,17 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
 		profile.save()
+	url = 'http://localhost:4200/homeless-profile/' + str(profile.id)
+	name = str(profile.firstName) + '' + str(profile.lastName)
+	saveQrCode(url,name)
+	if data.get("portfolio") is not None:
+		portfolio = data.get("portfolio")
+		for photo in portfolio:
+			portfolio_user = portfolio_models.HomelessPortfolio.objects.create(
+				homeless = profile,
+				userRegisterer = userRegisterer,
+				image = updateImage(photo.get("photo"))
+			)
 	return profile
 
 def get_profile_homeless(id_homeless: int) -> HomelessProfile:
@@ -392,23 +422,27 @@ def filterMyHomelessProfile(user: accounts_models.User):
 	elif (len(profiles) > 0):
 
 		for p in profiles:
-			data.append(
-				{
+			values = {
 				'id': p.id,
 				'firstName': p.firstName,
 				'lastName' : p.lastName,
 				'email' : p.email,
-				# 'photo' : p.photo,
+				'show_email': p.show_email,
 				# Additional information personal
 				'occupation' : p.occupation,
 				'phone' : p.phone,
 				'address' : p.address,
 				'city' : p.city,
 				'state' : p.state,
+				'location_detail': p.location_detail,
 				'country' : p.country,
 				'dateOfBirth' : p.dateOfBirth,
 				'aboutYou' : p.aboutYou,
 				'created_at' : p.created_at
 				}
-			)
+			if p.photo:
+				values['photo'] = p.photo.url
+			else:
+				values['photo'] = ''
+			data.append(values)
 		return data
