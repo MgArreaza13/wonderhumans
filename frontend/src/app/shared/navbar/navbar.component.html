@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+      <ul class="navbar-nav navbar-nav-hover align-items-lg-end d-flex justify-content-end w-100">
         <!-- <li class="nav-item dropdown">
           <a class="nav-link no-caret" data-toggle="dropdown" role="button">
             <i class="ni ni-ui-04 d-lg-none"></i>
@@ -89,22 +89,24 @@
           <a class="nav-link " role="button" [routerLink]="['/register']">            
             <span class="nav-link-inner--text">Register</span>
           </a>
-        </li>
-
-      </ul>
-      <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+        </li>      
         <li class="nav-item" *ngIf="user">
-          <a class="nav-link nav-link-icon" [routerLink]="['/qr-reader']" data-toggle="tooltip">
+          <a class="nav-link nav-link-icon" role="button" [routerLink]="['/qr-reader']" data-toggle="tooltip">
             <span class="nav-link-inner--text d-lg-none">QR READER</span>
           </a>
         </li>
-        <li *ngIf="user" class="nav-item">
+        <li class="nav-item dropdown" *ngIf="user">
+          <a class="nav-link " role="button" (click)="logout()" data-toggle="Logout">            
+            <span class="nav-link-inner--text">Logout</span>
+          </a>
+        </li>
+        <!-- <li *ngIf="user" class="nav-item">
           <button (click)="logout()" class="nav-link nav-link-icon btn btn-icon btn-3 btn-secondary btn-sm" type="button"
             placement="bottom" ngbTooltip="Cerrar Sesión" style="padding: 0;
                           color: brown;font-size: small;">
             <span class="btn-inner--text">Logout <i class="ni ni-button-power"></i></span>
           </button>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

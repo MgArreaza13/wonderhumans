@@ -1,4 +1,43 @@
-@import '../../../assets/scss/reviews';
+@import "../../../assets/scss/reviews";
 .section-shaped .shape-style-1.shape-primary {
-    background: linear-gradient(150deg, #cf3a9e 15%, #ff6240 70%, #fbaa4f 94%) !important;
+  background: linear-gradient(
+    150deg,
+    #cf3a9e 15%,
+    #ff6240 70%,
+    #fbaa4f 94%
+  ) !important;
+}
+.section-shaped .shape {
+  position: fixed !important;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+.about-font {
+  font-weight: 600 !important;
+  font-variant: petite-caps;
+}
+.separator-bottom {
+  top: auto;
+  bottom: 0;
+  z-index: 0 !important;
+}
+@media (min-width: 768px) and (max-width: 1000px) {
+  .mt-md-7,
+  .my-md-7 {
+    margin-top: 5rem !important;
+  }
+}
+@media (max-width: 575.98px){    
+    .profile-page .card-profile .card-profile-actions {
+        margin-top: 125px;
+    }
+}
+.imageU{
+  border-radius: 50% !important;
+  width: 180px !important;
+  max-width: 180px !important;
+  height: 180px !important;
+  object-fit: cover !important;
 }

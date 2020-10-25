@@ -1,15 +1,15 @@
-<main>
-  <section class="section section-shaped section-lg">
-    <div class="shape shape-style-1 bg-gradient-default">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+<main class="section-shaped">
+  <div class="shape shape-style-1 bg-gradient-default">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <section class="section section-lg">
     <div class="container pt-lg-md">
       <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -29,7 +29,7 @@
                 type="button"
                 class="btn btn-outline-success btn-sm "
               >
-                <i class="ni ni-fat-add"></i> Add event
+                <i class="ni ni-fat-add"></i> Add cause
               </button>
             </span>
             <div class="card-header bg-white pb-2">
@@ -38,7 +38,7 @@
               </div>
               <div class="btn-wrapper text-center">
                 <img
-                  src="https://images.unsplash.com/photo-1519430044529-9a9a57177865?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=761&q=80"
+                  [src]="homelessPhoto"
                   alt=""
                   class="img-fluid rounded-circle shadow-lg"
                 />
@@ -53,7 +53,7 @@
                     {{ homelessProfile?.lastName }}
                   </h5>
                   <small
-                    *ngIf="homelessProfile?.email"
+                    *ngIf="homelessProfile?.email && homelessProfile?.show_email === true"
                     class="font-weight-bold text-center d-block"
                     >Email: {{ homelessProfile?.email }}</small
                   >
@@ -72,6 +72,11 @@
                     *ngIf="homelessProfile?.occupation"
                     class="font-weight-bold text-center d-block"
                     >Occupation: {{ homelessProfile?.occupation }}</small
+                  >
+                  <small
+                    *ngIf="homelessProfile?.location_detail"
+                    class="font-weight-bold text-center d-block"
+                    >Location: {{ homelessProfile?.location_detail }}</small
                   >
                 </div>
                 <ngb-tabset
@@ -144,13 +149,13 @@
                       <div class="row">
                         <div
                           class="col-sm"
-                          *ngFor="let image of portfolio; let i = index"
+                          *ngFor="let item of portfolio"
                         >
                           <img
-                            src="http://localhost:8000{{ image.image }}"
-                            (click)="openM(image.image)"
+                            src="{{imageUrl}}{{ item.image }}"
+                            (click)="openM(item.image)"
                             class="img-portfolio"
-                          />
+                          />                         
                         </div>
                       </div>
                     </ng-template>
@@ -287,7 +292,7 @@
                     [elementsOptions]="elementsOptions"
                     (change)="cardUpdated($event)"
                     (error)="error = $event"
-                  ></ngx-stripe-card>
+                  ></ngx-stripe-card>                  
                   <div class="error">
                     {{ error?.message }}
                   </div>
@@ -311,7 +316,7 @@
 
   <ng-template #template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Add Event</h4>
+      <h4 class="modal-title pull-left">Add Cause</h4>
       <button
         type="button"
         class="close pull-right"

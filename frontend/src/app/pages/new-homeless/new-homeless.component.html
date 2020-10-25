@@ -25,26 +25,41 @@
     </div>
   </section>
   <section class="section" *ngIf="newHomelessForm">
+    <form
+      role="form"
+      [formGroup]="newHomelessForm"
+      (ngSubmit)="onSubmit()"
+    >
     <div class="container">
       <div class="card card-profile shadow mt--300">
         <div class="px-4">
           <div class="row justify-content-center mb-10">
             <div class="col-lg-3 order-lg-2">
               <div class="card-profile-image">
-                <a href="javascript:void(0)">
-                  <img
-                    src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
-                    class="rounded-circle"
-                  />
-                </a>
+                <ng-template #noImage>
+                 <div class="imagen-para-archivo">
+                  <span>
+                    <label for="boton-archivo">
+                      <img
+                      src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
+                      class="imageU"
+                      />                      </label>
+                    
+                    <input id="boton-archivo" 
+                      type="file"
+                      accept="image/*"
+                      (change)="showPreview($event)"
+                      
+                    />
+                  </span>
+                 </div>
+                </ng-template>
+                <span *ngIf="imageURL && imageURL !== ''; else noImage">
+                  <img [src]="imageURL" class="imageU" />
+                </span>
               </div>
             </div>
           </div>
-          <form
-            role="form"
-            [formGroup]="newHomelessForm"
-            (ngSubmit)="onSubmit()"
-          >
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
@@ -380,57 +395,119 @@
                 </section>
               </div>
             </div>
-            <div class="row">
-              <label for="">About you</label>
-              <textarea
-                (focus)="focus = true"
-                (blur)="focus = false"
-                [ngClass]="{
-                  'is-invalid': f['aboutYou'].errors && f['aboutYou'].touched
-                }"
-                formControlName="aboutYou"
-                class="form-control form-control-alternative"
-                rows="3"
-                placeholder="Write something here"
-              ></textarea>
-              <section
-                  class="m-2 text-danger"
-                  *ngIf="
-                    f['aboutYou'].hasError('required') &&
-                    (f['aboutYou'].touched || f['aboutYou'].dirty)
-                  "
+            <div class="row mb-4">
+              <div class="col-12">
+                <div
+                  class="custom-control custom-control-alternative custom-checkbox"
                 >
-                  *Required field
-                </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
-                    f['aboutYou'].hasError('minlength') &&
-                    (f['aboutYou'].touched || f['aboutYou'].dirty)
-                  "
-                >
-                  *4 is the minimum characters allowed
-                </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
-                    f['aboutYou'].hasError('maxlength') &&
-                    (f['aboutYou'].touched || f['aboutYou'].dirty)
-                  "
-                >
-                  *100 is the maximum characters allowed
-                </section>
+                  <input
+                    formControlName="show_email"
+                    class="custom-control-input"
+                    id="show_email"
+                    type="checkbox"
+                  />
+                  <label class="custom-control-label" for="show_email">
+                    <span>Show email</span>
+                  </label>
+                </div>
+              </div>
             </div>
+            <div class="row mb-4">
+              <div class="col-6">                
+                <label for="">Location detail</label>
+                <textarea
+                  (focus)="focus = true"
+                  (blur)="focus = false"
+                  [ngClass]="{
+                    'is-invalid': f['location_detail'].errors && f['location_detail'].touched
+                  }"
+                  formControlName="location_detail"
+                  class="form-control form-control-alternative"
+                  rows="3"
+                  placeholder="Write something here"
+                ></textarea>
+                <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['location_detail'].hasError('required') &&
+                      (f['location_detail'].touched || f['location_detail'].dirty)
+                    "
+                  >
+                    *Required field
+                  </section>
+                  <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['location_detail'].hasError('minlength') &&
+                      (f['location_detail'].touched || f['location_detail'].dirty)
+                    "
+                  >
+                    *3 is the minimum characters allowed
+                  </section>
+                  <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['location_detail'].hasError('maxlength') &&
+                      (f['location_detail'].touched || f['location_detail'].dirty)
+                    "
+                  >
+                    *50 is the maximum characters allowed
+                  </section>
+              </div>
+              <div class="col-6">                
+                <label for="">About you</label>
+                <textarea
+                  (focus)="focus = true"
+                  (blur)="focus = false"
+                  [ngClass]="{
+                    'is-invalid': f['aboutYou'].errors && f['aboutYou'].touched
+                  }"
+                  formControlName="aboutYou"
+                  class="form-control form-control-alternative"
+                  rows="3"
+                  placeholder="Write something here"
+                ></textarea>
+                <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['aboutYou'].hasError('required') &&
+                      (f['aboutYou'].touched || f['aboutYou'].dirty)
+                    "
+                  >
+                    *Required field
+                  </section>
+                  <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['aboutYou'].hasError('minlength') &&
+                      (f['aboutYou'].touched || f['aboutYou'].dirty)
+                    "
+                  >
+                    *4 is the minimum characters allowed
+                  </section>
+                  <section
+                    class="m-2 text-danger"
+                    *ngIf="
+                      f['aboutYou'].hasError('maxlength') &&
+                      (f['aboutYou'].touched || f['aboutYou'].dirty)
+                    "
+                  >
+                    *100 is the maximum characters allowed
+                  </section>
+              </div>
+            </div>           
             <div class="row">
-              <label for="">Portfolio</label>
-              <file-upload class="w-100"></file-upload>
+              <div class="col-12">
+                <label for="">Portfolio</label>
+              <file-upload class="w-100" formControlName="portfolio"></file-upload>
+              </div>
             </div>
             <div class="row mt-5 mb-5 float-right">
               <button type="submit" class="btn btn-success" [disabled]="newHomelessForm.invalid">Save</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </section>
 </main>
