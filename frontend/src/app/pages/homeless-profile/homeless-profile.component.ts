@@ -152,7 +152,7 @@ export class HomelessProfileComponent implements OnInit {
         console.log(data);
         this.homelessProfile = data;
         // tslint:disable-next-line: max-line-length
-        this.homelessPhoto = (this.homelessProfile.photo) ? `${this.imageUrl}${this.homelessProfile.photo}` : 'https://lh3.googleusercontent.com/proxy/MwlVugXgLdVUNuSXNfNEQd_jKgFJC3Zt0uRxpV9Nle2GuREJpmKWLzxpplOVkiUvwoMLe-Oa6rYouAS_gziG8PdbkjXJ65a62wgAsTqlJ5PBJCsIOZqBpt8wrR8bS6E'
+        this.homelessPhoto = (this.homelessProfile.photo) ? `${this.imageUrl}${this.homelessProfile.photo}` : 'https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_960_720.png'
       },
       error => {
         console.log(error)

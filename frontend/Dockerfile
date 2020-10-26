@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:8.13.0
 
 RUN mkdir -p /home/user/app/frontend
 WORKDIR /home/user/app/frontend
