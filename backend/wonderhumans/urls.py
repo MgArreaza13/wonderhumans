@@ -26,4 +26,6 @@ urlpatterns = [
     path('api/comments/', include('apps.comments.urls')),
     path('api/donations/', include('apps.donations.urls')),
     path('api/portfolio/', include('apps.portfolio.urls')),
+    path('api/feed/', include('apps.feed.urls')),
+    path('api/likes/', include('apps.likes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True,)

@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.comments',
     'apps.donations',
-    'apps.portfolio'
+    'apps.portfolio',
+    'apps.feed',
+    'apps.likes'
 ]
 
 MIDDLEWARE = [
