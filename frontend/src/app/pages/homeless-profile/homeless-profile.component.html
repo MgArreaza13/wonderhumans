@@ -153,9 +153,9 @@
                         >
                           <img
                             src="{{imageUrl}}{{ item.image }}"
-                            (click)="openM(item.image)"
+                            (click)="openModal2(item.image)"
                             class="img-portfolio"
-                          />                         
+                          />
                         </div>
                       </div>
                     </ng-template>
@@ -292,7 +292,7 @@
                     [elementsOptions]="elementsOptions"
                     (change)="cardUpdated($event)"
                     (error)="error = $event"
-                  ></ngx-stripe-card>                  
+                  ></ngx-stripe-card>
                   <div class="error">
                     {{ error?.message }}
                   </div>

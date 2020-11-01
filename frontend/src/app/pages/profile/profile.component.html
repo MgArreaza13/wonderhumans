@@ -102,10 +102,10 @@
                   <h5><i class="ni ni-album-2"></i> Publicaciones</h5>
                   <div class="row">
                     <div class="row">
-                      <div class="col-4 mb-3" *ngFor="let item of feedData" >
+                      <div class="col-4 col-md-4 col-lg-4 col-sm-4 mb-3" *ngFor="let item of feedData" >
                         <!-- normal -->
-                        <div class="span-cua ih-item square effect13 bottom_to_top"><a >
-                            <div class="img"><img
+                        <div class="span-cua ih-item square effect13 bottom_to_top" style="max-width: 100%;"><a >
+                            <div class="img" style="display: contents;"><img
                                 src="{{environmentHomeless}}{{item.image}}"
                                 alt="img" (click)="openModalWithComponent(item)"></div>
                             <div class="info"(click)="openModalWithComponent(item)">

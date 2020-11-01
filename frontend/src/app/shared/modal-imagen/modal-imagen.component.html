@@ -3,7 +3,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </span>
-<div class="row" *ngIf="type === 'view' else add">
+<div class="row" *ngIf="type === 'view'">
   <div class="col-7 pr-0" style="max-height: 100%;">
     <img [src]="img" alt="">
   </div>
@@ -52,9 +52,9 @@
   </div>
 </div>
 
-<ng-template #add>
 
-  <div class="row">
+
+  <div class="row"  *ngIf="type === 'add'">
     <ng-template #noImage>
       <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px">
         <h5>Añade una imagen para tu publicación</h5>
@@ -81,4 +81,10 @@
       </span>
     </div>
   </div>
-</ng-template>
+
+  <div class="row"  *ngIf="type === 'onlyView'">
+    <div class="col-12 pr-0" style="max-height: 100%;">
+      <img [src]="img" alt="" style="padding: 2rem;object-fit: contain;" >
+    </div>
+  </div>
+
