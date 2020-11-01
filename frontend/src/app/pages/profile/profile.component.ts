@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     images: any[];
     dataHom = [];
     environmentHomeless: string;
-    feedData: any;
+    feedData: any = [];
     constructor(
         private userService: UserService,
         private modalService: BsModalService,
@@ -203,9 +203,11 @@ export class ProfileComponent implements OnInit {
     getAllFeeds() {
         this.feedService.getmyFeeds(this.user['id']).subscribe(
             (data: any) => {
-
-                this.feedData = data;
-                console.log(this.feedData)
+                data.forEach(element => {
+                    if(!element.detail) {
+                        this.feedData.push(element)
+                    }
+                });
             },
             (error) => {
                 console.log(error)

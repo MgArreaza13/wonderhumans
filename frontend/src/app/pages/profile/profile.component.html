@@ -79,8 +79,8 @@
                     (reachesRightBound)="rightBoundStat($event)" (snapAnimationFinished)="onSnapAnimationFinished()"
                     (dragStart)="onDragStart()" (dragEnd)="onDragEnd()" #nav>
                     <span>
-                      <img routerLink="/homeless-profile/{{item.id}}" drag-scroll-item src="{{item.photo}}" />
-                      <p style="line-height: 0.7;font-size: small;
+                      <img style="border: 3px solid lightgray;" routerLink="/homeless-profile/{{item.id}}" drag-scroll-item src="{{item.photo}}" />
+                      <p style="line-height: 1.7;font-size: small;
                       font-weight: 800;">{{item.name | slice:0:12}}</p>
                     </span>
 
