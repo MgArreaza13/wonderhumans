@@ -18,22 +18,26 @@ import { LocalStorageService } from './services/local-storage.service';
 import { AuthService } from './services/auth.service';
 import { HomelessService } from './services/homeless.service';
 import { UserService } from './services/user.service';
+import { FeedService } from './services/feed.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  exports: [
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    AuthGuard,
-    UserService,
-    AuthService,
-    HomelessService,
-    LocalStorageService,
-    SidebarService,
-  ],
+    declarations: [],
+    imports: [
+        CommonModule,
+    ],
+    exports: [
+
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        AuthGuard,
+        UserService,
+        AuthService,
+        HomelessService,
+        LocalStorageService,
+        SidebarService,
+        FeedService],
+    entryComponents: []
 })
-export class CoreModule {}
+export class CoreModule { }

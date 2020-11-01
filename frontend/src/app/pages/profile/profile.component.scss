@@ -1,12 +1,12 @@
 @import "../../../assets/scss/reviews";
+
 .section-shaped .shape-style-1.shape-primary {
-  background: linear-gradient(
-    150deg,
-    #cf3a9e 15%,
-    #ff6240 70%,
-    #fbaa4f 94%
-  ) !important;
+  background: linear-gradient(150deg,
+      #cf3a9e 15%,
+      #ff6240 70%,
+      #fbaa4f 94%) !important;
 }
+
 .section-shaped .shape {
   position: fixed !important;
   top: 0;
@@ -14,30 +14,123 @@
   width: 100%;
   height: 100%;
 }
+
 .about-font {
   font-weight: 600 !important;
   font-variant: petite-caps;
 }
+
 .separator-bottom {
   top: auto;
   bottom: 0;
   z-index: 0 !important;
 }
+
 @media (min-width: 768px) and (max-width: 1000px) {
+
   .mt-md-7,
   .my-md-7 {
     margin-top: 5rem !important;
   }
 }
-@media (max-width: 575.98px){    
-    .profile-page .card-profile .card-profile-actions {
-        margin-top: 125px;
-    }
+
+@media (max-width: 575.98px) {
+  .profile-page .card-profile .card-profile-actions {
+    margin-top: 125px;
+  }
 }
-.imageU{
+
+.imageU {
   border-radius: 50% !important;
   width: 180px !important;
   max-width: 180px !important;
   height: 180px !important;
   object-fit: cover !important;
 }
+
+.drag-scroll {
+  height: 50px;
+  width: 100px
+}
+
+.demo-one {
+  width: 100%;
+}
+
+.demo-one img {
+  height: 5rem;
+  width: 5rem;
+  margin: 0;
+  border-radius: 50%;
+
+  .drag-scroll-wrapper {
+    height: 100%;
+  }
+}
+
+.btn-arrow {
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: small;
+  background: #3333338c;
+  ;
+  border: none;
+  color: white;
+  font-weight: 700;
+  line-height: 2;
+  width: 2.5rem;
+
+}
+
+.end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.align {
+  display: flex;
+  align-items: center;
+  padding: 0 !important;
+}
+
+.btn-arrow:focus {
+  outline: ridge;
+  outline-color: #0c0c0c21;
+}
+
+.span-cua {
+  width: 100%;
+  height: 12rem;
+  border: 0 !important;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.btn-float{
+  float: right;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: #e64d72;
+    border-color: azure;
+    color: white;
+    font-size: 2rem;
+    line-height: 2;
+}
+img:focus {
+  outline: 1px dotted;
+  outline: transparent;
+}
+@import './hover.scss'
+

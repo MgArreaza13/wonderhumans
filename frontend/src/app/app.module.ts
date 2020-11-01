@@ -1,3 +1,5 @@
+// tslint:disable-next-line: max-line-length
+import { DragScrollModule } from 'ngx-drag-scroll';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NewHomelessComponent } from './pages/new-homeless/new-homeless.component';
 import { SharedModule } from './shared/shared.module';
@@ -33,45 +35,52 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignupComponent,
-    LandingComponent,
-    ProfileComponent,
-    NavbarComponent,
-    FooterComponent,
-    LoginComponent,
-    EditProfileComponent,
-    NewHomelessComponent,
-    HomelessProfileComponent,
-    QrReaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    NgbModule.forRoot(),
-    RouterModule,
-    CoreModule,
-    SharedModule,
-    ZXingScannerModule,
-    NgxSpinnerModule,
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-    }), // ToastrModule added
-    HomeModule,
-    AppRoutingModule,
-    LightboxModule,
-    SidebarModule.forRoot(),
-    ModalModule.forRoot(),
-    FileUploadModule,
-    NgxStripeModule.forRoot('pk_test_HvwgwPUBp4MDNtNzAblZKClz00L9KZljOT'),
-    BsDatepickerModule.forRoot(),
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SignupComponent,
+        LandingComponent,
+        ProfileComponent,
+        NavbarComponent,
+        FooterComponent,
+        LoginComponent,
+        EditProfileComponent,
+        NewHomelessComponent,
+        HomelessProfileComponent,
+        QrReaderComponent,
+        ModalImagenComponent
+    ],
+    imports: [
+        BrowserModule,
+        NgbModule.forRoot(),
+        RouterModule,
+        CoreModule,
+        SharedModule,
+        ZXingScannerModule,
+        NgxSpinnerModule,
+        BrowserAnimationsModule, // required animations module
+        ToastrModule.forRoot({
+            timeOut: 10000,
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+        }), // ToastrModule added
+        HomeModule,
+        AppRoutingModule,
+        LightboxModule,
+        SidebarModule.forRoot(),
+        ModalModule.forRoot(),
+        FileUploadModule,
+        NgxStripeModule.forRoot('pk_test_HvwgwPUBp4MDNtNzAblZKClz00L9KZljOT'),
+        BsDatepickerModule.forRoot(),
+        DragScrollModule,
+
+    ],
+    providers: [],
+    // tslint:disable-next-line: max-line-length
+    exports: [],
+    bootstrap: [AppComponent],
+    entryComponents: [ModalImagenComponent]
 })
 export class AppModule { }
