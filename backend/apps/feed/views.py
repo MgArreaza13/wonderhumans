@@ -2,7 +2,6 @@
 from django.shortcuts import render
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext as _
-from django.core.exceptions import PermissionDenied
 
 # From DRF
 from rest_framework.views import APIView
@@ -13,67 +12,62 @@ from rest_framework import status
 from rest_framework import viewsets
 
 # My services
-from apps.comments import services as comments_services
+from apps.feed import services as feed_services
 
-# My serializers
-from apps.comments import serializers as comments_serializers
-
-# From Python
-import json
+# My serializer
+from apps.feed import serializers as feed_serializers
 
 # Create your views here.
 
-class ManagementCommentsViewSet (APIView):
+class FeedView (APIView):
 	"""
-		Service for user profiles 
+		Service for feed users
 		contain cruds, creation, update, deleted, and list
 	"""
 	permission_classes = [permissions.IsAuthenticated]
 
-	def get(self, request, id_homeless):
+	def post(self, request):
 		try:
-			comments = comments_services.getComments(id_homeless)
+			feed = feed_services.create_feed(request.data, request.user)
 		except ValueError as e:
 			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		except PermissionDenied as e:
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = comments_serializers.CommentsSerializers(comments, many=True).data
+		serializer = feed_serializers.FeedSerializers(feed, many=False).data
+		serializer['detail'] = str(_("You have register a feed correctly"))
 		return Response(serializer, status=status.HTTP_200_OK)
 
-	def post(self, request, id_homeless):
-		body_unicode = request.body.decode('utf-8')
-		body = json.loads(body_unicode)
+	def get(self, request, id_feed):
 		try:
-			comments = comments_services.createComment(body,id_homeless,request.user)
+			feed = feed_services.get_feed(id_feed, request.user)
 		except ValueError as e:
 			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		except PermissionDenied as e:
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = comments_serializers.CommentsSerializers(comments, many=True).data
-		return Response(serializer, status=status.HTTP_201_CREATED)
+		serializer = feed
+		serializer['detail'] = str(_("You get a feed correctly"))
+		return Response(serializer, status=status.HTTP_200_OK)
 
-class CommentFeedView(APIView):
+class FilterFeedView(APIView):
 	"""
-		Service for comments feed 
-		contain cruds, creation, update, deleted, and list
+		Class contain method to get all feeds user 
 	"""
 
 	permission_classes = [permissions.IsAuthenticated]
 
-	def post(self, request, id_feed):
-		body_unicode = request.body.decode('utf-8')
-		body = json.loads(body_unicode)
+	def get(self, request, id_user):
 		try:
-			comment_feed =  comments_services.create_comment_feed(body, id_feed, request.user)
+			feeds = feed_services.filter_feeds(id_user, request.user)
 		except ValueError as e:
 			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		except PermissionDenied as e:
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = comments_serializers.CommentsSerializers(comment_feed, many=False).data
-		return Response(serializer, status=status.HTTP_200_OK)
+		#serializer = feed_serializers.FeedSerializers(feed, many=False).data
+		feeds.append({'detail': str(_("You have get a list feed correctly"))})
+		return Response(feeds, status=status.HTTP_200_OK)
