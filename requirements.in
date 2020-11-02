@@ -5,7 +5,6 @@ django-webpack-loader
 django-js-reverse
 django-import-export
 python-decouple
-psycopg2
 brotlipy
 django-log-request-id
 dj-database-url
@@ -55,3 +54,4 @@ zipp
 celery
 redis
 flower
+psycopg2-binary

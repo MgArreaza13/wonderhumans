@@ -1,64 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
-// regular style toast 
+// regular style toast
 @import '~ngx-toastr/toastr';
- 
 
-// if you'd like to use it without importing all of bootstrap it requires 
+
+// if you'd like to use it without importing all of bootstrap it requires
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '~ngx-toastr/toastr-bs4-alert';
 
 //NavCustom
-#navCustom{
-    .nav-link.active, .nav-pills .show > .nav-link {
-        background-color: #F44336 !important;
-        color: white !important;        
-        border: 3px solid #FF5722 !important;
-        
-      }
-      .nav-link {    
-        color: #e86a61 !important;
-        border: 1px solid #F44336 !important;      
-      }
-      .nav-tabs{
-        border-bottom: 0 !important;
-      }
-      .nav-pills-circle .nav-link {
-        text-align: center;
-        height: 95px !important;
-        width: 95px !important;;
-        padding: 0;
-        line-height: 90px !important;;
-        border-radius: 50%;
-        margin-bottom: 10px;
-    }
+#navCustom {
+
+  .nav-link.active,
+  .nav-pills .show>.nav-link {
+    background-color: #F44336 !important;
+    color: white !important;
+    border: 3px solid #FF5722 !important;
+
+  }
+
+  .nav-link {
+    color: #e86a61 !important;
+    border: 1px solid #F44336 !important;
+  }
+
+  .nav-tabs {
+    border-bottom: 0 !important;
+  }
+
+  .nav-pills-circle .nav-link {
+    text-align: center;
+    height: 95px !important;
+    width: 95px !important;
+    ;
+    padding: 0;
+    line-height: 90px !important;
+    ;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
 }
+
 //NavCustom
-#navCustom2{
-  .nav-link.active, .nav-pills .show > .nav-link {
+#navCustom2 {
+
+  .nav-link.active,
+  .nav-pills .show>.nav-link {
     background-color: #f4f5f7 !important;
     color: #f44336 !important;
     border: 3px solid transparent !important;
     box-shadow: none !important;
     border-bottom: 1px solid #F44336 !important;
-   // border-top-color: transparent;
-      
-    }
-    .nav-link {    
-      color: #e86a61 !important;
-      border: 1px solid #F44336 !important;      
-    }
-    .nav-tabs{
-      border-bottom: 0 !important;
-    }
-    .nav-pills-circle .nav-link {
-      text-align: center;
-      height: 95px !important;
-      width: 95px !important;;
-      padding: 0;
-      line-height: 90px !important;;
-      border-radius: 50%;
-      margin-bottom: 10px;
+    // border-top-color: transparent;
+
   }
+
+  .nav-link {
+    color: #e86a61 !important;
+    border: 1px solid #F44336 !important;
+  }
+
+  .nav-tabs {
+    border-bottom: 0 !important;
+  }
+
+  .nav-pills-circle .nav-link {
+    text-align: center;
+    height: 95px !important;
+    width: 95px !important;
+    ;
+    padding: 0;
+    line-height: 90px !important;
+    ;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+}
+
+.img-div img {
+  border-radius: 50% !important;
+}
+
+.ng-image-slider .ng-image-slider-container .main {
+  display: flex;
+  justify-content: center;
+}
+
+.drag-scroll-wrapper .drag-scroll-container {
+  height: 100% !important;
+}
+
+.modal-open .modal {
+  background: #3333337d !important;
+}
+
+/*
+Full screen Modal
+*/
+.fullscreen-modal .modal-dialog {
+  margin: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .fullscreen-modal .modal-dialog {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .fullscreen-modal .modal-dialog {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .fullscreen-modal .modal-dialog {
+    width: 1170px;
+  }
+}
+
+.fullscreen-modal .modal-content {
+  border: 0;
+  border-radius: 0;
 }

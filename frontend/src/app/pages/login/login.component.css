@@ -8,3 +8,6 @@
     font-variant: small-caps;
     font-size: small;
 }
+.section-shaped {
+    position: inherit !important;
+}

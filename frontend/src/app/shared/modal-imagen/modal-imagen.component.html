@@ -1,0 +1,90 @@
+<span class="cont">
+  <button (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</span>
+<div class="row" *ngIf="type === 'view'">
+  <div class="col-7 pr-0" style="max-height: 100%;">
+    <img [src]="img" alt="">
+  </div>
+  <div class="col-5 pl-0">
+    <section style="height: 15%;">
+      <span class="sp1">
+        <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
+          alt="">
+        <b>{{allData.name}}  {{allData.lastname}}</b>
+      </span>
+    </section>
+    <section style="
+      height: 60%;
+      overflow: overlay;
+      max-height: 19rem;">
+      <span class="sp2">
+        <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
+          alt="">
+        <p>{{allData.description}}</p>
+      </span>
+      <span class="sp2">
+        <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
+          alt="">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque facilis repudiandae, nihil ratione
+          laudantium commodi doloremque magnam quod voluptatibus perferendis qui aspernatur atque dolorem veniam numquam
+          asperiores! Magni, quae doloribus.</p>
+      </span>
+
+    </section>
+    <section style="height: 25%;">
+      <span class="icons">
+        <button class="iconsbtn" (click)="doVote()" [ngClass]="allData.ilike === true ? 'red': 'grey' "><i
+            class="ni ni-favourite-28"></i></button>
+        <button class="iconsbtn"><i class="ni ni-chat-round"></i></button>
+      </span>
+      <p style="padding: 0.5rem;">Le gusta a {{allData.likes}} personas</p>
+      <span style="display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 00.2rem;">
+        <textarea style="width: 100%; max-height: 50px; border:none; resize: none;"
+          placeholder="  Escribe tu comentario" [(ngModel)]="comment"></textarea>
+        <button style="background: transparent;border: none; color: coral;" (click)="publicar(allData)">Publicar</button>
+      </span>
+    </section>
+  </div>
+</div>
+
+
+
+  <div class="row"  *ngIf="type === 'add'">
+    <ng-template #noImage>
+      <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px">
+        <h5>Añade una imagen para tu publicación</h5>
+        <div class="imagen-para-archivo">
+          <span>
+            <label for="boton-archivo">
+              <img  class="imgI" [src]="imageDefaul" /> </label>
+            <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+    <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
+      <span>
+        <img [src]="imageURL" />
+      </span>
+    </div>
+    <div class="col-6 pl-0 addPublic" >
+      <label for="">Descripción</label>
+      <textarea [(ngModel)]="description"></textarea>
+      <span>
+        <button class="btn btn-sm btn-success" (click)="upload()">Publicar</button>
+        <button class="btn btn-sm btn-info" (click)="changeImg()">Cambiar Imagen</button>
+      </span>
+    </div>
+  </div>
+
+  <div class="row"  *ngIf="type === 'onlyView'">
+    <div class="col-12 pr-0" style="max-height: 100%;">
+      <img [src]="img" alt="" style="padding: 2rem;object-fit: contain;" >
+    </div>
+  </div>
+
