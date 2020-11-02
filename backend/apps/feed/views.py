@@ -68,6 +68,4 @@ class FilterFeedView(APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		#serializer = feed_serializers.FeedSerializers(feed, many=False).data
-		feeds.append({'detail': str(_("You have get a list feed correctly"))})
 		return Response(feeds, status=status.HTTP_200_OK)

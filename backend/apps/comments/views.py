@@ -77,3 +77,16 @@ class CommentFeedView(APIView):
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = comments_serializers.CommentsSerializers(comment_feed, many=False).data
 		return Response(serializer, status=status.HTTP_200_OK)
+
+	
+	def get(self, request, id_feed):
+		try:
+			comments_feed = comments_services.get_comments_feed(id_feed)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = comments_serializers.CommentsSerializers(comments_feed, many=True).data
+		return Response(serializer, status=status.HTTP_200_OK)

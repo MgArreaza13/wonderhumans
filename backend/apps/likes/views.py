@@ -29,12 +29,24 @@ class LikesFeedView(APIView):
 
     def post(self, request, id_feed):
         try:
-            like = likes_services.create_like_feed(id_feed, request.user)
+            likes_services.create_like_feed(id_feed, request.user)
         except ValueError as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except PermissionDenied as e:
             return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        serializer = str(_("Like save"))
+        serializer = {'i_like':'true'}
+        return Response(serializer, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, id_feed):
+        try:
+            likes_services.delete_like_feed(id_feed, request.user)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = {'i_like':'false'}
         return Response(serializer, status=status.HTTP_201_CREATED)

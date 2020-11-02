@@ -64,3 +64,19 @@ def create_comment_feed(data:dict, id_feed:int, user:User)->comments_models.Comm
 			print(e)
 			raise ValueError(str(_("An error occurred while saving the comment feed")))
 	return feed
+
+def get_comments_feed(id_feed):
+	"""
+		Method to gets all comments feed
+
+		:param id_feed: id feed
+		:type id_feed: int
+		:raise: ValueError
+		:return: comments
+	"""
+	try:
+		feed = feed_models.Feed.objects.get(id=id_feed)
+	except feed_models.Feed.DoesNotExists as e:
+		raise ValueError(str(_("Feed id does not exist")))
+	comments = comments_models.CommentFeed.objects.filter(feed=feed)
+	return comments
