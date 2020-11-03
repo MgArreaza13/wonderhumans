@@ -37,7 +37,7 @@ class FeedView (APIView):
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = feed_serializers.FeedSerializers(feed, many=False).data
 		serializer['detail'] = str(_("You have register a feed correctly"))
-		return Response(serializer, status=status.HTTP_200_OK)
+		return Response(serializer, status=status.HTTP_201_CREATED)
 
 	def get(self, request, id_feed):
 		try:
@@ -51,6 +51,31 @@ class FeedView (APIView):
 		serializer = feed
 		serializer['detail'] = str(_("You get a feed correctly"))
 		return Response(serializer, status=status.HTTP_200_OK)
+	
+	def delete(self, request, id_feed):
+		try:
+			feed_services.delete_feed(id_feed, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = str(_("You have successfully removed feed"))
+		return Response(serializer, status=status.HTTP_200_OK)
+	
+	def put(self, request):
+		try:
+			feed = feed_services.update_feed(request.data, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = feed_serializers.FeedSerializers(feed, many=False).data
+		serializer['detail'] = str(_("You have update a feed correctly"))
+		return Response(serializer, status=status.HTTP_201_CREATED)
 
 class FilterFeedView(APIView):
 	"""
@@ -68,6 +93,4 @@ class FilterFeedView(APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		#serializer = feed_serializers.FeedSerializers(feed, many=False).data
-		feeds.append({'detail': str(_("You have get a list feed correctly"))})
 		return Response(feeds, status=status.HTTP_200_OK)

@@ -6,6 +6,7 @@ from django.urls import path, re_path, include
 from apps.likes import views
 
 urlpatterns = [
-    path('feed/get/<int:id_feed', views.LikesFeedView.as_view(), name='comments-homeless'),
-    path('feed/new/<int:id_feed>', views.LikesFeedView.as_view(), name='comments-homeless'),
+    path('feed/get/<int:id_feed', views.LikesFeedView.as_view(), name='comments-feed-get'),
+    path('feed/new/<int:id_feed>', views.LikesFeedView.as_view(), name='comments-feed-create'),
+    path('feed/delete/<int:id_feed', views.LikesFeedView.as_view(), name='coments-feed-delete'),
 ]
