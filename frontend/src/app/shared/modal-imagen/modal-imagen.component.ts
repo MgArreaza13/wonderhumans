@@ -23,19 +23,22 @@ export class ModalImagenComponent implements OnInit {
     userVotes: boolean = true;
     imageURL: string;
     // tslint:disable-next-line: max-line-length
-    imageDefaul = 'https://images.vexels.com/media/users/3/135544/isolated/preview/23724deafa9e7ec5830d49438d3e3f9f-colorful-button-more-add-icon-by-vexels.png';
+    imageDefaul = "../../../assets/img/add.png";
     fileImg: File;
     description: any;
     allData: any;
     comment: any;
+    comments: Object;
+    ilike: any;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
         private spinner: NgxSpinnerService,
         private toastr: ToastrService,
-        private modalService: BsModalService, ) { }
+        private modalService: BsModalService,) { }
 
     ngOnInit(): void {
+        this.getComments();
 
         console.log('hola' + this.type)
         console.log(this.data);
@@ -46,31 +49,42 @@ export class ModalImagenComponent implements OnInit {
             this.img = `${base_url}${img}`;
         }
         this.allData = this.data[0];
+        this.ilike = this.allData.ilike;
+        console.log(this.ilike)
     }
 
 
     cerrarModal() {
-        this.bsModalRef.hide();
         this.modalService.setDismissReason('close');
+        this.bsModalRef.hide();
         this.modalService._hideModal(0)
     }
 
     doVote() {
-        console.log('hesss')
+        console.log('hesss');
+        if (this.ilike === 'false') {
+            this.feedService.like(this.allData.id).subscribe((data) => {
+                console.log(data)
+                this.ilike = data['i_like'];
+                console.log(this.ilike)
+            }, err => {
+                console.log(err)
+            });
+        } else {
+            this.feedService.dislike(this.allData.id).subscribe((data) => {
+                console.log(data)
+                this.ilike = data['i_like'];
+                console.log(this.ilike)
+            }, err => {
+                console.log(err)
+            });
+        }
     }
 
     // Image Preview
     showPreview(event) {
-        console.log(event)
         const file = (event.target as HTMLInputElement).files[0];
-        console.log(file);
         this.fileImg = file;
-        // this.profileForm.patchValue({
-        //     photo: file
-        // });
-        // this.profileForm.get('photo').updateValueAndValidity();
-
-        // File Preview
         const reader = new FileReader();
         reader.onload = () => {
             this.imageURL = reader.result as string;
@@ -79,7 +93,7 @@ export class ModalImagenComponent implements OnInit {
     }
 
     upload() {
-        if (this.imageURL === undefined || this.description === '' ) {
+        if (this.imageURL === undefined || this.description === '') {
             this.toastr.error('Error, debe ingresar todos los datos');
         } else {
             this.spinner.show();
@@ -127,5 +141,14 @@ export class ModalImagenComponent implements OnInit {
 
     changeImg() {
         this.imageURL = '';
+    }
+
+    getComments() {
+        this.feedService.getComments(this.data[0].id).subscribe((data) => {
+            this.comments = (data['length'] !== 0) ? data : null;
+            console.log(this.comments)
+        }, err => {
+            console.log(err)
+        });
     }
 }

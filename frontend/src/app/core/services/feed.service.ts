@@ -15,15 +15,22 @@ export class FeedService {
         return this.http.post(`${environment.apiRoot}/api/feed/create/`, body);
     }
     like(id) {
-        return this.http.post(`${environment.apiRoot}/api/feed/new/${id}`, null);
+        return this.http.post(`${environment.apiRoot}/api/likes/feed/new/${id}`, null);
     }
-    newCom(id,body) {
+    dislike(id) {
+        return this.http.delete(`${environment.apiRoot}/api/likes/feed/new/${id}`);
+    }
+    newCom(id, body) {
         return this.http.post(`${environment.apiRoot}/api/comments/feed/new/${id}`, body);
     }
     getmyFeeds(id) {
         return this.http.get(`${environment.apiRoot}/api/feed/filter/${id}`);
     }
-    getOnlyFeed(id){
+    getComments(id) {
+        return this.http.get(`${environment.apiRoot}/api/comments/feed/new/${id}`);
+    }
+    getOnlyFeed(id) {
         return this.http.get(`${environment.apiRoot}/api/feed/get/${id}`);
     }
+
 }
