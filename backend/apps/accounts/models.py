@@ -37,6 +37,7 @@ class HomelessProfile(models.Model):
     show_email = models.BooleanField(default=True)
     typeUser = models.CharField(max_length=30, choices=TYPE_USER , null= True)
     photo = models.ImageField(upload_to='profile', blank=True, null=True)
+    qr_code = models.URLField(max_length=100, blank=True, null=True)
     # Additional information personal
     occupation = models.CharField(max_length=100, blank=True , null= True)
     phone = models.CharField(max_length=20, blank=True , null= True)

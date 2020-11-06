@@ -90,3 +90,27 @@ class CommentFeedView(APIView):
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = comments_serializers.CommentsSerializers(comments_feed, many=True).data
 		return Response(serializer, status=status.HTTP_200_OK)
+
+	def delete(self, request, id_feed):
+		try:
+			comments_services.delete_comment_feed(id_feed, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = {'detail':str(_("You have deleted comment"))}
+		return Response(serializer, status=status.HTTP_200_OK)
+
+	def put(self, request):
+		try:
+			comment_feed = comments_services.update_comment_feed(request.data, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = comments_serializers.CommentsSerializers(comment_feed, many=False).data
+		return Response(serializer, status=status.HTTP_200_OK)

@@ -7,4 +7,6 @@ urlpatterns = [
     path('new/<int:id_homeless>', views.ManagementCommentsViewSet.as_view(), name='comments-homeless'),
     path('feed/new/<int:id_feed>', views.CommentFeedView.as_view(), name='comments-feed-create'),
     path('feed/get/<int:id_feed>', views.CommentFeedView.as_view(), name='comments-feed-get'),
+    path('feed/delete/<int:id_feed>', views.CommentFeedView.as_view(), name='comments-feed-delete'),
+    path('feed/update/', views.CommentFeedView.as_view(), name='comments-feed-update'),
 ]
