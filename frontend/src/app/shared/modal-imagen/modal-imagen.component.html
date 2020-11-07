@@ -1,14 +1,23 @@
 <span class="cont">
-  <button (click)="bsModalRef.hide()">
+  <button (click)="cerrarModal()">
     <span aria-hidden="true">&times;</span>
   </button>
 </span>
 <div class="row" *ngIf="type === 'view'">
-  <div class="col-7 pr-0" style="max-height: 100%;">
+  <div class="col-7 col-xs-6 col-md-7 col-lg-7 col-xl-7 pr-0">
+    <span style="position: absolute;
+    padding: 10px;
+    background: border-box;
+    display: flex;
+    justify-content: start;
+    background: #faebd74a;">
+      <button class="btn btn-sm btn-warning" (click)="editType(allData.id)"><i class="fa fa-edit"></i></button>
+      <button class="btn btn-sm btn-danger" (click)="deleteFeed(allData.id)"><i class="fa fa-close"></i></button>
+    </span>
     <img [src]="img" alt="">
   </div>
-  <div class="col-5 pl-0">
-    <section style="height: 15%;">
+  <div class="col-5 col-xs-6 col-md-5 col-lg-5 col-xl-5 pl-0">
+    <section>
       <span class="sp1">
         <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
           alt="">
@@ -16,9 +25,8 @@
       </span>
     </section>
     <section style="
-      height: 60%;
       overflow: overlay;
-      max-height: 19rem;">
+      min-height: 10rem;">
       <span class="sp2">
         <img src="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/girl_female_woman_avatar-512.png"
           alt="">
@@ -39,10 +47,10 @@
       </span>
 
     </section>
-    <section style="height: 25%;">
+    <section>
       <span class="icons">
-        <button class="iconsbtn" (click)="doVote()" ><i
-            class="ni ni-favourite-28" [ngClass]="{'red': ilike === 'true'}"></i></button>
+        <button class="iconsbtn" (click)="doVote()"><i class="ni ni-favourite-28"
+            [ngClass]="{'red': ilike === 'true'}"></i></button>
         <button class="iconsbtn"><i class="ni ni-chat-round"></i></button>
       </span>
       <p style="padding: 0.5rem;">Le gusta a {{allData.likes}} personas</p>
@@ -62,15 +70,26 @@
 
 <div class="row" *ngIf="type === 'add'">
   <ng-template #noImage>
-    <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px">
+    <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px;min-height: 30rem;">
       <h5>Añade una imagen para tu publicación</h5>
+      <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
+      <!-- <img *ngIf="croppedImage" [src]="croppedImage" /> -->
       <div class="imagen-para-archivo">
         <span>
           <label for="boton-archivo">
-            <img class="imgI" [src]="imageDefaul" /> </label>
-          <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
+            <img class="imgI" *ngIf="croppedImage" [src]="croppedImage" />
+            <img class="imgI" *ngIf="!croppedImage" [src]="imageDefaul" />
+
+            <input id="boton-archivo" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+          </label>
         </span>
+
       </div>
+      <image-cropper *ngIf="show === true" [backgroundColor]="Brown" [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+      <button class="btn btn-sm btn-success mb-2" (click)="ready()" *ngIf="croppedImage">Listo</button>
     </div>
   </ng-template>
   <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
@@ -82,7 +101,45 @@
     <label for="">Descripción</label>
     <textarea [(ngModel)]="description"></textarea>
     <span>
-      <button class="btn btn-sm btn-success" (click)="upload()">Publicar</button>
+      <button class="btn btn-sm btn-success" (click)="upload()" [disabled]="readyImage === false">Publicar</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()">Cambiar Imagen</button>
+    </span>
+  </div>
+</div>
+
+<div class="row" *ngIf="type === 'edit'">
+  <ng-template #noImage>
+    <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px; height: 30rem;">
+      <h6 style="text-align: center;">Escoge una nueva imagen para tu publicación</h6>
+
+      <div class="imagen-para-archivo">
+        <span>
+          <label for="boton-archivo">
+            <img class="imgI" *ngIf="croppedImage" [src]="croppedImage" />
+            <img class="imgI" *ngIf="!croppedImage" [src]="imageDefaul" />
+
+            <input id="boton-archivo" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+          </label>
+        </span>
+
+      </div>
+      <image-cropper  *ngIf="show === true" [backgroundColor]="Brown" [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()" >
+      </image-cropper>
+      <button class="btn btn-sm btn-success" (click)="ready()" *ngIf="croppedImage">Listo</button>
+    </div>
+  </ng-template>
+  <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
+    <span>
+      <img [src]="imageURL" />
+    </span>
+  </div>
+  <div class="col-6 pl-0 addPublic">
+    <label for="">Descripción</label>
+    <textarea [(ngModel)]="description"></textarea>
+    <span>
+      <button class="btn btn-sm btn-success" (click)="edit()">Editar</button>
       <button class="btn btn-sm btn-info" (click)="changeImg()">Cambiar Imagen</button>
     </span>
   </div>

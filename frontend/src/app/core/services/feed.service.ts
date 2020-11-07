@@ -14,6 +14,12 @@ export class FeedService {
     newFeed(body) {
         return this.http.post(`${environment.apiRoot}/api/feed/create/`, body);
     }
+    editFeed(body) {
+        return this.http.put(`${environment.apiRoot}/api/feed/update/`, body);
+    }
+    deleteFeed(id) {
+        return this.http.delete(`${environment.apiRoot}/api/feed/delete/${id}`);
+    }
     like(id) {
         return this.http.post(`${environment.apiRoot}/api/likes/feed/new/${id}`, null);
     }

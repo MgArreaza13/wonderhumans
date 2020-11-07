@@ -5,6 +5,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+
 const base_url = environment.apiRoot;
 @Component({
     selector: 'app-modal-imagen',
@@ -13,6 +15,8 @@ const base_url = environment.apiRoot;
 
 })
 export class ModalImagenComponent implements OnInit {
+    imageChangedEvent: any = '';
+    croppedImage: any = '';
     type: string;
     closeBtnName: string;
     data: any[] = [];
@@ -22,14 +26,16 @@ export class ModalImagenComponent implements OnInit {
     votes: any = 5;
     userVotes: boolean = true;
     imageURL: string;
-    // tslint:disable-next-line: max-line-length
-    imageDefaul = "../../../assets/img/add.png";
+    imageDefaul = '../../../assets/img/add.png';
     fileImg: File;
     description: any;
     allData: any;
     comment: any;
     comments: Object;
     ilike: any;
+    show: boolean = false;
+    idEdit: any;
+    readyImage: boolean = false;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
@@ -57,7 +63,7 @@ export class ModalImagenComponent implements OnInit {
     cerrarModal() {
         this.modalService.setDismissReason('close');
         this.bsModalRef.hide();
-        this.modalService._hideModal(0)
+        this.modalService._hideModal(0);
     }
 
     doVote() {
@@ -151,4 +157,92 @@ export class ModalImagenComponent implements OnInit {
             console.log(err)
         });
     }
+
+
+    fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+        this.show = true;
+    }
+    imageCropped(event: ImageCroppedEvent) {
+        this.croppedImage = event.base64;
+    }
+    imageLoaded() {
+        // show cropper
+        console.log('loades')
+    }
+    cropperReady() {
+        // cropper ready
+        console.log('ready')
+    }
+    loadImageFailed() {
+        // show message
+        console.log('failed')
+    }
+    ready() {
+        this.imageURL = this.croppedImage;
+        console.log('ready');
+        console.log(this.imageCropped)
+        this.readyImage = true;
+    }
+
+    editType(id) {
+        console.log(id)
+        this.type = 'edit';
+        this.idEdit = id;
+    }
+
+    edit() {
+        this.spinner.show();
+        const body = {
+            id: this.idEdit,
+            image: this.imageURL,
+            description: this.description
+        };
+        console.log(body);
+        this.feedService.editFeed(body).subscribe((data) => {
+            console.log(data);
+            this.toastr.success('Actualización satisfactoria');
+            this.spinner.hide();
+            this.cerrarModal();
+            this.ngOnInit();
+        }, err => {
+            console.log(err);
+            this.spinner.hide();
+            this.toastr.error(err.error.detail);
+            this.cerrarModal();
+        });
+    }
+
+    deleteFeed(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea eliminar este feed?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result) {
+                this.feedService.deleteFeed(id).subscribe((data) => {
+                    console.log(data);
+                    this.toastr.success('Eliminación satisfactoria');
+                    this.spinner.hide();
+                    this.cerrarModal();
+                    this.ngOnInit();
+                }, err => {
+                    console.log(err);
+                    this.spinner.hide();
+                    this.toastr.error(err.error.detail);
+                    this.cerrarModal();
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        });
+    }
+
 }

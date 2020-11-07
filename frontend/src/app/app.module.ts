@@ -18,7 +18,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { HomeModule } from './pages/home/home.module';
 import { LoginComponent } from './pages/login/login.component';
 // import { ToastrModule } from 'ngx-toastr';
@@ -75,6 +75,7 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         NgxStripeModule.forRoot('pk_test_HvwgwPUBp4MDNtNzAblZKClz00L9KZljOT'),
         BsDatepickerModule.forRoot(),
         DragScrollModule,
+        ImageCropperModule
 
     ],
     providers: [],
