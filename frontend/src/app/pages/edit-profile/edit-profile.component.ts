@@ -79,12 +79,12 @@ export class EditProfileComponent implements OnInit {
             firstName: [(dataUser) ? dataUser.user.first_name : this.user.first_name, [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(10),
+                Validators.maxLength(25),
             ]],
             lastName: [(dataUser) ? dataUser.user.last_name : this.user.last_name, [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(10),
+                Validators.maxLength(25),
             ]],
             email: [(dataUser) ? dataUser.user.email : this.user.email, [
                 Validators.required, Validators.email

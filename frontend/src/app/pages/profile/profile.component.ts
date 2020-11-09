@@ -177,12 +177,13 @@ export class ProfileComponent implements OnInit {
 
         this.bsModalRef = this.modalService.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal')
+        this.bsModalRef.setClass('modal-lg modalA')
         const _combine = combineLatest(
             this.modalService.onHide,
             this.modalService.onHidden,
         ).subscribe((data) => {
-            if (data[0] === 'close') {
+            console.log(data)
+            if (data[0] === 'close' || data[0] === 'backdrop-click') {
                 this.getAllFeeds();
             }
 
@@ -201,7 +202,18 @@ export class ProfileComponent implements OnInit {
         };
         this.bsModalRef = this.modalService.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal')
+        this.bsModalRef.setClass('modal-lg modalA');
+        const _combine = combineLatest(
+            this.modalService.onHide,
+            this.modalService.onHidden,
+        ).subscribe((data) => {
+            console.log(data)
+            if (data[0] === 'close' || data[0] === 'backdrop-click') {
+                this.getAllFeeds();
+            }
+
+        });
+
     }
 
     getAllFeeds() {
