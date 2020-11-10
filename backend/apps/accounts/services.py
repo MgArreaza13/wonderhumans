@@ -185,10 +185,10 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		raise ValueError(str(_("Profile already exist")))
 	# Edit user account
 	if data.get("firstName") is not None:
-		accounts_validations.validate_length("First Name",data.get("firstName"),3,10)
+		accounts_validations.validate_length("First Name",data.get("firstName"),3,25)
 		user.first_name = data.get("firstName")
 	if data.get("lastName") is not None:
-		accounts_validations.validate_length("Last Name",data.get("lastName"),3,10)
+		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
 		accounts_validations.validate_length("Email",data.get("email"),0,300)
@@ -255,10 +255,10 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		raise ValueError(str(_("Profile not exist")))
 	# Edit user account
 	if data.get("firstName") is not None:
-		accounts_validations.validate_length("First Name",data.get("firstName"),3,10)
+		accounts_validations.validate_length("First Name",data.get("firstName"),3,25)
 		user.first_name = data.get("firstName")
 	if data.get("lastName") is not None:
-		accounts_validations.validate_length("Last Name",data.get("lastName"),3,10)
+		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
 		accounts_validations.validate_length("Email",data.get("email"),0,300)
@@ -308,11 +308,11 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	userRegisterer = accounts_models.User.objects.get(id=user.id)
 	typeUser: str = 'homeless'
 	if data.get("firstName") is not None:
-		accounts_validations.validate_length("First Name",data.get("firstName"),3,10)
+		accounts_validations.validate_length("First Name",data.get("firstName"),3,25)
 	else:
 		raise ValueError(str(_("First Name field is required")))
 	if data.get("lastName") is not None:
-		accounts_validations.validate_length("Last Name",data.get("lastName"),3,10)
+		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 	else:
 		raise ValueError(str(_("Last Name field is required")))
 	if data.get("email") is not None:
@@ -373,10 +373,11 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	if data.get("photo") is not None:
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
-		profile.save()
-	url = 'http://localhost:4200/homeless-profile/' + str(profile.id)
+	url = 'homeless-profile/' + str(profile.id)
 	name = str(profile.firstName) + '' + str(profile.lastName)
 	saveQrCode(url,name)
+	profile.qr_code = 'media/qrCode/' + name + '.png'
+	profile.save()
 	if data.get("portfolio") is not None:
 		portfolio = data.get("portfolio")
 		for photo in portfolio:
