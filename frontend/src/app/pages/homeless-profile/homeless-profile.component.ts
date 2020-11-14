@@ -19,6 +19,8 @@ import { ModalImagenComponent } from 'src/app/shared/modal-imagen/modal-imagen.c
     styleUrls: ['./homeless-profile.component.scss']
 })
 export class HomelessProfileComponent implements OnInit {
+    dataCauses = [];
+    dynamic: number;
     bsModalRef: BsModalRef;
     stripeKey = '';
     error: any;
@@ -196,11 +198,24 @@ export class HomelessProfileComponent implements OnInit {
             }
         )
     }
-
     getEventList(id) {
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
                 this.eventsList = data;
+                this.eventsList.forEach(element => {
+                    this.dataCauses.push(
+                        {
+                            name: element.name,
+                            total: Number(element.total),
+                            rest: (element.rest === '') ? Number(element.total) : Number(element.rest),
+                            acumulado: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)),
+                            // tslint:disable-next-line: max-line-length
+                            porcentage: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)) * 100 / Number(element.total)
+                        }
+                    )
+                });
+                console.log(this.dataCauses)
+
             },
             error => {
                 console.log(error);
@@ -212,7 +227,6 @@ export class HomelessProfileComponent implements OnInit {
         this.homelessService.getPortfolio(id).subscribe(
             (data: any) => {
                 this.portfolio = data;
-                console.log(this.portfolio)
 
             },
             error => {

@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
     styleUrls: ['./edit-profile.component.scss']
 })
 export class EditProfileComponent implements OnInit {
+    contator: number = 0;
     hasProfile = false;
     submitted = false;
     profileForm: FormGroup;
@@ -24,6 +25,7 @@ export class EditProfileComponent implements OnInit {
     imageURL: string;
     imageDefaul: string;
     focus;
+    restante: number;
     constructor(
         private userService: UserService,
         private formBuilder: FormBuilder,
@@ -39,11 +41,17 @@ export class EditProfileComponent implements OnInit {
         this.getProfile();
     }
 
+    onKey(event) {
+        this.contator = event.target.value.length;
+        if (this.contator <= 100) {
+            this.restante = 100 - this.contator;
+        }
+    }
 
     async getProfile() {
         this.userService.getProfile().subscribe(
             async (data: any) => {
-                console.log(data)
+                console.log(data);
                 // tslint:disable-next-line: max-line-length
                 this.imageDefaul = (data.photo) ? `${environment.apiRoot}${data.photo}` : 'https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png';
                 this.hasProfile = true;
@@ -135,7 +143,7 @@ export class EditProfileComponent implements OnInit {
         this.profile.photo = this.imageURL;
         console.log(this.profile);
         if (this.hasProfile === false) {
-            this.createProfile(this.profile)
+            this.createProfile(this.profile);
         } else if (this.hasProfile === true) {
             this.updateProfile(this.profile);
         }
@@ -143,7 +151,7 @@ export class EditProfileComponent implements OnInit {
     }
 
     createProfile(profile) {
-        console.log('crear')
+        console.log('crear');
         this.userService.newProfile(profile).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
@@ -160,7 +168,7 @@ export class EditProfileComponent implements OnInit {
     }
 
     updateProfile(update) {
-        console.log('actualizar')
+        console.log('actualizar');
         this.userService.updateProfile(update).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
@@ -176,16 +184,16 @@ export class EditProfileComponent implements OnInit {
     }
 
     photoAdd(event) {
-        console.log(event)
+        console.log(event);
         console.log('aqui para poner foto de perfil');
         this.showPreview(event);
     }
 
     // Image Preview
     showPreview(event) {
-        console.log(event)
+        console.log(event);
         const file = (event.target as HTMLInputElement).files[0];
-        console.log(file)
+        console.log(file);
         this.profileForm.patchValue({
             photo: file
         });
@@ -195,7 +203,7 @@ export class EditProfileComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
             this.imageURL = reader.result as string;
-        }
-        reader.readAsDataURL(file)
+        };
+        reader.readAsDataURL(file);
     }
 }

@@ -72,7 +72,8 @@ export class ModalImagenComponent implements OnInit {
             this.feedService.like(this.allData.id).subscribe((data) => {
                 console.log(data)
                 this.ilike = data['i_like'];
-                console.log(this.ilike)
+                console.log(this.ilike);
+                this.allData.likes = this.allData.likes + 1;
             }, err => {
                 console.log(err)
             });
@@ -80,6 +81,7 @@ export class ModalImagenComponent implements OnInit {
             this.feedService.dislike(this.allData.id).subscribe((data) => {
                 console.log(data)
                 this.ilike = data['i_like'];
+                this.allData.likes = this.allData.likes - 1;
                 console.log(this.ilike)
             }, err => {
                 console.log(err)

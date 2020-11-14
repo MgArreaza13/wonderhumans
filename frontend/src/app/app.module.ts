@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
-
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LandingComponent } from './pages/landing/landing.component';
@@ -75,7 +75,8 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         NgxStripeModule.forRoot('pk_test_HvwgwPUBp4MDNtNzAblZKClz00L9KZljOT'),
         BsDatepickerModule.forRoot(),
         DragScrollModule,
-        ImageCropperModule
+        ImageCropperModule,
+        ProgressbarModule.forRoot()
 
     ],
     providers: [],
