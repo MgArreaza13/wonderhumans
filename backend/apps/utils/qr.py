@@ -5,35 +5,29 @@ import sys
 
 def saveQrCode(url, name):
 
-    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../media"))
+    # Getting a folder to save code and logo to put in code
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../media/qrCodes/"))
     logo = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../apps/utils/logo-01.png"))
-    
+    # Checking if a folder exist:
+    if not os.path.exists(BASE_DIR):
+        print("no existe")
+        os.mkdir(BASE_DIR)
     # ----------- Img
-    #size= 150,150
-
     img_bg = Image.open(logo)
-    """for infile in sys.argv[1:]:
-        outfile = os.path.splitext(infile)[0] + ".thumbnail"
-        if infile != outfile:
-            try:
-                with Image.open(logo) as img_bg:
-                    img_bg.thumbnail(size)
-                    img_bg.save(outfile, "PNG")
-            except OSError:
-                print("cannot create thumbnail for", infile)"""
-    # ---------- Qr Code
+    # ---------- Qr Code: Instancing object code
     qr = qrcode.QRCode(
         error_correction=qrcode.constants.ERROR_CORRECT_H
     )
-
+    # Adding url to object
     qr.add_data(url)
+    # Creating code
     qr.make()
-
+    # Creating img in code
     img_qr = qr.make_image().convert('RGB')
-
+    # Img location (x,y)
     pos = ((img_qr.size[0] - img_bg.size[0]) // 2, (img_qr.size[1] - img_bg.size[1]) // 2)
-
+    # Ordering img in code by location (x,y)
     img_qr.paste(img_bg, pos)
-
-    img_qr.save(BASE_DIR + '/qrCodes/'+ name + '.png')
+    # Saving code in folder with a dinamic path
+    img_qr.save(BASE_DIR + name + '.png')
     return True

@@ -373,6 +373,7 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	if data.get("photo") is not None:
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
+		print(profile.photo)
 	url = 'homeless-profile/' + str(profile.id)
 	name = str(profile.firstName) + '' + str(profile.lastName)
 	saveQrCode(url,name)
@@ -443,7 +444,5 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				}
 			if p.photo:
 				values['photo'] = p.photo.url
-			else:
-				values['photo'] = ''
 			data.append(values)
 		return data
