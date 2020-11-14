@@ -61,6 +61,8 @@ export class HomelessProfileComponent implements OnInit {
     comments;
     imageUrl: string;
     homelessPhoto: any;
+    contator: any;
+    restante: number;
     constructor(
         private modalService: NgbModal,
         private homelessService: HomelessService,
@@ -198,6 +200,14 @@ export class HomelessProfileComponent implements OnInit {
             }
         )
     }
+
+    onKey(event) {
+        this.contator = event.target.value.length;
+        if (this.contator <= 100) {
+            this.restante = 100 - this.contator;
+        }
+    }
+
     getEventList(id) {
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
@@ -221,6 +231,7 @@ export class HomelessProfileComponent implements OnInit {
                 console.log(error);
             }
         )
+
     }
 
     getPortfolioList(id) {

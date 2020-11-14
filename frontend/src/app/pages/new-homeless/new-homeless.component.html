@@ -270,10 +270,14 @@
             <div class="row mb-4">
               <div class="col-6">
                 <label for="">Location detail</label>
-                <textarea (focus)="focus = true" (blur)="focus = false" [ngClass]="{
+                <textarea maxlength="100" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
+                  [ngClass]="{
                     'is-invalid': f['location_detail'].errors && f['location_detail'].touched
                   }" formControlName="location_detail" class="form-control form-control-alternative" rows="3"
                   placeholder="Write something here"></textarea>
+                <span *ngIf="contator"
+                  style="float: right;font-variant: small-caps;margin-top: 0.3rem;">{{contator}}/{{restante}}
+                  caracteres</span>
                 <section class="m-2 text-danger" *ngIf="
                       f['location_detail'].hasError('required') &&
                       (f['location_detail'].touched || f['location_detail'].dirty)
@@ -295,10 +299,14 @@
               </div>
               <div class="col-6">
                 <label for="">About you</label>
-                <textarea (focus)="focus = true" (blur)="focus = false" [ngClass]="{
+                <textarea maxlength="100" (keyup)="onKeyt($event)" (focus)="focus = true" (blur)="focus = false"
+                  [ngClass]="{
                     'is-invalid': f['aboutYou'].errors && f['aboutYou'].touched
                   }" formControlName="aboutYou" class="form-control form-control-alternative" rows="3"
                   placeholder="Write something here"></textarea>
+                <span *ngIf="contatort"
+                  style="float: right;font-variant: small-caps;margin-top: 0.3rem;">{{contatort}}/{{restantet}}
+                  caracteres</span>
                 <section class="m-2 text-danger" *ngIf="
                       f['aboutYou'].hasError('required') &&
                       (f['aboutYou'].touched || f['aboutYou'].dirty)

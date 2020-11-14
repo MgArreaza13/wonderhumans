@@ -36,6 +36,10 @@ export class ModalImagenComponent implements OnInit {
     show: boolean = false;
     idEdit: any;
     readyImage: boolean = false;
+    contator: any;
+    restante: number;
+    contatorC: any;
+    restanteC: number;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
@@ -64,6 +68,19 @@ export class ModalImagenComponent implements OnInit {
         this.modalService.setDismissReason('close');
         this.bsModalRef.hide();
         this.modalService._hideModal(0);
+    }
+
+    onKey(event) {
+        this.contator = event.target.value.length;
+        if (this.contator <= 65000) {
+            this.restante = 65000 - this.contator;
+        }
+    }
+    onKeyC(event) {
+        this.contatorC = event.target.value.length;
+        if (this.contatorC <= 3500) {
+            this.restanteC = 3500 - this.contatorC;
+        }
     }
 
     doVote() {

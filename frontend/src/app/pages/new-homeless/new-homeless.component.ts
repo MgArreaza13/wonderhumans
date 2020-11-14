@@ -25,6 +25,10 @@ export class NewHomelessComponent implements OnInit {
     public portfolio: Array<any> = [];
     fileString: string | ArrayBuffer;
     imageURL: string;
+    contator: any;
+    restante: number;
+    contatort: any;
+    restantet: number;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -142,6 +146,20 @@ export class NewHomelessComponent implements OnInit {
         this.newHomeless.photo = (this.imageURL) ? this.imageURL : null;
         console.log(this.newHomeless);
         this.newHomelessCreate(this.newHomeless)
+    }
+
+
+    onKey(event) {
+        this.contator = event.target.value.length;
+        if (this.contator <= 100) {
+            this.restante = 100 - this.contator;
+        }
+    }
+    onKeyt(event) {
+        this.contatort = event.target.value.length;
+        if (this.contatort <= 100) {
+            this.restantet = 100 - this.contatort;
+        }
     }
 
     async newHomelessCreate(dataHomeless) {
