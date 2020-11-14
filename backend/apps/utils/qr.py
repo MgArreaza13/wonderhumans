@@ -29,5 +29,6 @@ def saveQrCode(url, name):
     # Ordering img in code by location (x,y)
     img_qr.paste(img_bg, pos)
     # Saving code in folder with a dinamic path
-    img_qr.save(BASE_DIR + name + '.png')
+    print(BASE_DIR)
+    img_qr.save(BASE_DIR + '/' + name + '.png')
     return True

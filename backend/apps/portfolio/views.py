@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.translation import gettext as _
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework import permissions
@@ -28,4 +29,28 @@ class ManagementPortfolioViewSet (APIView):
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = portfolio_serializers.PortfolioSerializers(portfolios, many=True).data
+		return Response(serializer, status=status.HTTP_200_OK)
+
+	def put(self, request):
+		try:
+			portfolio = portfolio_services.edit_portfolio(request.data, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = portfolio_serializers.PortfolioSerializers(portfolio).data
+		return Response(serializer, status=status.HTTP_200_OK)
+	
+	def delete(self, request, id):
+		try:
+			portfolio_services.delete_portfolio(id, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = str(_("Portfolio deleted"))
 		return Response(serializer, status=status.HTTP_200_OK)
