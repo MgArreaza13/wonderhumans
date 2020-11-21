@@ -118,6 +118,7 @@ export class ProfileComponent implements OnInit {
                 console.log(error)
                 if (error.error.detail === 'User dont have profile') {
                     this.profile = null;
+                    this.imageUrl = null;
                 }
             }
         )
@@ -125,22 +126,27 @@ export class ProfileComponent implements OnInit {
 
 
     getMyHomelessProfile() {
+        console.log('entre en obtener homelless')
         this.dataHom.length = 0;
         this.userService.getMyHomelessProfile().subscribe(
             (data: any) => {
                 this.environmentHomeless = environment.apiRoot;
 
-                this.userHomeless = data;
-                this.userHomeless.forEach(element => {
-                    this.dataHom.push(
-                        {
-                            name: `${element.firstName} ${element.lastName}`,
-                            photo: `${this.environmentHomeless}${element.photo}`,
-                            id: element.id
-                        })
-                });
+                this.userHomeless = (data.length !== 0) ? data : null;
+                if (this.userHomeless !== null) {
+                    this.userHomeless.forEach(element => {
+                        this.dataHom.push(
+                            {
+                                name: `${element.firstName} ${element.lastName}`,
+                                photo: (element.photo) ? `${this.environmentHomeless}${element.photo}` : 'https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png',
+                                id: element.id
+                            })
+                    });
+                }
+                console.log(this.dataHom)
             },
             err => {
+                console.log('nohomeless' + err)
                 console.log(err)
             }
         )
@@ -171,14 +177,13 @@ export class ProfileComponent implements OnInit {
         };
         this.bsModalRef = this.modalService.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal')
+        this.bsModalRef.setClass('modal-lg modalA');
         const _combine = combineLatest(
             this.modalService.onHide,
             this.modalService.onHidden,
         ).subscribe((data) => {
-            console.log(data);
-            this.changeDetection.markForCheck()
-            if(data[0] === 'close'){
+            console.log(data)
+            if (data[0] === 'close' || data[0] === 'backdrop-click') {
                 this.getAllFeeds();
             }
 
@@ -197,22 +202,32 @@ export class ProfileComponent implements OnInit {
         };
         this.bsModalRef = this.modalService.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal')
+        this.bsModalRef.setClass('modal-lg modalA');
+        const _combine = combineLatest(
+            this.modalService.onHide,
+            this.modalService.onHidden,
+        ).subscribe((data) => {
+            console.log(data)
+            if (data[0] === 'close' || data[0] === 'backdrop-click') {
+                this.getAllFeeds();
+            }
+
+        });
+
     }
 
     getAllFeeds() {
         this.feedService.getmyFeeds(this.user['id']).subscribe(
             (data: any) => {
-                data.forEach(element => {
-                    if(!element.detail) {
-                        this.feedData.push(element)
-                    }
-                });
+                this.feedData = (data.length !== 0) ? data : null;
             },
             (error) => {
-                console.log(error)
+                console.log(error);
+                this.feedData = null;
 
             }
         )
     }
+
+
 }

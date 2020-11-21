@@ -1,11 +1,10 @@
 .row {
 
-  height: 35rem;
+  // height: 25rem;
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
   }
 }
 
@@ -34,17 +33,18 @@ span.cont {
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
+  padding: 5px;
 
   img {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
   }
 }
 
 .sp2 {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   padding: 1rem;
   padding-bottom: 0;
 
@@ -103,7 +103,6 @@ a {
   width: 180px !important;
   max-width: 180px !important;
   height: 180px !important;
-  object-fit: cover !important;
 }
 
 .addI {
@@ -112,39 +111,44 @@ a {
   align-items: center;
   background: #dee2e6;
   flex-direction: column;
-  .imgI{
+
+  .imgI {
     width: 5rem;
   }
 }
-.addPublic{
+
+.addPublic {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  textarea{
+  textarea {
     width: 80%;
     height: 10rem;
     max-height: 10rem;
   }
-  span{
+
+  span {
     padding: 1rem;
     display: flex;
     justify-content: space-around;
     width: 80%;
-    button{
 
-    }
+    button {}
   }
 }
+
 button:focus {
   outline: 1px dotted;
   outline: transparent;
 }
+
 textarea:focus {
   outline: 1px dotted;
   outline: transparent;
 }
+
 img:focus {
   outline: 1px dotted;
   outline: transparent;
