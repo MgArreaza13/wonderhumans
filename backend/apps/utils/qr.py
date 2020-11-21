@@ -3,7 +3,7 @@ import os
 from PIL import Image
 import sys
 
-def saveQrCode(url, name):
+def saveQrCode(url, id):
 
     # Getting a folder to save code and logo to put in code
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__),"../../media/qrCodes/"))
@@ -30,5 +30,5 @@ def saveQrCode(url, name):
     img_qr.paste(img_bg, pos)
     # Saving code in folder with a dinamic path
     print(BASE_DIR)
-    img_qr.save(BASE_DIR + '/' + name + '.png')
+    img_qr.save(BASE_DIR + '/' + id + '.png')
     return True
