@@ -373,9 +373,9 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	if data.get("photo") is not None:
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
+		print(profile.photo)
 	url = 'homeless-profile/' + str(profile.id)
-	name = str(profile.firstName) + '' + str(profile.lastName)
-	saveQrCode(url,name)
+	saveQrCode(url,str(profile.id))
 	profile.qr_code = 'media/qrCode/' + name + '.png'
 	profile.save()
 	if data.get("portfolio") is not None:
@@ -402,9 +402,72 @@ def get_profile_homeless(id_homeless: int) -> HomelessProfile:
 		# Obtain profile from database if exist
 		profile = HomelessProfile.objects.get(Q(id= id_homeless))
 	except Profile.DoesNotExist as e:
-		raise ValueError(str(_("El usuario no tiene perfil")))
+		raise ValueError(str(_("The homeless not have profile")))
 	return profile
 
+def update_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
+	"""
+		update info in homeless profile.
+
+		:param data: data of homeless an id of homeles_profile
+		:type: dict.
+		:param user: user in system
+		:type: accounts_models.User.
+		:return: homeless profile.
+		:raises: ValueError.
+	"""
+	if data.get("id") is None:
+		raise ValueError(str(_("Id homeless is required")))
+	try:
+		# Obtain profile from database if exist
+		profile = HomelessProfile.objects.get(Q(id= data.get("id")))
+		if profile.userRegisterer != user:
+			raise ValueError(str(_("User have not permission to edit this homeless")))
+		if data.get("firstName") is not None:
+			accounts_validations.validate_length("First Name",data.get("firstName"),3,25)
+			profile.firstName = data.get("firstName")	
+		if data.get("lastName") is not None:
+			accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
+			profile.lastName = data.get("lastName")	
+		if data.get("email") is not None:
+			accounts_validations.validate_length("Email",data.get("email"),0,300)
+			if profile.email != data.get("email"):
+				accounts_validations.validate_email(data.get("email"))
+				profile.email = data.get("email")	
+		if data.get("show_email") is not None:
+			data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
+			profile.show_email = data.get("show_email")	
+		if data.get("dateOfBirth") is not None:
+			profile.dateOfBirth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		if data.get("occupation") is not None:
+			accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
+			profile.occupation = data.get("occupation")	
+		if data.get("city") is not None:
+			accounts_validations.validate_length("city",data.get("city"),3,15)
+			profile.city = data.get("city")	
+		if data.get("country") is not None:
+			accounts_validations.validate_length("country",data.get("country"),4,25)
+			profile.country = data.get("country")	
+		if data.get("aboutYou") is not None:
+			accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
+			profile.aboutYou = data.get("aboutYou")	
+		if data.get("location_detail") is not None:
+			accounts_validations.validate_length("Loation detail",data.get("location_detail"),3,50)
+			profile.location_detail = data.get("location_detail")	
+		if data.get("photo") is not None:
+			profile.photo = updateImage(data.get("photo"))
+		profile.save()
+		if data.get("portfolio") is not None:
+			portfolio = data.get("portfolio")
+			for photo in portfolio:
+				portfolio_user = portfolio_models.HomelessPortfolio.objects.create(
+					homeless = profile,
+					userRegisterer = user,
+					image = updateImage(photo.get("photo"))
+				)
+	except Profile.DoesNotExist as e:
+		raise ValueError(str(_("The homeless not have profile")))
+	return profile
 
 def filterMyHomelessProfile(user: accounts_models.User):
 	"""
@@ -443,7 +506,5 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				}
 			if p.photo:
 				values['photo'] = p.photo.url
-			else:
-				values['photo'] = ''
 			data.append(values)
 		return data

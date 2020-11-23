@@ -51,7 +51,7 @@ tmp_email/
 #frontend
 
 frontend/node_modules
-
+frontend/package-lock.json
 
 #backend
 
@@ -67,3 +67,4 @@ db/*
 
 !backend/media/.gitkeep
 backend/media/profile/
+backend/media/

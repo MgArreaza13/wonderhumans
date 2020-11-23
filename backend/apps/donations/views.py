@@ -1,17 +1,26 @@
+# From Django
 from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
+from django.utils.translation import gettext as _
+
+# From DRF
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from django.core.exceptions import PermissionDenied
-from apps.donations import serializers as donations_serializers
-from apps.donations import services as donations_services
-from django.utils.translation import gettext as _
-import json
-# Create your views here.
 
+# My services
+from apps.donations import services as donations_services
+
+# My serializer
+from apps.donations import serializers as donations_serializers
+
+# From Pyhon
+import json
+
+# My views.
 
 class ManagementEventViewSet (APIView):
 	"""
@@ -66,8 +75,5 @@ class ManagementDonationsViewSet (APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		print('********************')
-		print(donations)
-		print('********************')
 		serializer = donations_serializers.DonationSerializers(donations, many=True).data
 		return Response(serializer, status=status.HTTP_200_OK)

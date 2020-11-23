@@ -169,6 +169,20 @@ class ManagementHomelessProfileViewSet(APIView):
 		serializer = str(_("You have register a homeless correctly"))
 		return Response(serializer, status=status.HTTP_200_OK)
 
+	def put(self, request):
+		body_unicode = request.body.decode('utf-8')
+		body = json.loads(body_unicode)
+		try:
+			profile = accounts_services.update_homeless_profile(body, request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		#serializer = accounts_serializers.UserProfileSerializers(profile, many=False).data
+		serializer = str(_("You have edited a homeless correctly"))
+		return Response(serializer, status=status.HTTP_200_OK)
 
 
 

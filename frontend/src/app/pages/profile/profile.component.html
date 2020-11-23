@@ -84,6 +84,7 @@
                     <span>
                       <img style="border: 3px solid lightgray;" routerLink="/homeless-profile/{{item.id}}"
                         drag-scroll-item src="{{item.photo}}" />
+
                       <p style="line-height: 1.7;font-size: small;
                       font-weight: 800;">{{item.name | slice:0:12}}</p>
                     </span>
@@ -103,31 +104,66 @@
             <div class="row justify-content-center">
               <section class="pb-5">
                 <div class="container">
-                  <h5><i class="ni ni-album-2"></i> Publicaciones</h5>
                   <div class="row">
-                    <div class="row">
-                      <div class="col-4 col-md-4 col-lg-4 col-sm-4 mb-3" *ngFor="let item of feedData">
-                        <!-- normal -->
-                        <div class="span-cua ih-item square effect13 bottom_to_top" style="max-width: 100%;width: 100%;box-shadow: 1px 1px 7px #808080e0;"><a>
-                            <div class="img" style="display: contents;"><img src="{{environmentHomeless}}{{item.image}}"
-                                alt="img" (click)="openModalWithComponent(item)"></div>
-                            <div class="info" (click)="openModalWithComponent(item)">
-                              <h3 style="display: flex;
-                              justify-content: center; background-color: transparent;">
-                                <p style="font-size: large; font-weight: 700;"><i class="ni ni-chat-round"></i>
-                                  {{item.total_comments}}</p>
-                                <p style="font-size: large; font-weight: 700;"><i class="ni ni-favourite-28"></i>
-                                  {{item.total_likes}}</p>
-                              </h3>
+                    <h5 class="w-100"><i class="ni ni-album-2"></i> Publicaciones</h5>
+                  </div>
+                  <!-- <div *ngFor="let item of feedData" class="col-md-3 col-lg-3" style="display: flex;
+justify-content: center;
+align-items: center;margin:0.5em">
+  <span style="">
 
-                            </div>
-                          </a></div>
-                        <!-- end normal -->
-                      </div>
+    <div class="span-cua ih-item square effect13 bottom_to_top" style="widht:100%;box-shadow: 1px 1px 7px #808080e0;
+  "><a>
+        <div class="img" style="display: contents;"><img src="{{environmentHomeless}}{{item.image}}"
+            alt="img" (click)="openModalWithComponent(item)"></div>
+        <div class="info" (click)="openModalWithComponent(item)">
+          <h3 style="display: flex;
+            justify-content: center; background-color: transparent;">
+            <p style="font-size: large; font-weight: 700;"><i class="ni ni-chat-round"></i>
+              {{item.total_comments}}</p>
+            <p style="font-size: large; font-weight: 700;"><i class="ni ni-favourite-28"></i>
+              {{item.total_likes}}</p>
+          </h3>
+
+        </div>
+      </a></div>
+  </span>
+</div> -->
+                  <div class="row" style="justify-content: center;">
+
+                    <div class="grid-container">
+
+                      <article *ngFor="let item of feedData" id="3685" class="location-listing">
+
+                        <a class=" location-title" (click)="openModalWithComponent(item)">
+                          <h3 style="display: flex;
+                            justify-content: space-evenly;
+                            background-color: transparent;
+                            width: 100%;
+                            color: white;">
+                            <p style="font-size: large; font-weight: 700;"><i class="ni ni-chat-round"></i>
+                              {{item.total_comments}}</p>
+                            <p style="font-size: large; font-weight: 700;"><i class="ni ni-favourite-28"></i>
+                              {{item.total_likes}}</p>
+                          </h3>
+                        </a>
+
+                        <div class="location-image">
+                          <a href="#">
+                            <img width="300" height="169" src="{{environmentHomeless}}{{item.image}}"
+                              alt="san francisco"></a>
+
+                        </div>
+
+                      </article>
+
+
 
                     </div>
+                    <!-- end grid container -->
+                  </div>
 
-                    <!-- <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let homeless of userHomeless" >
+                  <!-- <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let homeless of userHomeless" >
                         <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                           <div class="mainflip">
                             <div class="frontside">
@@ -159,7 +195,6 @@
                         </div>
                       </div> -->
 
-                  </div>
                 </div>
               </section>
             </div>

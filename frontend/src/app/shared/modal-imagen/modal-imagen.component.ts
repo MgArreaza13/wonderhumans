@@ -36,6 +36,10 @@ export class ModalImagenComponent implements OnInit {
     show: boolean = false;
     idEdit: any;
     readyImage: boolean = false;
+    contator: any;
+    restante: number;
+    contatorC: any;
+    restanteC: number;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
@@ -66,13 +70,27 @@ export class ModalImagenComponent implements OnInit {
         this.modalService._hideModal(0);
     }
 
+    onKey(event) {
+        this.contator = event.target.value.length;
+        if (this.contator <= 65000) {
+            this.restante = 65000 - this.contator;
+        }
+    }
+    onKeyC(event) {
+        this.contatorC = event.target.value.length;
+        if (this.contatorC <= 3500) {
+            this.restanteC = 3500 - this.contatorC;
+        }
+    }
+
     doVote() {
         console.log('hesss');
         if (this.ilike === 'false') {
             this.feedService.like(this.allData.id).subscribe((data) => {
                 console.log(data)
                 this.ilike = data['i_like'];
-                console.log(this.ilike)
+                console.log(this.ilike);
+                this.allData.likes = this.allData.likes + 1;
             }, err => {
                 console.log(err)
             });
@@ -80,6 +98,7 @@ export class ModalImagenComponent implements OnInit {
             this.feedService.dislike(this.allData.id).subscribe((data) => {
                 console.log(data)
                 this.ilike = data['i_like'];
+                this.allData.likes = this.allData.likes - 1;
                 console.log(this.ilike)
             }, err => {
                 console.log(err)

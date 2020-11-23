@@ -138,11 +138,12 @@ export class ProfileComponent implements OnInit {
                         this.dataHom.push(
                             {
                                 name: `${element.firstName} ${element.lastName}`,
-                                photo: `${this.environmentHomeless}${element.photo}`,
+                                photo: (element.photo) ? `${this.environmentHomeless}${element.photo}` : 'https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png',
                                 id: element.id
                             })
                     });
                 }
+                console.log(this.dataHom)
             },
             err => {
                 console.log('nohomeless' + err)
@@ -174,10 +175,9 @@ export class ProfileComponent implements OnInit {
             ],
             type: 'view'
         };
-
         this.bsModalRef = this.modalService.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA')
+        this.bsModalRef.setClass('modal-lg modalA');
         const _combine = combineLatest(
             this.modalService.onHide,
             this.modalService.onHidden,
@@ -222,9 +222,12 @@ export class ProfileComponent implements OnInit {
                 this.feedData = (data.length !== 0) ? data : null;
             },
             (error) => {
-                console.log(error)
+                console.log(error);
+                this.feedData = null;
 
             }
         )
     }
+
+
 }

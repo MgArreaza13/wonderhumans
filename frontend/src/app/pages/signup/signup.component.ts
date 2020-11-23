@@ -46,12 +46,12 @@ export class SignupComponent implements OnInit {
             first_name: ['', [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(10),
+                Validators.maxLength(25),
             ]],
             last_name: ['', [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(10),
+                Validators.maxLength(25),
             ]],
             email: ['', [
                 Validators.required,

@@ -12,103 +12,68 @@
     </div>
     <!-- SVG separator -->
     <div class="separator separator-bottom separator-skew">
-      <svg
-        x="0"
-        y="0"
-        viewBox="0 0 2560 100"
-        preserveAspectRatio="none"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
         <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
       </svg>
     </div>
   </section>
   <section class="section" *ngIf="newHomelessForm">
-    <form
-      role="form"
-      [formGroup]="newHomelessForm"
-      (ngSubmit)="onSubmit()"
-    >
-    <div class="container">
-      <div class="card card-profile shadow mt--300">
-        <div class="px-4">
-          <div class="row justify-content-center mb-10">
-            <div class="col-lg-3 order-lg-2">
-              <div class="card-profile-image">
-                <ng-template #noImage>
-                 <div class="imagen-para-archivo">
-                  <span>
-                    <label for="boton-archivo">
-                      <img
-                      src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
-                      class="imageU"
-                      />                      </label>
+    <form role="form" [formGroup]="newHomelessForm" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <div class="card card-profile shadow mt--300">
+          <div class="px-4">
+            <div class="row justify-content-center mb-10">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <ng-template #noImage>
+                    <div class="imagen-para-archivo">
+                      <span>
+                        <label for="boton-archivo">
+                          <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
+                            class="imageU" /> </label>
 
-                    <input id="boton-archivo"
-                      type="file"
-                      accept="image/*"
-                      (change)="showPreview($event)"
-
-                    />
+                        <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
+                      </span>
+                    </div>
+                  </ng-template>
+                  <span *ngIf="imageURL && imageURL !== ''; else noImage">
+                    <img [src]="imageURL" class="imageU" />
                   </span>
-                 </div>
-                </ng-template>
-                <span *ngIf="imageURL && imageURL !== ''; else noImage">
-                  <img [src]="imageURL" class="imageU" />
-                </span>
+                </div>
               </div>
             </div>
-          </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
                   <label for="">Firstname</label>
                   <div class="input-group input-group-alternative mb-4">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="ni ni-single-02"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                     </div>
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" [ngClass]="{
                         'is-invalid':
                           f['firstName'].errors && f['firstName'].touched
-                      }"
-                      formControlName="firstName"
-                      class="form-control form-control-alternative"
-                      placeholder="Ex: Jhon Thomas"
-                      type="text"
-                    />
+                      }" formControlName="firstName" class="form-control form-control-alternative"
+                      placeholder="Ex: Jhon Thomas" type="text" />
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['firstName'].hasError('required') &&
                     (f['firstName'].touched || f['firstName'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['firstName'].hasError('minlength') &&
                     (f['firstName'].touched || f['firstName'].dirty)
-                  "
-                >
+                  ">
                   *3 is the minimum characters allowed
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['firstName'].hasError('maxlength') &&
                     (f['firstName'].touched || f['firstName'].dirty)
-                  "
-                >
+                  ">
                   *25 is the maximum characters allowed
                 </section>
               </div>
@@ -116,50 +81,32 @@
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
                   <label for="">Lastname</label>
                   <div class="input-group input-group-alternative mb-4">
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      formControlName="lastName"
-                      class="form-control"
-                      placeholder="Ex: Doe Smith"
-                      type="text"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" formControlName="lastName" class="form-control"
+                      placeholder="Ex: Doe Smith" type="text" [ngClass]="{
                         'is-invalid':
                           f['lastName'].errors && f['lastName'].touched
-                      }"
-                    />
+                      }" />
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="ni ni-single-02"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                     </div>
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['lastName'].hasError('required') &&
                     (f['lastName'].touched || f['lastName'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['lastName'].hasError('minlength') &&
                     (f['lastName'].touched || f['lastName'].dirty)
-                  "
-                >
+                  ">
                   *3 is the minimum characters allowed
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['lastName'].hasError('maxlength') &&
                     (f['lastName'].touched || f['lastName'].dirty)
-                  "
-                >
+                  ">
                   *25 is the maximum characters allowed
                 </section>
               </div>
@@ -170,32 +117,19 @@
                   <label for="">Birthdate</label>
                   <div class="input-group input-group-alternative mb-4">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="ni ni-birthday"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-birthday"></i></span>
                     </div>
-                    <input
-                      [ngClass]="{
+                    <input [ngClass]="{
                         'is-invalid':
                           f['lastName'].errors && f['lastName'].touched
-                      }"
-                      formControlName="dateOfBirth"
-                      class="form-control form-control-alternative datepicker"
-                      placeholder="Ex: 24/08/1990"
-                      type="text"
-                      ngbDatepicker
-                      #d="ngbDatepicker"
-                      (click)="d.toggle()"
-                    />
+                      }" formControlName="dateOfBirth" class="form-control form-control-alternative datepicker"
+                      placeholder="Ex: 24/08/1990" type="text" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['dateOfBirth'].hasError('required') &&
                     (f['dateOfBirth'].touched || f['dateOfBirth'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
               </div>
@@ -203,50 +137,31 @@
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
                   <label for="">Country</label>
                   <div class="input-group input-group-alternative mb-4">
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" [ngClass]="{
                         'is-invalid':
                           f['country'].errors && f['country'].touched
-                      }"
-                      formControlName="country"
-                      class="form-control"
-                      placeholder="Ex: EEUU"
-                      type="text"
-                    />
+                      }" formControlName="country" class="form-control" placeholder="Ex: EEUU" type="text" />
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="ni ni-world"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-world"></i></span>
                     </div>
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['country'].hasError('required') &&
                     (f['country'].touched || f['country'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['country'].hasError('minlength') &&
                     (f['country'].touched || f['country'].dirty)
-                  "
-                >
+                  ">
                   *4 is the minimum characters allowed
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['country'].hasError('maxlength') &&
                     (f['country'].touched || f['country'].dirty)
-                  "
-                >
+                  ">
                   *25 is the maximum characters allowed
                 </section>
               </div>
@@ -254,49 +169,30 @@
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
                   <label for="">City</label>
                   <div class="input-group input-group-alternative mb-4">
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" [ngClass]="{
                         'is-invalid': f['city'].errors && f['city'].touched
-                      }"
-                      formControlName="city"
-                      class="form-control"
-                      placeholder="Ex: Miami"
-                      type="text"
-                    />
+                      }" formControlName="city" class="form-control" placeholder="Ex: Miami" type="text" />
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="ni ni-compass-04"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-compass-04"></i></span>
                     </div>
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['city'].hasError('required') &&
                     (f['city'].touched || f['city'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['city'].hasError('minlength') &&
                     (f['city'].touched || f['city'].dirty)
-                  "
-                >
+                  ">
                   *4 is the minimum characters allowed
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['city'].hasError('maxlength') &&
                     (f['city'].touched || f['city'].dirty)
-                  "
-                >
+                  ">
                   *25 is the maximum characters allowed
                 </section>
               </div>
@@ -307,39 +203,24 @@
                   <label for="">Email</label>
                   <div class="input-group input-group-alternative mb-4">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"
-                        ><i class="ni ni-email-83"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                     </div>
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" [ngClass]="{
                         'is-invalid': f['email'].errors && f['email'].touched
-                      }"
-                      formControlName="email"
-                      class="form-control form-control-alternative"
-                      placeholder="Ex: Jhon@example.com"
-                      type="email"
-                    />
+                      }" formControlName="email" class="form-control form-control-alternative"
+                      placeholder="Ex: Jhon@example.com" type="email" />
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('required') &&
                     (f['email'].touched || f['email'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('email') &&
                     (f['email'].touched || f['email'].dirty)
-                  "
-                >
+                  ">
                   *Invalid email
                 </section>
               </div>
@@ -347,65 +228,39 @@
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
                   <label for="">Occupation</label>
                   <div class="input-group input-group-alternative mb-4">
-                    <input
-                      (focus)="focus = true"
-                      (blur)="focus = false"
-                      [ngClass]="{
+                    <input (focus)="focus = true" (blur)="focus = false" [ngClass]="{
                         'is-invalid':
                           f['occupation'].errors && f['occupation'].touched
-                      }"
-                      formControlName="occupation"
-                      class="form-control"
-                      placeholder="Ex: Designer"
-                      type="text"
-                    />
+                      }" formControlName="occupation" class="form-control" placeholder="Ex: Designer" type="text" />
                     <div class="input-group-append">
-                      <span class="input-group-text"
-                        ><i class="ni ni-briefcase-24"></i
-                      ></span>
+                      <span class="input-group-text"><i class="ni ni-briefcase-24"></i></span>
                     </div>
                   </div>
                 </div>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['occupation'].hasError('required') &&
                     (f['occupation'].touched || f['occupation'].dirty)
-                  "
-                >
+                  ">
                   *Required field
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['occupation'].hasError('minlength') &&
                     (f['occupation'].touched || f['occupation'].dirty)
-                  "
-                >
+                  ">
                   *3 is the minimum characters allowed
                 </section>
-                <section
-                  class="m-2 text-danger"
-                  *ngIf="
+                <section class="m-2 text-danger" *ngIf="
                     f['occupation'].hasError('maxlength') &&
                     (f['occupation'].touched || f['occupation'].dirty)
-                  "
-                >
+                  ">
                   *25 is the maximum characters allowed
                 </section>
               </div>
             </div>
             <div class="row mb-4">
               <div class="col-12">
-                <div
-                  class="custom-control custom-control-alternative custom-checkbox"
-                >
-                  <input
-                    formControlName="show_email"
-                    class="custom-control-input"
-                    id="show_email"
-                    type="checkbox"
-                  />
+                <div class="custom-control custom-control-alternative custom-checkbox">
+                  <input formControlName="show_email" class="custom-control-input" id="show_email" type="checkbox" />
                   <label class="custom-control-label" for="show_email">
                     <span>Show email</span>
                   </label>
@@ -415,91 +270,68 @@
             <div class="row mb-4">
               <div class="col-6">
                 <label for="">Location detail</label>
-                <textarea
-                  (focus)="focus = true"
-                  (blur)="focus = false"
+                <textarea maxlength="100" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
                   [ngClass]="{
                     'is-invalid': f['location_detail'].errors && f['location_detail'].touched
-                  }"
-                  formControlName="location_detail"
-                  class="form-control form-control-alternative"
-                  rows="3"
-                  placeholder="Write something here"
-                ></textarea>
-                <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                  }" formControlName="location_detail" class="form-control form-control-alternative" rows="3"
+                  placeholder="Write something here"></textarea>
+                <span *ngIf="contator"
+                  style="float: right;font-variant: small-caps;margin-top: 0.3rem;">{{contator}}/{{restante}}
+                  caracteres</span>
+                <section class="m-2 text-danger" *ngIf="
                       f['location_detail'].hasError('required') &&
                       (f['location_detail'].touched || f['location_detail'].dirty)
-                    "
-                  >
-                    *Required field
-                  </section>
-                  <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                    ">
+                  *Required field
+                </section>
+                <section class="m-2 text-danger" *ngIf="
                       f['location_detail'].hasError('minlength') &&
                       (f['location_detail'].touched || f['location_detail'].dirty)
-                    "
-                  >
-                    *3 is the minimum characters allowed
-                  </section>
-                  <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                    ">
+                  *3 is the minimum characters allowed
+                </section>
+                <section class="m-2 text-danger" *ngIf="
                       f['location_detail'].hasError('maxlength') &&
                       (f['location_detail'].touched || f['location_detail'].dirty)
-                    "
-                  >
-                    *50 is the maximum characters allowed
-                  </section>
+                    ">
+                  *50 is the maximum characters allowed
+                </section>
               </div>
               <div class="col-6">
                 <label for="">About you</label>
-                <textarea
-                  (focus)="focus = true"
-                  (blur)="focus = false"
+                <textarea maxlength="100" (keyup)="onKeyt($event)" (focus)="focus = true" (blur)="focus = false"
                   [ngClass]="{
                     'is-invalid': f['aboutYou'].errors && f['aboutYou'].touched
-                  }"
-                  formControlName="aboutYou"
-                  class="form-control form-control-alternative"
-                  rows="3"
-                  placeholder="Write something here"
-                ></textarea>
-                <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                  }" formControlName="aboutYou" class="form-control form-control-alternative" rows="3"
+                  placeholder="Write something here"></textarea>
+                <span *ngIf="contatort"
+                  style="float: right;font-variant: small-caps;margin-top: 0.3rem;">{{contatort}}/{{restantet}}
+                  caracteres</span>
+                <section class="m-2 text-danger" *ngIf="
                       f['aboutYou'].hasError('required') &&
                       (f['aboutYou'].touched || f['aboutYou'].dirty)
-                    "
-                  >
-                    *Required field
-                  </section>
-                  <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                    ">
+                  *Required field
+                </section>
+                <section class="m-2 text-danger" *ngIf="
                       f['aboutYou'].hasError('minlength') &&
                       (f['aboutYou'].touched || f['aboutYou'].dirty)
-                    "
-                  >
-                    *4 is the minimum characters allowed
-                  </section>
-                  <section
-                    class="m-2 text-danger"
-                    *ngIf="
+                    ">
+                  *4 is the minimum characters allowed
+                </section>
+                <section class="m-2 text-danger" *ngIf="
                       f['aboutYou'].hasError('maxlength') &&
                       (f['aboutYou'].touched || f['aboutYou'].dirty)
-                    "
-                  >
-                    *100 is the maximum characters allowed
-                  </section>
+                    ">
+                  *100 is the maximum characters allowed
+                </section>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
                 <label for="">Portfolio</label>
-              <file-upload class="w-100" formControlName="portfolio"></file-upload>
+                <file-upload class="w-100" formControlName="portfolio"></file-upload>
+                <span style="float: right;font-variant: small-caps;">Máximo de fotos permitidas: 4</span>
               </div>
             </div>
             <div class="row mt-5 mb-5 float-right">
