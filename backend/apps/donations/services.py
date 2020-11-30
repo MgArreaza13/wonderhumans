@@ -27,14 +27,13 @@ def create_cause(data, id_homeless, user):
 	name: str = data.get("name", None)
 	total: float = data.get("total", None)
 	description: float = data.get("description", None)
-	print(description)
 	if name is not None:
 		donations_validations.validate_length("Name",name,3,100)
 	else:
 		raise ValueError(str(_("Name is required")))
 	if total is not None:
-		if total <=10:
-			raise ValueError(str(_("Min value in total is 10")))
+		if total <=10 or total > 9999999:
+			raise ValueError(str(_("Min value in total is 10 and max is 9999999")))
 	else:
 		raise ValueError(str(_("Total is required")))
 	if description is not None:

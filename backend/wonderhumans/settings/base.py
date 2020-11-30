@@ -44,13 +44,14 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'djcelery_email',
-    #my apps
+    # My apps
     'apps.accounts',
     'apps.comments',
     'apps.donations',
     'apps.portfolio',
     'apps.feed',
-    'apps.likes'
+    'apps.likes',
+    'apps.food'
 ]
 
 MIDDLEWARE = [

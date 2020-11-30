@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/portfolio/', include('apps.portfolio.urls')),
     path('api/feed/', include('apps.feed.urls')),
     path('api/likes/', include('apps.likes.urls')),
+    path('api/food/', include('apps.food.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True,)
