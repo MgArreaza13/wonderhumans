@@ -20,6 +20,9 @@ class FoodRun(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=6,choices=STATUS, null=True)
 
+    def __str__(self):
+        return self.name
+
 class FoodDonation(models.Model):
 
     id_stripe = models.CharField(max_length=100, blank=True)
@@ -27,10 +30,16 @@ class FoodDonation(models.Model):
     food = models.ForeignKey(FoodRun, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=9,decimal_places=2, default=0)
 
+    def __str__(self):
+        return self.food.name
+
 class FoodVolunteer(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     food = models.ForeignKey(FoodRun, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 
 class FeedFood(models.Model):
 
@@ -41,4 +50,4 @@ class FeedFood(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.userRegisterer.username + ' ' + str(self.created_at)
+        return self.food.name
