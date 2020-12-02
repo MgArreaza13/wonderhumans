@@ -12,6 +12,10 @@ from apps.accounts import services as accounts_services
 # My validations
 from apps.food import validations as food_validations
 
+# My services 
+
+# Food run services ----------------------------------
+
 def new_food_run(data:dict, user:User)->dict:
     """
         Method to create a new food run by user
@@ -21,7 +25,7 @@ def new_food_run(data:dict, user:User)->dict:
         :return: FoodRun
     """
     total: float = data.get("total", None)
-    total_volunteers : int = data.get("total_volunteers")
+    total_volunteers : int = data.get("total_volunteers",None)
     if data.get("name") is not None:
         food_validations.validate_length('Name',data.get("name"),5,100)
     else:
@@ -73,6 +77,92 @@ def get_food_run(id:int)->dict:
         raise ValueError(str(_("id food run does not exist")))
     return food_run
 
+def get_all_food_run():
+    """
+        Method to get all food run
+    """
+    food_runs = food_models.FoodRun.objects.all()
+    return food_runs
+
+def update_food_run(data:dict,user:User)->dict:
+    """
+        Method to update a food run.
+        Only the owner of the food run can update it
+
+        :param data: content info to update in food run
+        :param user: content user owner of the food run
+        :raise: ValuerError
+        :return: food_models.FoodRun 
+    """
+    total: float = data.get("total", None)
+    total_volunteers : int = data.get("total_volunteers",None)
+    if data.get("id_food_run") is not None:
+        food_run = get_food_run(data.get("id_food_run"))
+        if user != food_run.user:
+            raise ValueError(str(_("This user have not permission to update this food run")))
+    else:
+        raise ValueError(str(_("id_food_run is required")))
+    if data.get("name") is not None:
+        food_validations.validate_length('Name',data.get("name"),5,100)
+        food_run.name = data.get("name")
+    if data.get("description") is not None:
+        food_validations.validate_length('Decription',data.get("description"),5,300)
+        food_run.description = data.get("description")
+    if total is not None:
+        if food_run.rest <=0:
+            raise ValueError(str(_("Can not change total beacause the rest alredy is 0")))
+        if total != food_run.total:
+            # print("Es diferente el valor del total")
+            if total <=0 or total > 9999999:
+                raise ValueError(str(_("Min value in total is 0 and max is 9999999")))
+            if total < food_run.rest:
+                raise ValueError(str(_("rest value can not be mayor than total value")))
+            # print(total)
+            food_run.total = total
+            rest = float(food_run.rest)
+            food_run.rest = total - rest
+            if (food_run.rest_volunteers == 0) and (food_run.rest <=0):
+                food_run.status = 'closed'
+        # print("No es doferente")
+    if total_volunteers is not None:
+        if food_run.total_volunteers <=0:
+            raise ValueError(str(_("Can not change total beacause the rest volunteer alredy is 0")))
+        if total_volunteers != food_run.total_volunteers:
+            # print("Es diferente el valor del total voluntario")
+            if total_volunteers <=0 or total > 10000:
+                raise ValueError(str(_("Min value in total is 0 and max is 10000")))
+            if total_volunteers < food_run.rest_volunteers:
+                raise ValueError(str(_("rest volunteers can no be mayor than total volunteer")))
+            # print(food_run.rest_volunteers,type(food_run.rest_volunteers))
+            food_run.total_volunteers = total_volunteers
+            food_run.rest_volunteers = food_run.rest_volunteers - total_volunteers
+            if (food_run.rest_volunteers == 0) and (food_run.rest <=0):
+                food_run.status = 'closed'
+        # print("Es diferente el valor del total voluntario")
+    if (food_run.rest_volunteers > 0) or (food_run.rest >0):
+            food_run.status = 'open'
+    try:
+        with transaction.atomic():
+            food_run.save()
+    except Exception as e:
+        # print(e)
+        raise ValueError(str(_("There was a error updating the food run")))
+    return food_run
+        
+def delete_food_run(id:int,user:User):
+    """
+        Method to delete a food run by owner user
+    """
+    food_run = get_food_run(id)
+    if user != food_run.user:
+        raise ValueError(str(_("This user have not permission to delete this food run")))
+    try:
+        with transaction.atomic():
+            food_run.delete()
+    except Exception as e:
+        print(e)
+        raise ValueError(str(_("there was a error deleting the food run")))
+
 def update_food_run_rests(rest_volunteers,amount,food_run:dict)->dict:
     """
         Method to update a food run rests field: rest_volunteer 
@@ -98,6 +188,8 @@ def update_food_run_rests(rest_volunteers,amount,food_run:dict)->dict:
         return False
     return True
 
+# Food donation services ----------------------------------
+
 def create_food_donation(data:dict, user:User):
     """
         Method to create a new donation
@@ -110,7 +202,7 @@ def create_food_donation(data:dict, user:User):
     if data.get("id_food_run") is not None:
         food_validations.validate_food_donation(data.get("id_food_run"))
         food_run = get_food_run(data.get("id_food_run"))
-        if food_run.status == 'closed':
+        if food_run.status == 'closed' or food_run.rest <=0:
             raise ValueError(str(_("This food run not allow more donations because this is closed")))
     else:
         raise ValueError(str(_("id_food_run is required")))

@@ -22,6 +22,10 @@ class FoodRun(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ["-created_at"]
+
 
 class FoodDonation(models.Model):
 
@@ -51,3 +55,6 @@ class FeedFood(models.Model):
 
     def __str__(self):
         return self.food.name
+    
+    class Meta:
+        ordering = ["-created_at"]
