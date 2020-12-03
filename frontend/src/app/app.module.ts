@@ -36,6 +36,8 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.component';
+import { FoodRunListModule } from './pages/food-run-list/food-run-list.module';
+import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.module';
 
 @NgModule({
     declarations: [
@@ -50,7 +52,9 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         NewHomelessComponent,
         HomelessProfileComponent,
         QrReaderComponent,
-        ModalImagenComponent
+        ModalImagenComponent,
+
+
     ],
     imports: [
         BrowserModule,
@@ -76,7 +80,9 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         BsDatepickerModule.forRoot(),
         DragScrollModule,
         ImageCropperModule,
-        ProgressbarModule.forRoot()
+        ProgressbarModule.forRoot(),
+        FoodRunListModule,
+        FoodRunDetailsModule
 
     ],
     providers: [],

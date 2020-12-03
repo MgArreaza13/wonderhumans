@@ -25,18 +25,15 @@ export class QrReaderComponent implements OnInit {
     }
 
     onCodeResult(resultString: string): void {
-        console.log(resultString);
         if (resultString.includes('homeless-profile/')) {
             this.qrResult = resultString;
             this.goto();
-            console.log('si');
         } else {
             console.log('no');
         }
     }
 
     goto() {
-        console.log('entre aca');
         this.router.navigateByUrl(this.qrResult);
     }
 

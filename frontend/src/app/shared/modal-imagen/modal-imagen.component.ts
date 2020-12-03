@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { HomelessService } from './../../core/services/homeless.service';
 
 const base_url = environment.apiRoot;
 @Component({
@@ -40,18 +41,19 @@ export class ModalImagenComponent implements OnInit {
     restante: number;
     contatorC: any;
     restanteC: number;
+    editPortofolio: boolean = false;
+    fir: boolean = false;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
         private spinner: NgxSpinnerService,
         private toastr: ToastrService,
-        private modalService: BsModalService,) { }
+        private modalService: BsModalService,
+        private homelessService: HomelessService) { }
 
     ngOnInit(): void {
-        this.getComments();
 
-        console.log('hola' + this.type)
-        console.log(this.data);
+        this.getComments();
         const img = this.data[0].img;
         if (img.includes('https')) {
             this.img = img;
@@ -60,7 +62,7 @@ export class ModalImagenComponent implements OnInit {
         }
         this.allData = this.data[0];
         this.ilike = this.allData.ilike;
-        console.log(this.ilike)
+
     }
 
 
@@ -84,22 +86,17 @@ export class ModalImagenComponent implements OnInit {
     }
 
     doVote() {
-        console.log('hesss');
         if (this.ilike === 'false') {
             this.feedService.like(this.allData.id).subscribe((data) => {
-                console.log(data)
                 this.ilike = data['i_like'];
-                console.log(this.ilike);
                 this.allData.likes = this.allData.likes + 1;
             }, err => {
                 console.log(err)
             });
         } else {
             this.feedService.dislike(this.allData.id).subscribe((data) => {
-                console.log(data)
                 this.ilike = data['i_like'];
                 this.allData.likes = this.allData.likes - 1;
-                console.log(this.ilike)
             }, err => {
                 console.log(err)
             });
@@ -126,9 +123,7 @@ export class ModalImagenComponent implements OnInit {
                 image: this.imageURL,
                 description: this.description
             };
-            console.log(body);
             this.feedService.newFeed(body).subscribe((data) => {
-                console.log(data);
                 this.toastr.success('Registro satisfactorio');
                 this.spinner.hide();
                 this.cerrarModal();
@@ -151,7 +146,6 @@ export class ModalImagenComponent implements OnInit {
                 comment: this.comment
             };
             this.feedService.newCom(data.id, body).subscribe((res) => {
-                console.log(res);
                 this.spinner.hide();
                 this.toastr.success('Publicación exitosa');
                 this.cerrarModal();
@@ -171,7 +165,6 @@ export class ModalImagenComponent implements OnInit {
     getComments() {
         this.feedService.getComments(this.data[0].id).subscribe((data) => {
             this.comments = (data['length'] !== 0) ? data : null;
-            console.log(this.comments)
         }, err => {
             console.log(err)
         });
@@ -199,13 +192,10 @@ export class ModalImagenComponent implements OnInit {
     }
     ready() {
         this.imageURL = this.croppedImage;
-        console.log('ready');
-        console.log(this.imageCropped)
         this.readyImage = true;
     }
 
     editType(id) {
-        console.log(id)
         this.type = 'edit';
         this.idEdit = id;
     }
@@ -217,9 +207,7 @@ export class ModalImagenComponent implements OnInit {
             image: this.imageURL,
             description: this.description
         };
-        console.log(body);
         this.feedService.editFeed(body).subscribe((data) => {
-            console.log(data);
             this.toastr.success('Actualización satisfactoria');
             this.spinner.hide();
             this.cerrarModal();
@@ -244,7 +232,6 @@ export class ModalImagenComponent implements OnInit {
         }).then((result) => {
             if (result) {
                 this.feedService.deleteFeed(id).subscribe((data) => {
-                    console.log(data);
                     this.toastr.success('Eliminación satisfactoria');
                     this.spinner.hide();
                     this.cerrarModal();
@@ -264,4 +251,66 @@ export class ModalImagenComponent implements OnInit {
         });
     }
 
+    deletePortfolio() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Desea eliminar esta imagen?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result) {
+                this.homelessService.deletePortfolio(this.data[0].id).subscribe((data) => {
+                    this.toastr.success('Eliminación satisfactoria');
+                    this.spinner.hide();
+                    this.cerrarModal();
+                    this.ngOnInit();
+                }, err => {
+                    console.log(err);
+                    this.spinner.hide();
+                    this.toastr.error(err.error.detail);
+                    this.cerrarModal();
+                });
+                // Swal.fire(
+                //     'Deleted!',
+                //     'Your file has been deleted.',
+                //     'success'
+                // )
+            }
+        });
+    }
+
+    editPort() {
+        this.editPortofolio = true;
+    }
+
+    editar() {
+        this.imageURL = this.croppedImage;
+        this.readyImage = true;
+        this.fir = true;
+    }
+
+    readyEdit() {
+        this.spinner.show();
+
+        const body = {
+            photo: this.imageURL,
+            id: this.data[0].id
+        };
+        console.log(body)
+        this.homelessService.editPortfolio(body).subscribe((data) => {
+            this.spinner.hide();
+            this.toastr.success('Actualización satisfactoria');
+            this.cerrarModal();
+
+        }, err => {
+            console.log(err);
+            this.spinner.hide();
+            this.toastr.error(err.error.detail);
+            this.cerrarModal();
+
+        })
+    }
 }

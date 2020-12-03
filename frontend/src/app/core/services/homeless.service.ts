@@ -7,38 +7,46 @@ import { NewHomeless } from 'src/app/shared/models/newHomeless';
 
 @Injectable()
 export class HomelessService {
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  newHomeless(newH: NewHomeless) {
-    return this.http.post(`${environment.apiRoot}/api/accounts/homelessProfile/`, newH);
-  }
+    newHomeless(newH: NewHomeless) {
+        return this.http.post(`${environment.apiRoot}/api/accounts/homelessProfile/`, newH);
+    }
+    editHomeless(homeless) {
+        return this.http.put(`${environment.apiRoot}/api/accounts/homelessProfile/edit/`, homeless);
+    }
 
-  getHomelessProfile(id) {
-    return this.http.get(`${environment.apiRoot}/api/accounts/homelessProfile/${id}`);
-  }
+    getHomelessProfile(id) {
+        return this.http.get(`${environment.apiRoot}/api/accounts/homelessProfile/${id}`);
+    }
 
-  getCommentsProfile(id) {
-    return this.http.get(`${environment.apiRoot}/api/comments/get/${id}`);
-  }
+    getCommentsProfile(id) {
+        return this.http.get(`${environment.apiRoot}/api/comments/get/${id}`);
+    }
 
-  getDonations(id){
-    return this.http.get(`${environment.apiRoot}/api/donations/get/${id}`);
-  }
+    getDonations(id) {
+        return this.http.get(`${environment.apiRoot}/api/donations/get/${id}`);
+    }
 
-  getEventsDonations(id){
-    return this.http.get(`${environment.apiRoot}/api/donations/event/get/${id}`);
-  }
+    getEventsDonations(id) {
+        return this.http.get(`${environment.apiRoot}/api/donations/event/get/${id}`);
+    }
 
-  getPortfolio(id){
-    return this.http.get(`${environment.apiRoot}/api/portfolio/get/${id}`);
-  }
+    getPortfolio(id) {
+        return this.http.get(`${environment.apiRoot}/api/portfolio/get/${id}`);
+    }
+    deletePortfolio(id) {
+        return this.http.delete(`${environment.apiRoot}/api/portfolio/delete/${id}`);
+    }
+    editPortfolio(portfolio) {
+        return this.http.put(`${environment.apiRoot}/api/portfolio/edit/`, portfolio);
+    }
 
+    newComment(id, comment) {
+        return this.http.post(`${environment.apiRoot}/api/comments/new/${id}`, comment);
+    }
 
-  newComment(id, comment) {
-    return this.http.post(`${environment.apiRoot}/api/comments/new/${id}`, comment);
-  }
-
-  newEvent(id, event) {
-    return this.http.post(`${environment.apiRoot}/api/donations/event/new/${id}`, event);
-  }
+    newEvent(id, event) {
+        return this.http.post(`${environment.apiRoot}/api/donations/event/new/${id}`, event);
+    }
 }

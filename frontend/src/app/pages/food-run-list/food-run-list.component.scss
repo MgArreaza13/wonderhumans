@@ -1,0 +1,30 @@
+.bg-gradient-default {
+  background: linear-gradient(150deg, #cf3a9e 15%, #ff6240 70%, #fbaa4f 94%) !important;
+}
+
+.text-danger {
+  font-variant: small-caps;
+  font-size: small;
+}
+
+.section-shaped {
+  position: inherit !important;
+}
+
+.section-shaped .shape-style-1.shape-default {
+  background: linear-gradient(150deg,
+      #cf3a9e 15%,
+      #ff6240 70%,
+      #fbaa4f 94%) !important;
+}
+
+.bg-grad {
+  background: linear-gradient(150deg, #de4583 15%, #f1884d 70%, #f1894e 94%) !important;
+}
+
+.top-im {
+  width: 17rem;
+  height: 17rem;
+  object-fit: cover;
+  border-radius: 20px;
+}
