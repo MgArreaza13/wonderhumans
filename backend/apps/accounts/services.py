@@ -376,7 +376,7 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		print(profile.photo)
 	url = 'homeless-profile/' + str(profile.id)
 	saveQrCode(url,str(profile.id))
-	profile.qr_code = 'media/qrCode/' + name + '.png'
+	profile.qr_code = 'media/qrCodes/' + str(profile.id)+ '.png'
 	profile.save()
 	if data.get("portfolio") is not None:
 		portfolio = data.get("portfolio")

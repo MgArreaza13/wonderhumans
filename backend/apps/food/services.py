@@ -16,7 +16,7 @@ from apps.food import validations as food_validations
 
 # Food run services ----------------------------------
 
-def new_food_run(data:dict, user:User)->dict:
+def new_food_run(data:dict, user:User):
     """
         Method to create a new food run by user
 
@@ -62,7 +62,7 @@ def new_food_run(data:dict, user:User)->dict:
     return food_run
     
 
-def get_food_run(id:int)->dict:
+def get_food_run(id:int):
     """
         Metho to get a food run
 
@@ -84,7 +84,7 @@ def get_all_food_run():
     food_runs = food_models.FoodRun.objects.all()
     return food_runs
 
-def update_food_run(data:dict,user:User)->dict:
+def update_food_run(data:dict,user:User):
     """
         Method to update a food run.
         Only the owner of the food run can update it
@@ -163,7 +163,7 @@ def delete_food_run(id:int,user:User):
         print(e)
         raise ValueError(str(_("there was a error deleting the food run")))
 
-def update_food_run_rests(rest_volunteers,amount,food_run:dict)->dict:
+def update_food_run_rests(rest_volunteers,amount,food_run:dict)->bool:
     """
         Method to update a food run rests field: rest_volunteer 
         and rest_total
@@ -236,6 +236,20 @@ def create_food_donation(data:dict, user:User):
     food_run.save()
     return donation
 
+def get_all_donation(id_food:id):
+    """
+        Method to get all donation for food run
+
+        :param id_food: food run id
+        :raise: ValueError
+        :return:food_models.FoodDonation
+    """
+    donations = food_models.FoodDonation.objects.filter(food__id=id_food)
+    return donations
+
+
+# Food volunteer services ----------------------------------
+
 def create_food_volunteer(data:dict, user:User)->dict:
     """
         Method to agregate a new volunteer to food run
@@ -265,6 +279,28 @@ def create_food_volunteer(data:dict, user:User)->dict:
         volunteer.delete()
     return volunteer
 
+def get_all_volunteer(id_food:int):
+    """
+        Method to get all volunteer for food run
+
+        :return: food_models.FoodVolunteer
+    """
+    volunteers = food_models.FoodVolunteer.objects.filter(food__id=id_food)
+    return volunteers
+
+def delete_volunteer(id_food:int,user:User):
+    """
+        Method to delete a volunteer for food run.
+        Only the will itself can eliminate
+    """
+    try:
+        volunteer = food_models.FoodVolunteer.objects.get(food__id=id_food,user=user)
+    except food_models.FoodVolunteer.DoesNotExist:
+        raise ValueError(str(_("You are not a volunteer in this food run")))
+    volunteer.delete()
+
+# Food feed services ----------------------------------
+
 def create_food_feed(data:dict,user:User)->dict:
     """
         Method to create a new feed in food by user 
@@ -280,6 +316,8 @@ def create_food_feed(data:dict,user:User)->dict:
         raise ValueError(str(_("id_food_run is required")))
     if data.get("image") is None:
         raise ValueError(str(_("image is required")))
+    if user != food_run.user:
+        raise ValueError(str(_("You do not have permission to create a feed food")))
     try:
         with transaction.atomic():
             feed = food_models.FeedFood.objects.create(
@@ -295,3 +333,24 @@ def create_food_feed(data:dict,user:User)->dict:
         feed.description = data.get("description")
         feed.save()
     return feed
+
+def delete_food_feed(id_feed:int,user:User):
+    """
+        Method to delete a feed food by owner food
+    """
+    try:
+        feed = food_models.FeedFood.objects.get(id=id_feed)
+    except food_models.FeedFood.DoesNotExist:
+        raise ValueError(str(_("the feed does not exist")))
+    if user != feed.user:
+        raise ValueError(str(_("You do not have permission to delete this feed food")))
+    feed.delete()
+
+def get_all_food_feed(id_food:int):
+    """
+        Method to get all feed for food run
+
+        :return: food_models.FeedFood
+    """
+    feeds = food_models.FeedFood.objects.filter(food__id=id_food)
+    return feeds

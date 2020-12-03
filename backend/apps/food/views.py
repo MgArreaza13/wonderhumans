@@ -93,7 +93,7 @@ class FoodRunAllView(APIView):
 
 class FoodDonationView(APIView):
     """
-        Content CRUD services to Food Donation
+        Content services create and get to Food Donations
     """
 
     def post(self, request):
@@ -108,10 +108,22 @@ class FoodDonationView(APIView):
         serializer = food_serializers.FoodDonationSerializers(donation, many=False).data
         serializer['detail'] = str(_("You have register a donation food run correctly"))
         return Response(serializer, status=status.HTTP_201_CREATED)
+    
+    def get(self, request, id_food):
+        try:
+            donations = food_services.get_all_donation(id_food)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = food_serializers.FoodDonationSerializers(donations, many=True).data
+        return Response(serializer, status=status.HTTP_200_OK)
 
 class FoodVolunteerView(APIView):
     """
-        Content CRUD services to Food Volunteer
+        Content services create, delete and get Food Volunteers
     """
 
     def post(self, request):
@@ -126,6 +138,30 @@ class FoodVolunteerView(APIView):
         serializer = food_serializers.FoodVolunteerSerializers(volunteer, many=False).data
         serializer['detail'] = str(_("You have register a volunteer food run correctly"))
         return Response(serializer, status=status.HTTP_201_CREATED)
+    
+    def get(self, request, id_food):
+        try:
+            volunteers = food_services.get_all_volunteer(id_food)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = food_serializers.FoodVolunteerSerializers(volunteers, many=True).data
+        return Response(serializer, status=status.HTTP_200_OK)
+    
+    def delete(self, request, id_food):
+        try:
+            food_services.delete_volunteer(id_food,request.user)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = str(_("You have deleted a volunteer food run correctly"))
+        return Response(serializer, status=status.HTTP_200_OK)
 
 class FeedFoodView(APIView):
     """
@@ -144,3 +180,27 @@ class FeedFoodView(APIView):
         serializer = food_serializers.FoodFeedSerializers(feed, many=False).data
         serializer['detail'] = str(_("You have register a feed food run correctly"))
         return Response(serializer, status=status.HTTP_201_CREATED)
+    
+    def get(self, request, id_food):
+        try:
+            feeds = food_services.get_all_food_feed(id_food)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = food_serializers.FoodVolunteerSerializers(feeds, many=True).data
+        return Response(serializer, status=status.HTTP_200_OK)
+
+    def delete(self, request, id_feed):
+        try:
+            food_services.delete_food_feed(id_feed,request.user)
+        except ValueError as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except PermissionDenied as e:
+            return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        except Exception as e:
+            return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        serializer = str(_("You have deleted a feed food run correctly"))
+        return Response(serializer, status=status.HTTP_200_OK)
