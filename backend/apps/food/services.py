@@ -34,6 +34,8 @@ def new_food_run(data:dict, user:User):
         food_validations.validate_length('Decription',data.get("description"),5,300)
     else:
         raise ValueError(str(_("description is required")))
+    if data.get("image") is None:
+        raise ValueError(str(_("image is required")))
     if total is not None:
         if total <=0 or total > 9999999:
             raise ValueError(str(_("Min value in total is 0 and max is 9999999")))
@@ -50,6 +52,7 @@ def new_food_run(data:dict, user:User):
                 user = user,
                 name =  data.get("name"),
                 description = data.get("description"),
+                image = accounts_services.updateImage(data.get("image")),
                 total = total,
                 rest = total,
                 total_volunteers = total_volunteers,
@@ -141,6 +144,8 @@ def update_food_run(data:dict,user:User):
         # print("Es diferente el valor del total voluntario")
     if (food_run.rest_volunteers > 0) or (food_run.rest >0):
             food_run.status = 'open'
+    if data.get("image") is not None:
+        food_run.image = accounts_services.updateImage(data.get("image"))
     try:
         with transaction.atomic():
             food_run.save()

@@ -2,6 +2,8 @@ import serpy
 from apps.accounts import serializers as accounts_serializers
 
 class CauseSerializers(serpy.Serializer):
+
+    id = serpy.Field()
     homeless = accounts_serializers.HomelessProfileSerializers()
     name =  serpy.Field()
     description = serpy.Field()
