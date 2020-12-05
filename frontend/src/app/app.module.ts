@@ -38,6 +38,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.component';
 import { FoodRunListModule } from './pages/food-run-list/food-run-list.module';
 import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.module';
+import { CausesDetailsComponent } from './shared/causes-details/causes-details.component';
+import { FoodRunFormComponent } from './shared/food-run-form/food-run-form.component';
 
 @NgModule({
     declarations: [
@@ -53,6 +55,8 @@ import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.
         HomelessProfileComponent,
         QrReaderComponent,
         ModalImagenComponent,
+        CausesDetailsComponent,
+        FoodRunFormComponent
 
 
     ],
@@ -89,6 +93,6 @@ import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.
     // tslint:disable-next-line: max-line-length
     exports: [],
     bootstrap: [AppComponent],
-    entryComponents: [ModalImagenComponent]
+    entryComponents: [ModalImagenComponent, CausesDetailsComponent, FoodRunFormComponent]
 })
 export class AppModule { }

@@ -16,8 +16,7 @@
             <h1 class="text-white font-weight-light">Lorem ipsum dolor sit amet, consectetur.</h1>
             <p class="lead text-white mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
               inventore odit vitae dolores, tempore repudiandae ducimus, officia beat.</p>
-            <a href="https://demos.creative-tim.com/argon-design-system-angular/documentation/alerts?ref=adsa-bootstrap-carousel"
-              class="btn btn-white mt-4">start a food run</a>
+            <a (click)="addFoodRun()" class="btn btn-white mt-4">start a food run</a>
           </div>
           <div class="col-lg-6 mb-lg-auto">
             <div class="rounded shadow-lg overflow-hidden transform-perspective-right">
@@ -59,37 +58,14 @@
         </div>
       </div>
       <div class="row " style="justify-content: space-between">
-        <div class="card" style=" border-radius: 20px;margin:12px">
-          <img class="card-img-top top-im"
-            src="https://images.unsplash.com/photo-1541802645635-11f2286a7482?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80"
-            alt="Card image">
+        <div class="card" style=" border-radius: 20px;margin:12px" *ngFor="let item of foodRunsData">
+          <img class="card-img-top top-im" src="{{environmentY}}{{item.image}}" alt="Card image">
           <div class="card-body">
-            <h4 class="card-title">Lorem Ipsum</h4>
-            <p class="card-text">Some example text.</p>
-            <a [routerLink]="['/details-food-run']" class="btn btn-primary btn-block btn-sm">Ver detalles</a>
+            <h4 class="card-title">{{item.name}}</h4>
+            <p class="card-text">Monto a recaudar: {{item.total | currency}}</p>
+            <a routerLink="/details-food-run/{{item.id}}" class="btn btn-primary btn-block btn-sm">Ver detalles</a>
           </div>
         </div>
-        <div class="card" style=" border-radius: 20px;margin:12px">
-          <img class="card-img-top top-im"
-            src="https://images.unsplash.com/photo-1509059852496-f3822ae057bf?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=856&q=80"
-            alt="Card image">
-          <div class="card-body">
-            <h4 class="card-title">Lorem Ipsum</h4>
-            <p class="card-text">Some example text.</p>
-            <a [routerLink]="['/details-food-run']" class="btn btn-primary btn-block btn-sm">Ver detalles</a>
-          </div>
-        </div>
-        <div class="card" style=" border-radius: 20px;margin:12px">
-          <img class="card-img-top top-im"
-            src="https://images.unsplash.com/photo-1559000857-670162a2e338?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            alt="Card image">
-          <div class="card-body">
-            <h4 class="card-title">Lorem Ipsum</h4>
-            <p class="card-text">Some example text.</p>
-            <a [routerLink]="['/details-food-run']" class="btn btn-primary btn-block btn-sm">Ver detalles</a>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>

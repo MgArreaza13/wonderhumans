@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ModalImagenComponent } from 'src/app/shared/modal-imagen/modal-imagen.component';
 import { combineLatest } from 'rxjs';
+import { CausesDetailsComponent } from 'src/app/shared/causes-details/causes-details.component';
 
 
 @Component({
@@ -208,6 +209,7 @@ export class HomelessProfileComponent implements OnInit {
     getEventList(id) {
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
+                console.log(data)
                 this.eventsList = data;
                 this.eventsList.forEach(element => {
                     this.dataCauses.push(
@@ -287,6 +289,7 @@ export class HomelessProfileComponent implements OnInit {
     async createEvent(id) {
         await this.spinner.show();
         const body = {
+            id_homeless: id,
             name: this.name,
             total: this.total,
             description: this.description,
@@ -334,6 +337,27 @@ export class HomelessProfileComponent implements OnInit {
             type: 'onlyView'
         };
         this.bsModalRef = this.modalService2.show(ModalImagenComponent, { initialState });
+        this.bsModalRef.content.closeBtnName = 'Close';
+        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal');
+        const _combine = combineLatest(
+            this.modalService2.onHide,
+            this.modalService2.onHidden,
+        ).subscribe((data) => {
+            if (data[0] === 'close') {
+                this.ngOnInit();
+            }
+
+        });
+    }
+    causeDetails(data) {
+
+        const initialState = {
+
+            data: [
+                data
+            ],
+        };
+        this.bsModalRef = this.modalService2.show(CausesDetailsComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
         this.bsModalRef.setClass('modal-lg modalA fullscreen-modal');
         const _combine = combineLatest(

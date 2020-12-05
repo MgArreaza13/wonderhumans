@@ -29,7 +29,7 @@ export class HomelessService {
     }
 
     getEventsDonations(id) {
-        return this.http.get(`${environment.apiRoot}/api/donations/event/get/${id}`);
+        return this.http.get(`${environment.apiRoot}/api/donations/cause/all/${id}`);
     }
 
     getPortfolio(id) {
@@ -46,7 +46,11 @@ export class HomelessService {
         return this.http.post(`${environment.apiRoot}/api/comments/new/${id}`, comment);
     }
 
-    newEvent(id, event) {
-        return this.http.post(`${environment.apiRoot}/api/donations/event/new/${id}`, event);
+    newEvent(id, cause) {
+        return this.http.post(`${environment.apiRoot}/api/donations/cause/new/${id}`, cause);
+    }
+
+    newDonation(body) {
+        return this.http.post(`${environment.apiRoot}/api/donations/new/`, body);
     }
 }

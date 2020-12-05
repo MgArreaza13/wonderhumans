@@ -21,17 +21,22 @@
         font-variant-caps: all-small-caps;
         font-size: 1.5rem;">Nuestro voluntariado</h5>
           <div class="row row-grid justify-content-center align-items-center">
-            <div class="col-12">
+            <div class="col-12" *ngIf="dataVol !== null else noVol">
               <drag-scroll #nav drag-scroll-y-disabled="true" [scrollbar-hidden]="true">
-                <img class="imgCover" drag-scroll-item [src]="item.img" *ngFor="let item of slides" />
+                <img class="imgCover" drag-scroll-item src="{{environmentY}}{{item.food.image}}"
+                  *ngFor="let item of dataVol" />
 
               </drag-scroll>
             </div>
+            <ng-template #noVol>
+              <h4 class="text-center">No hay voluntarios registrados</h4>
+            </ng-template>
 
           </div>
           <div class="row mt-3">
             <div class="col-12  align-items-center">
-              <button class="btn btn-sm float-right btn-success" (click)="moveLeft()">Quiero ser un voluntario</button>
+              <button class="btn btn-sm float-right btn-success" (click)="volunterAdd()">Quiero ser un
+                voluntario</button>
             </div>
           </div>
         </div>
@@ -39,32 +44,26 @@
       <hr>
       <div class="container py-md" style="background: #ffffff;
       padding: 1rem;border-radius: calc(0.25rem - 0.0625rem) calc(0.25rem - 0.0625rem) 0 0;">
-        <div class="row row-grid justify-content-between align-items-center">
+        <div class="row row-grid justify-content-between align-items-center" *ngIf="dataDetails">
           <div class="col-lg-8">
-            <img
-              src="https://images.unsplash.com/photo-1541802645635-11f2286a7482?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80"
-              alt="" style="max-width: 100%;
-              min-width: 100%;object-fit: cover;margin-bottom: 1rem;">
+            <div class="w-100 d-flex align-items-center justify-content-center mb-2">
+              <img src="{{environmentY}}{{dataDetails.image}}" alt="" style=" max-width: 100%;
+            min-width: 29rem;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            width: 29rem;
+            height: 29rem;">
+            </div>
             <section class="present">
               <div class="icon icon-sm icon-shape bg-gradient-pink shadow rounded-circle">
                 <i class="fa fa-heart " style="color: #dc3545 !important;"></i>
               </div>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt sit provident.</p>
+              <p>{{dataDetails.name}}</p>
             </section>
             <hr>
             <section class="p-2">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt voluptate reiciendis tenetur
-                accusamus laboriosam quam soluta ipsum veniam qui nisi,
-                numquam eveniet perspiciatis doloribus? Pariatur eligendi iure libero ex deserunt. Lorem ipsum dolor
-                sit
-                amet, consectetur adipisicing elit. Deserunt voluptate reiciendis tenetur accusamus laboriosam quam
-                soluta ipsum veniam qui nisi,
-                numquam eveniet perspiciatis doloribus? Pariatur eligendi iure libero ex deserunt. Lorem ipsum dolor
-                sit
-                amet, consectetur adipisicing elit. Deserunt voluptate reiciendis tenetur accusamus laboriosam quam
-                soluta ipsum veniam qui nisi,
-                numquam eveniet perspiciatis doloribus? Pariatur eligendi iure libero ex deserunt.
+                {{dataDetails.description}}
               </p>
             </section>
             <section class="p-2 row" style="display: flex;justify-content: center;margin-bottom: .8rem;">
@@ -99,8 +98,8 @@
                 display: flex;
                 flex-flow: column;
                 align-items: center;">
-                  <p>Mariana Goméz</p>
-                  <small>Miami, EEUU</small>
+                  <p>{{dataDetails.user.first_name}} {{dataDetails.user.last_name}}</p>
+                  <small>{{dataDetails.user.email}}</small>
                 </span>
               </div>
               <div>
@@ -139,9 +138,11 @@
                     <p style="    font-size: small;
                     text-align: center;
                     font: -webkit-small-control;
-                    font-variant-caps: all-petite-caps;">$166 recaudados del objetivo de $200</p>
-                    <progressbar style="height: 16px;" max="200" [value]="166" type="success" [striped]="true"
-                      [animate]="true"><i>$166 / $200</i>
+                    font-variant-caps: all-petite-caps;">{{(dataDetails.total - dataDetails.rest) | currency}}
+                      recaudados del objetivo de {{dataDetails.total | currency}}</p>
+                    <progressbar style="height: 16px;" [max]="dataDetails.total"
+                      [value]="(dataDetails.total - dataDetails.rest)" type="success" [striped]="true" [animate]="true">
+                      <i>{{(dataDetails.total - dataDetails.rest) | currency}} / {{dataDetails.total | currency}}</i>
                     </progressbar>
                   </span>
                   <div class="text-muted text-center mb-3">

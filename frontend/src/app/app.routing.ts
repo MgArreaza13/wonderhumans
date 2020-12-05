@@ -29,7 +29,7 @@ const routes: Routes = [
     { path: 'landing', component: LandingComponent },
     { path: 'login', component: LoginComponent },
     { path: 'food-run', component: FoodRunListComponent },
-    { path: 'details-food-run', component: FoodRunDetailsComponent },
+    { path: 'details-food-run/:idFood', component: FoodRunDetailsComponent },
     { path: '', redirectTo: 'landing', pathMatch: 'full' }
 ];
 

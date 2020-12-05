@@ -157,7 +157,8 @@
                                 </progressbar>
                               </td>
                               <td class="text-nowrap text-center">
-                                <a style="color: #fb6340;" data-toggle="tooltip" data-original-title="Ver">Ver <i
+                                <a style="color: #fb6340;cursor: pointer;" data-toggle="tooltip"
+                                  data-original-title="Ver" (click)="causeDetails(item)">Ver <i
                                     class="fa fa-eye text-inverse m-r-10"></i> </a>
 
                               </td>
@@ -169,9 +170,9 @@
                       <ng-template #noCause>
                         <h5>No hay causas registradas</h5>
                       </ng-template>
-                      <button class="btn btn-warning float-right" (click)="open(classic)">
+                      <!-- <button class="btn btn-warning float-right" (click)="open(classic)">
                         Show more
-                      </button>
+                      </button> -->
                     </ng-template>
                   </ngb-tab>
                 </ngb-tabset>
@@ -203,7 +204,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills" id="navCustom">
+        <!-- <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills" id="navCustom">
           <ngb-tab>
             <ng-template ngbTabTitle>
               <i class="ni ni-calendar-grid-58 mr-2"></i> Recaudaciones
@@ -284,7 +285,7 @@
               </div>
             </ng-template>
           </ngb-tab>
-        </ngb-tabset>
+        </ngb-tabset> -->
       </div>
     </div>
   </ng-template>
@@ -298,7 +299,7 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label>Name of event</label>
+        <label>Name of cause</label>
         <input type="text" class="form-control" aria-describedby="nameevent" placeholder="Enter name event"
           [(ngModel)]="name" />
         <small id="nameevent" class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing
