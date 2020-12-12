@@ -12,6 +12,12 @@ export class FoodRunService {
     newFoodRund(body) {
         return this.http.post(`${environment.apiRoot}/api/food/new/`, body);
     }
+    editFoodRund(body) {
+        return this.http.put(`${environment.apiRoot}/api/food/edit/`, body);
+    }
+    deleteFoodRund(id) {
+        return this.http.delete(`${environment.apiRoot}/api/food/get/${id}`);
+    }
     newVol(body) {
         return this.http.post(`${environment.apiRoot}/api/food/new/volunteer/`, body);
     }
@@ -24,4 +30,20 @@ export class FoodRunService {
     getVol(id) {
         return this.http.get(`${environment.apiRoot}/api/food/all/volunteer/${id}`);
     }
+    newDonation(body) {
+        return this.http.post(`${environment.apiRoot}/api/food/new/donation/`, body);
+    }
+
+    getDonations(id) {
+        return this.http.get(`${environment.apiRoot}/api/food/all/donation/${id}`);
+    }
+
+    newMultimedia(body) {
+        return this.http.post(`${environment.apiRoot}/api/food/new/feed/`, body);
+    }
+
+    getMultimedia(id) {
+        return this.http.get(`${environment.apiRoot}/api/food/all/feed/${id}`);
+    }
+
 }

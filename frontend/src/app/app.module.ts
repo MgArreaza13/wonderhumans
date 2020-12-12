@@ -40,6 +40,8 @@ import { FoodRunListModule } from './pages/food-run-list/food-run-list.module';
 import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.module';
 import { CausesDetailsComponent } from './shared/causes-details/causes-details.component';
 import { FoodRunFormComponent } from './shared/food-run-form/food-run-form.component';
+import { DonationFoodRunComponent } from './shared/donation-food-run/donation-food-run.component';
+import { AddMultimediaComponent } from './shared/add-multimedia/add-multimedia.component';
 
 @NgModule({
     declarations: [
@@ -56,8 +58,9 @@ import { FoodRunFormComponent } from './shared/food-run-form/food-run-form.compo
         QrReaderComponent,
         ModalImagenComponent,
         CausesDetailsComponent,
-        FoodRunFormComponent
-
+        FoodRunFormComponent,
+        DonationFoodRunComponent,
+        AddMultimediaComponent
 
     ],
     imports: [
@@ -93,6 +96,6 @@ import { FoodRunFormComponent } from './shared/food-run-form/food-run-form.compo
     // tslint:disable-next-line: max-line-length
     exports: [],
     bootstrap: [AppComponent],
-    entryComponents: [ModalImagenComponent, CausesDetailsComponent, FoodRunFormComponent]
+    entryComponents: [ModalImagenComponent, CausesDetailsComponent, FoodRunFormComponent, DonationFoodRunComponent, AddMultimediaComponent]
 })
 export class AppModule { }

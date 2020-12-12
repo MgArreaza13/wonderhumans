@@ -189,6 +189,7 @@ export class HomelessProfileComponent implements OnInit {
 
 
     getDonationsList(id) {
+        this.donationsList = null;
         this.homelessService.getDonations(id).subscribe(
             (data: any) => {
                 this.donationsList = data;
@@ -207,6 +208,7 @@ export class HomelessProfileComponent implements OnInit {
     }
 
     getEventList(id) {
+        this.dataCauses.length = 0;
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
                 console.log(data)
@@ -214,6 +216,7 @@ export class HomelessProfileComponent implements OnInit {
                 this.eventsList.forEach(element => {
                     this.dataCauses.push(
                         {
+                            id: element.id,
                             name: element.name,
                             total: Number(element.total),
                             rest: (element.rest === '') ? Number(element.total) : Number(element.rest),

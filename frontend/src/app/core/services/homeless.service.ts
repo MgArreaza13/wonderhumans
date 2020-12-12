@@ -53,4 +53,8 @@ export class HomelessService {
     newDonation(body) {
         return this.http.post(`${environment.apiRoot}/api/donations/new/`, body);
     }
+
+    recentDonations(id) {
+        return this.http.get(`${environment.apiRoot}/api/donations/cause/get/${id}`);
+    }
 }
