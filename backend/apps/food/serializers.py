@@ -1,5 +1,8 @@
 import serpy
 
+# My models
+from apps.accounts.models import Profile
+
 # My serializer
 from apps.accounts import serializers as accounts_serializers
 
@@ -42,7 +45,14 @@ class FoodVolunteerSerializers(serpy.Serializer):
 
     id = serpy.Field()
     user = accounts_serializers.UserSerializers()
+    photo = serpy.MethodField('get_image')
     food = FoodRunSerializers()
+
+    def get_image(self, obj):
+        if obj.user.profile:
+            if obj.user.profile.photo:
+                return obj.user.profile.photo.url
+        return None
 
 class FoodFeedSerializers(serpy.Serializer):
 

@@ -190,7 +190,7 @@ class FeedFoodView(APIView):
             return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        serializer = food_serializers.FoodVolunteerSerializers(feeds, many=True).data
+        serializer = food_serializers.FoodFeedSerializers(feeds, many=True).data
         return Response(serializer, status=status.HTTP_200_OK)
 
     def delete(self, request, id_feed):
