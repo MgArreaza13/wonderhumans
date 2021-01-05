@@ -11,6 +11,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ModalImagenComponent } from 'src/app/shared/modal-imagen/modal-imagen.component';
+import { combineLatest } from 'rxjs';
+import { CausesDetailsComponent } from 'src/app/shared/causes-details/causes-details.component';
 
 
 @Component({
@@ -126,7 +128,6 @@ export class HomelessProfileComponent implements OnInit {
                         timer: 1500
                     });
                     this.closemodal();
-                    console.log(result);
                 });
             } else {
                 Swal.fire({
@@ -156,7 +157,6 @@ export class HomelessProfileComponent implements OnInit {
     getProfile(id: number) {
         this.homelessService.getHomelessProfile(id).subscribe(
             (data) => {
-                console.log(data);
                 this.homelessProfile = data;
                 // tslint:disable-next-line: max-line-length
                 this.homelessPhoto = (this.homelessProfile.photo) ? `${this.imageUrl}${this.homelessProfile.photo}` : 'https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_960_720.png'
@@ -167,11 +167,9 @@ export class HomelessProfileComponent implements OnInit {
         )
     }
 
-
     getCommentsProfile(id: number) {
         this.homelessService.getCommentsProfile(id).subscribe(
             (data) => {
-                console.log(data);
                 this.comments = data;
             },
             error => {
@@ -191,6 +189,7 @@ export class HomelessProfileComponent implements OnInit {
 
 
     getDonationsList(id) {
+        this.donationsList = null;
         this.homelessService.getDonations(id).subscribe(
             (data: any) => {
                 this.donationsList = data;
@@ -209,12 +208,15 @@ export class HomelessProfileComponent implements OnInit {
     }
 
     getEventList(id) {
+        this.dataCauses.length = 0;
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
+                console.log(data)
                 this.eventsList = data;
                 this.eventsList.forEach(element => {
                     this.dataCauses.push(
                         {
+                            id: element.id,
                             name: element.name,
                             total: Number(element.total),
                             rest: (element.rest === '') ? Number(element.total) : Number(element.rest),
@@ -224,7 +226,6 @@ export class HomelessProfileComponent implements OnInit {
                         }
                     )
                 });
-                console.log(this.dataCauses)
 
             },
             error => {
@@ -262,7 +263,6 @@ export class HomelessProfileComponent implements OnInit {
 
         this.homelessService.newComment(id, body).subscribe(
             (data: any) => {
-                console.log(data);
                 this.ifSendComment = false;
                 this.comment = '';
                 this.comments = data;
@@ -282,9 +282,6 @@ export class HomelessProfileComponent implements OnInit {
     }
 
     newEvent() {
-        console.log(this.total)
-        console.log(this.description)
-        console.log(this.name)
         if (this.name === undefined || this.description === undefined || this.total === undefined) {
             this.toastr.error('Empty fields');
         } else {
@@ -295,14 +292,13 @@ export class HomelessProfileComponent implements OnInit {
     async createEvent(id) {
         await this.spinner.show();
         const body = {
+            id_homeless: id,
             name: this.name,
             total: this.total,
             description: this.description,
         };
-        console.log(body);
         this.homelessService.newEvent(id, body).subscribe(
             async (data: any) => {
-                console.log(data);
                 this.closemodal();
                 await this.spinner.hide();
                 this.toastr.success('Event added successfully');
@@ -331,19 +327,51 @@ export class HomelessProfileComponent implements OnInit {
         await this.router.navigateByUrl('/user-profile');
     }
 
-    openModal2(img) {
+    openModal2(img, idPort) {
+        console.log(this.portfolio)
         const initialState = {
 
             data: [
                 {
-                    img: img
+                    img: img,
+                    id: idPort
                 }
             ],
             type: 'onlyView'
         };
         this.bsModalRef = this.modalService2.show(ModalImagenComponent, { initialState });
         this.bsModalRef.content.closeBtnName = 'Close';
-        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal')
+        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal');
+        const _combine = combineLatest(
+            this.modalService2.onHide,
+            this.modalService2.onHidden,
+        ).subscribe((data) => {
+            if (data[0] === 'close') {
+                this.ngOnInit();
+            }
+
+        });
+    }
+    causeDetails(data) {
+
+        const initialState = {
+
+            data: [
+                data
+            ],
+        };
+        this.bsModalRef = this.modalService2.show(CausesDetailsComponent, { initialState });
+        this.bsModalRef.content.closeBtnName = 'Close';
+        this.bsModalRef.setClass('modal-lg modalA fullscreen-modal');
+        const _combine = combineLatest(
+            this.modalService2.onHide,
+            this.modalService2.onHidden,
+        ).subscribe((data) => {
+            if (data[0] === 'close') {
+                this.ngOnInit();
+            }
+
+        });
     }
 
 }

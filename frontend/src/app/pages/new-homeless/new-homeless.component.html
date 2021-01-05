@@ -30,8 +30,10 @@
                     <div class="imagen-para-archivo">
                       <span>
                         <label for="boton-archivo">
-                          <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
-                            class="imageU" /> </label>
+                          <img *ngIf="!dataEdit"
+                            src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" class="imageU" />
+                          <img *ngIf="dataEdit" [src]="imageEdit" class="imageU" />
+                        </label>
 
                         <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
                       </span>
@@ -121,7 +123,7 @@
                     </div>
                     <input [ngClass]="{
                         'is-invalid':
-                          f['lastName'].errors && f['lastName'].touched
+                          f['dateOfBirth'].errors && f['dateOfBirth'].touched
                       }" formControlName="dateOfBirth" class="form-control form-control-alternative datepicker"
                       placeholder="Ex: 24/08/1990" type="text" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
                   </div>
@@ -327,7 +329,7 @@
                 </section>
               </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="!dataEdit">
               <div class="col-12">
                 <label for="">Portfolio</label>
                 <file-upload class="w-100" formControlName="portfolio"></file-upload>

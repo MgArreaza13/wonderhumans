@@ -1,0 +1,212 @@
+<main>
+  <div class="position-relative">
+    <!-- Hero for FREE version -->
+    <section class="section section-shaped">
+      <div class="shape shape-style-1 shape-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="container py-sm" style="
+      padding-top: 1rem !important;
+      margin-top: 2rem;
+      background: #ffffff;border-radius: calc(0.25rem - 0.0625rem) calc(0.25rem - 0.0625rem) 0 0;
+      ">
+        <div class="col-lg-12">
+
+          <h5 style="text-align: center;
+        font-variant-caps: all-small-caps;
+        font-size: 1.5rem;">Nuestro voluntariado</h5>
+          <div class="row row-grid justify-content-center align-items-center">
+            <div class="col-12" *ngIf="dataVol !== null else noVol">
+              <drag-scroll #nav drag-scroll-y-disabled="true" [scrollbar-hidden]="true">
+                <img class="imgCover" drag-scroll-item src="{{environmentY}}{{item.photo}}"
+                  *ngFor="let item of dataVol" />
+
+              </drag-scroll>
+            </div>
+            <ng-template #noVol>
+              <h4 class="text-center">No hay voluntarios registrados</h4>
+            </ng-template>
+
+          </div>
+          <div class="row mt-3">
+            <div class="col-12  align-items-center">
+              <button class="btn btn-sm float-right btn-success" (click)="volunterAdd()">Quiero ser un
+                voluntario</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="container py-md" style="background: #ffffff;
+      padding: 1rem;border-radius: calc(0.25rem - 0.0625rem) calc(0.25rem - 0.0625rem) 0 0;">
+        <div class="row row-grid justify-content-between align-items-center" *ngIf="dataDetails">
+          <div class="col-lg-8">
+            <span style="width: 100%;display: flex; justify-content: flex-end;">
+              <span *ngIf="isOwner === true" class="d-flex">
+                <button class="btn btn-sm float-right btn-warning" (click)="editFoodRun()"><i
+                    class="fa fa-edit"></i></button>
+                <button class="btn btn-sm float-right btn-danger" (click)="deleteFoodRun()"><i
+                    class="fa fa-trash"></i></button>
+              </span>
+              <span *ngIf="isVolunter === true" style="margin-left: 0.5rem;">
+                <button class="btn btn-sm float-right btn-success" (click)="addMoreMulti()"><i
+                    class="fa fa-plus"></i></button>
+              </span>
+            </span>
+            <div class="w-100 d-flex align-items-center justify-content-center mb-2 mt-4">
+              <div class="rounded shadow-lg overflow-hidden">
+                <ngb-carousel>
+                  <ng-template ngbSlide>
+                    <img class="imageSlide" src="{{environmentY}}{{dataDetails.image}}" alt="">
+                  </ng-template>
+                  <ng-template ngbSlide *ngFor="let item of multiMedia">
+                    <img class="imageSlide" src="{{environmentY}}{{item.image}}" alt="Second slide">
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+
+            </div>
+            <section class="present">
+              <div class="icon icon-sm icon-shape bg-gradient-pink shadow rounded-circle">
+                <i class="fa fa-heart " style="color: #dc3545 !important;"></i>
+              </div>
+              <p>{{dataDetails.name}}</p>
+            </section>
+            <hr>
+            <section class="p-2">
+              <p>
+                {{dataDetails.description}}
+              </p>
+            </section>
+            <section class="p-2 row" style="display: flex;justify-content: center;margin-bottom: .8rem;">
+              <div class="col-6">
+                <button class="btn btn-success btn-block">
+                  Donar
+                </button>
+
+              </div>
+              <div class="col-6">
+
+                <button class="btn btn-light btn-block">
+                  Compartir
+                </button>
+              </div>
+            </section>
+            <h6 class="p-2">
+              Organizador
+            </h6>
+            <hr class="m-0 mb-2">
+            <section class="p-2" style="display: flex;
+            flex-direction: row;
+            justify-content: space-between;">
+              <div style="display: flex;
+              justify-content: space-between;
+              align-items: baseline;">
+                <div class="icon icon-sm icon-shape bg-gradient-pink shadow rounded-circle">
+                  <i class="fa fa-heart " style="color: #dc3545 !important;"></i>
+                </div>
+                <span style="    margin-left: 0.5rem;
+                text-align: center;
+                display: flex;
+                flex-flow: column;
+                align-items: center;">
+                  <p>{{dataDetails.user.first_name}} {{dataDetails.user.last_name}}</p>
+                  <small>{{dataDetails.user.email}}</small>
+                </span>
+              </div>
+              <div>
+                <button class="btn btn-success">Contacto</button>
+              </div>
+            </section>
+            <h6 class="p-2 mt-2">
+              Comentarios
+            </h6>
+            <hr class="m-0 mb-2">
+            <section class="p-2" style="display: flex;
+            flex-direction: row;
+            justify-content: space-between;">
+              <div style="display: flex;
+              justify-content: space-between;
+              align-items: baseline;">
+                <div class="icon icon-sm icon-shape bg-gradient-pink shadow rounded-circle">
+                  <i class="fa fa-heart " style="color: #dc3545 !important;"></i>
+                </div>
+                <span style="margin-left: 0.5rem;
+                display: flex;
+                flex-flow: column;">
+                  <p><b>Luis Escobar donó $10</b></p>
+                  <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae quisquam porro ab, quasi,
+                    tempora blanditiis laborum labori</small>
+                </span>
+              </div>
+
+            </section>
+          </div>
+          <div class="col-lg-4 mb-lg-auto">
+            <div class="">
+              <div class="card bg-secondary shadow border-0">
+                <div class="card-header bg-white pb-5">
+                  <span style="display: flex;flex-direction: column;">
+                    <p style="    font-size: small;
+                    text-align: center;
+                    font: -webkit-small-control;
+                    font-variant-caps: all-petite-caps;">{{(dataDetails.total - dataDetails.rest) | currency}}
+                      recaudados del objetivo de {{dataDetails.total | currency}}</p>
+                    <progressbar style="height: 16px;" [max]="dataDetails.total"
+                      [value]="(dataDetails.total - dataDetails.rest)" type="success" [striped]="true" [animate]="true">
+                      <i>{{(dataDetails.total - dataDetails.rest) | currency}} / {{dataDetails.total | currency}}</i>
+                    </progressbar>
+                  </span>
+                  <div class="text-muted text-center mb-3">
+                    <small>Lorem ipsum</small>
+                  </div>
+                  <div class="btn-wrapper text-center">
+                    <a (click)="donationDetails(dataDetails)" class="btn btn-neutral btn-icon btn-block">
+                      <span class="btn-inner--icon">
+                        <i class="fa fa-heart"></i>
+                      </span>
+                      <span class="btn-inner--text">Donar</span>
+                    </a>
+                    <a href="javascript:void(0)" class="btn btn-neutral btn-icon btn-block">
+                      <span class="btn-inner--icon">
+                        <i class="fa fa-share"></i>
+                      </span>
+                      <span class="btn-inner--text">Compartir</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body px-lg-5 py-lg-5">
+                  <div class="text-center text-muted mb-4">
+                    <small>Últimas donaciones</small>
+                  </div>
+                  <span *ngFor="let item of dataDonations | slice:0:3"
+                    style="display: flex;flex-flow: row;align-items: baseline;">
+                    <div class="icon icon-sm icon-shape bg-gradient-pink shadow rounded-circle">
+                      <i class="fa fa-heart " style="color: #dc3545 !important;"></i>
+                    </div>
+                    <p style="display: flex;
+                    flex-flow: column;
+                    justify-content: space-between;
+                    align-items: baseline;
+                    margin-left: 5px;">
+                      <b>{{item.user.first_name}} {{item.user.last_name}}</b>
+                      <small>Donó {{item.amount | currency}}</small>
+                    </p>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</main>

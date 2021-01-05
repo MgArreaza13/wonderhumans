@@ -126,7 +126,6 @@ export class ProfileComponent implements OnInit {
 
 
     getMyHomelessProfile() {
-        console.log('entre en obtener homelless')
         this.dataHom.length = 0;
         this.userService.getMyHomelessProfile().subscribe(
             (data: any) => {
@@ -143,7 +142,6 @@ export class ProfileComponent implements OnInit {
                             })
                     });
                 }
-                console.log(this.dataHom)
             },
             err => {
                 console.log('nohomeless' + err)
@@ -153,7 +151,6 @@ export class ProfileComponent implements OnInit {
     }
 
     feed() {
-        console.log('holaaa Miodaasdaskljhk')
     }
 
     openModalWithComponent(item) {
@@ -182,7 +179,6 @@ export class ProfileComponent implements OnInit {
             this.modalService.onHide,
             this.modalService.onHidden,
         ).subscribe((data) => {
-            console.log(data)
             if (data[0] === 'close' || data[0] === 'backdrop-click') {
                 this.getAllFeeds();
             }
@@ -207,7 +203,6 @@ export class ProfileComponent implements OnInit {
             this.modalService.onHide,
             this.modalService.onHidden,
         ).subscribe((data) => {
-            console.log(data)
             if (data[0] === 'close' || data[0] === 'backdrop-click') {
                 this.getAllFeeds();
             }
