@@ -3,6 +3,7 @@ from apps.food import views
 
 urlpatterns = [
     # Food Run
+    path('test/', views.Test.as_view(), name='test'),
     path('new/', views.FoodRunView.as_view(), name='new_food_run'),
     path('get/<int:id>', views.FoodRunView.as_view(), name='get_food_run'),
     path('edit/', views.FoodRunView.as_view(), name='edit_food_run'),

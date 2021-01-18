@@ -17,7 +17,17 @@ from apps.food import services as food_services
 # My serializers
 from apps.food import serializers as food_serializers
 
+# My Task
+from apps.food import task as food_task
+from datetime import datetime, timedelta
 # My views
+
+class Test(APIView):
+    
+    def post(self,request):
+        tomorrow = datetime.utcnow() + timedelta(seconds=30)
+        food_task.test.delay()
+        return Response({'detail':'Todo correcto?'}, status=status.HTTP_200_OK)
 
 class FoodRunView(APIView):
     """

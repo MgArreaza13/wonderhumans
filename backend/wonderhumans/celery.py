@@ -22,12 +22,13 @@ import os
 from celery import Celery
 # from .celerybeat_schedule import CELERYBEAT_SCHEDULE
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wonderhumans.settings.local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wonderhumans.settings.base")
 
-app = Celery('tasks')
+app = Celery('wonderhumans')
 app.config_from_object('django.conf:settings', namespace='CELERY')
-app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
+# app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
 # app.conf.update(CELERYBEAT_SCHEDULE=CELERYBEAT_SCHEDULE)
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 @app.task(bind=True)
 def debug_task(self):
