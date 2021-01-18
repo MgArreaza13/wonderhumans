@@ -36,6 +36,12 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.component';
+import { FoodRunListModule } from './pages/food-run-list/food-run-list.module';
+import { FoodRunDetailsModule } from './pages/food-run-details/food-run-details.module';
+import { CausesDetailsComponent } from './shared/causes-details/causes-details.component';
+import { FoodRunFormComponent } from './shared/food-run-form/food-run-form.component';
+import { DonationFoodRunComponent } from './shared/donation-food-run/donation-food-run.component';
+import { AddMultimediaComponent } from './shared/add-multimedia/add-multimedia.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +56,12 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         NewHomelessComponent,
         HomelessProfileComponent,
         QrReaderComponent,
-        ModalImagenComponent
+        ModalImagenComponent,
+        CausesDetailsComponent,
+        FoodRunFormComponent,
+        DonationFoodRunComponent,
+        AddMultimediaComponent
+
     ],
     imports: [
         BrowserModule,
@@ -76,13 +87,15 @@ import { ModalImagenComponent } from './shared/modal-imagen/modal-imagen.compone
         BsDatepickerModule.forRoot(),
         DragScrollModule,
         ImageCropperModule,
-        ProgressbarModule.forRoot()
+        ProgressbarModule.forRoot(),
+        FoodRunListModule,
+        FoodRunDetailsModule
 
     ],
     providers: [],
     // tslint:disable-next-line: max-line-length
     exports: [],
     bootstrap: [AppComponent],
-    entryComponents: [ModalImagenComponent]
+    entryComponents: [ModalImagenComponent, CausesDetailsComponent, FoodRunFormComponent, DonationFoodRunComponent, AddMultimediaComponent]
 })
 export class AppModule { }

@@ -1,0 +1,98 @@
+<!-- <div class="container">
+  <div class="row p-3">
+    <div class="col-12">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Nombre del food run</label>
+            <input type="email" class="form-control" placeholder="Nombre">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Monto a reunir</label>
+            <input type="number" class="form-control" placeholder="Monto">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Número de voluntarios</label>
+            <input type="number" class="form-control" placeholder="Voluntarios">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+
+    </div>
+  </div>
+</div> -->
+<div class="container">
+  <div class="card card-profile p-2">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="px-4">
+      <div class="row justify-content-center mb-2">
+        <div class="col-lg-3 order-lg-2">
+          <div class="card-profile-image">
+            <ng-template #noImage>
+              <div class="imagen-para-archivo">
+                <span>
+                  <label for="boton-archivo" *ngIf="data === undefined">
+                    <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" class="imageU" />
+                  </label>
+                  <label for="boton-archivo" *ngIf="data !== undefined">
+                    <img src="{{environmentY}}{{data.image}}" class="imageU" />
+                  </label>
+
+                  <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
+                </span>
+              </div>
+            </ng-template>
+            <span *ngIf="imageURL && imageURL !== ''; else noImage">
+              <img [src]="imageURL" class="imageU" />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center ">
+        <div class="col-12 order-lg-2">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Nombre del food run</label>
+              <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="name">
+            </div>
+
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label>Monto a reunir</label>
+              <input type="number" class="form-control" placeholder="Monto" [(ngModel)]="total">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Número de voluntarios</label>
+              <input type="number" class="form-control" placeholder="Voluntarios" [(ngModel)]="volunteers">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Descripción</label>
+              <textarea class="form-control" placeholder="Descripción" [(ngModel)]="description"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-5 mb-5 float-right">
+        <button (click)="save()" class="btn btn-success">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,6 +30,12 @@
               <div class="btn-wrapper text-center">
                 <img [src]="homelessPhoto" alt="" class="img-fluid rounded-circle shadow-lg" />
               </div>
+              <div class="btn-wrapper text-center mt-3">
+                <button routerLink="/edit-homeless/{{idHomeless}}" id="add-event-btn" type="button"
+                  class="btn btn-outline-warning btn-sm ">
+                  Editar homeless
+                </button>
+              </div>
             </div>
             <div class="card-body px-lg-2">
               <div class="col-12">
@@ -114,7 +120,7 @@
                       <div class="row">
                         <div class="col-sm" *ngFor="let item of portfolio">
                           <img style="box-shadow: 1px 1px 7px #808080e0;" src="{{imageUrl}}{{ item.image }}"
-                            (click)="openModal2(item.image)" class="img-portfolio" />
+                            (click)="openModal2(item.image, item.id)" class="img-portfolio" />
                         </div>
                       </div>
                     </ng-template>
@@ -151,7 +157,8 @@
                                 </progressbar>
                               </td>
                               <td class="text-nowrap text-center">
-                                <a style="color: #fb6340;" data-toggle="tooltip" data-original-title="Ver">Ver <i
+                                <a style="color: #fb6340;cursor: pointer;" data-toggle="tooltip"
+                                  data-original-title="Ver" (click)="causeDetails(item)">Ver <i
                                     class="fa fa-eye text-inverse m-r-10"></i> </a>
 
                               </td>
@@ -163,9 +170,9 @@
                       <ng-template #noCause>
                         <h5>No hay causas registradas</h5>
                       </ng-template>
-                      <button class="btn btn-warning float-right" (click)="open(classic)">
+                      <!-- <button class="btn btn-warning float-right" (click)="open(classic)">
                         Show more
-                      </button>
+                      </button> -->
                     </ng-template>
                   </ngb-tab>
                 </ngb-tabset>
@@ -197,7 +204,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills" id="navCustom">
+        <!-- <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills" id="navCustom">
           <ngb-tab>
             <ng-template ngbTabTitle>
               <i class="ni ni-calendar-grid-58 mr-2"></i> Recaudaciones
@@ -278,7 +285,7 @@
               </div>
             </ng-template>
           </ngb-tab>
-        </ngb-tabset>
+        </ngb-tabset> -->
       </div>
     </div>
   </ng-template>
@@ -292,7 +299,7 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label>Name of event</label>
+        <label>Name of cause</label>
         <input type="text" class="form-control" aria-describedby="nameevent" placeholder="Enter name event"
           [(ngModel)]="name" />
         <small id="nameevent" class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing

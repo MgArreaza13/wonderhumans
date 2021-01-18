@@ -119,7 +119,7 @@
                     </div>
                     <input [ngClass]="{
                         'is-invalid':
-                          f['lastName'].errors && f['lastName'].touched
+                          f['dateOfBirth'].errors && f['dateOfBirth'].touched
                       }" formControlName="dateOfBirth" class="form-control form-control-alternative datepicker"
                       placeholder="Ex: 24/08/1990" type="text" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
                   </div>

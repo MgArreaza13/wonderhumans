@@ -10,78 +10,77 @@ import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  focus;
-  focus1;
-  public loginForm: FormGroup;
-  public user: User = {};
-  public auth: Authentication = {};
-  public submitted = false;
-  public loading = false;
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private spinner: NgxSpinnerService,
-    private toastr: ToastrService,
-    private lsService: LocalStorageService,
-    private router: Router
-  ) { }
+    focus;
+    focus1;
+    public loginForm: FormGroup;
+    public user: User = {};
+    public auth: Authentication = {};
+    public submitted = false;
+    public loading = false;
+    constructor(
+        private formBuilder: FormBuilder,
+        private authService: AuthService,
+        private spinner: NgxSpinnerService,
+        private toastr: ToastrService,
+        private lsService: LocalStorageService,
+        private router: Router
+    ) { }
 
-  ngOnInit() {
-    // Validate token
-    const token = this.lsService.getValue('token');
-    if (token) {
-      this.router.navigate(['/user-profile']);
+    ngOnInit() {
+        // Validate token
+        const token = this.lsService.getValue('token');
+        if (token) {
+            this.router.navigate(['/user-profile']);
+        }
+
+        // Build form
+        this.loginForm = this.formBuilder.group({
+            username: [
+                "",
+                Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25)])
+            ],
+            password: [
+                "",
+                [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
+            ]
+        });
     }
 
-    // Build form
-    this.loginForm = this.formBuilder.group({
-      username: [
-        "",
-        Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(25)])
-      ],
-      password: [
-        "",
-        [Validators.required, Validators.minLength(8), Validators.maxLength(25)]
-      ]
-    });
-  }
+    get f() { return this.loginForm.controls; }
 
-  get f() { return this.loginForm.controls; }
+    onSubmit() {
+        this.spinner.show();
+        this.submitted = true;
+        if (this.loginForm.invalid) {
+            this.spinner.hide();
+            return;
+        }
 
-  onSubmit() {
-    this.spinner.show();
-    this.submitted = true;
-    if (this.loginForm.invalid) {
-      this.spinner.hide();
-      return;
+        // Set object
+        this.auth.username = this.loginForm.get('username').value;
+        this.auth.password = this.loginForm.get('password').value;
+
+        // Send request
+        this.authService.login(this.auth).subscribe(
+            (data: any) => {
+                this.user.id = data.id;
+                this.user.token = data.token;
+                this.user.first_name = data.first_name;
+                this.user.last_name = data.last_name;
+                this.user.username = data.username;
+                this.user.email = data.email;
+                this.lsService.setValue('wonderHumanUser', JSON.stringify(this.user));
+                this.spinner.hide();
+                this.toastr.success('Welcome', 'login success');
+                this.router.navigateByUrl('/user-profile')
+            },
+            err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
+        );
     }
-
-    // Set object
-    this.auth.username = this.loginForm.get('username').value;
-    this.auth.password = this.loginForm.get('password').value;
-
-    // Send request
-    this.authService.login(this.auth).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.user.id = data.id;
-        this.user.token = data.token;
-        this.user.first_name = data.first_name;
-        this.user.last_name = data.last_name;
-        this.user.username = data.username;
-        this.user.email = data.email;
-        this.lsService.setValue('wonderHumanUser', JSON.stringify(this.user));
-        this.spinner.hide();
-        this.toastr.success('Welcome', 'login success');
-        this.router.navigateByUrl('/user-profile')
-      },
-      err => { console.log(err); this.toastr.error('Error', err.error.detail); this.spinner.hide(); }
-    );
-  }
 
 }

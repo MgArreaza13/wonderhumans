@@ -161,10 +161,53 @@
 </div>
 
 <div class="row" *ngIf="type === 'onlyView'">
-  <div class="col-12 pr-0" style="max-height: 100%;    display: flex;
-  justify-content: center;">
-    <img [src]="img" alt="" style="padding: 2rem;object-fit: contain;    max-width: 30rem;
+  <div *ngIf="editPortofolio === false else editPorf" class="col-12 pr-0" style="max-height: 100%;    display: flex;
+  justify-content: start;">
+    <span style="position: absolute;
+    padding: 10px;
+    background: border-box;
+    display: flex;
+    justify-content: start;
+    background: #faebd74a;">
+      <button class="btn btn-sm btn-warning" (click)="editPort()"><i class="fa fa-edit"></i></button>
+      <button class="btn btn-sm btn-danger" (click)="deletePortfolio()"><i class="fa fa-close"></i></button>
+    </span>
+    <img [src]="img" alt="" style="padding: 2rem;object-fit: contain;margin: 0 auto; max-width: 30rem;
     min-width: 30rem;
     object-fit: cover;">
   </div>
+  <ng-template #editPorf>
+    <div *ngIf="fir === false" class="col-12 pr-0  addI" style="max-height: 100%;padding-left: 0px; height: 30rem;">
+      <h6 style="text-align: center;">Escoge una nueva imagen para tu publicación</h6>
+
+      <div class="imagen-para-archivo">
+        <span>
+          <label for="boton-archivo">
+            <img class="imgI" *ngIf="croppedImage" [src]="croppedImage" />
+            <img class="imgI" *ngIf="!croppedImage" [src]="imageDefaul" />
+
+            <input id="boton-archivo" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+          </label>
+        </span>
+
+      </div>
+      <image-cropper *ngIf="show === true" [backgroundColor]="Brown" [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+      <button class="btn btn-sm btn-success" (click)="editar()" *ngIf="croppedImage">Listo</button>
+    </div>
+    <div class="col-12 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''">
+      <span style="padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;">
+        <button (click)="readyEdit()" class="btn btn-sm btn-success" style="position: absolute;
+        margin: 1rem;
+        right: 15px;bottom: 0;">Listo</button>
+        <img [src]="imageURL" />
+      </span>
+
+    </div>
+  </ng-template>
 </div>

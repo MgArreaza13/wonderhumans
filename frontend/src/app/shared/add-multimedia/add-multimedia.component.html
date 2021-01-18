@@ -1,0 +1,33 @@
+<div class="row">
+  <ng-template #noImage>
+    <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px;min-height: 30rem;">
+      <h5>Añade una imagen para tu publicación</h5>
+      <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
+      <!-- <img *ngIf="croppedImage" [src]="croppedImage" /> -->
+      <div class="imagen-para-archivo">
+        <span>
+          <label for="boton-archivo">
+            <img [src]="imageDefaul" class="imageU" /> </label>
+
+          <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
+        </span>
+      </div>
+    </div>
+  </ng-template>
+  <div class="col-6" style="max-height: 100%;padding: 3rem;" *ngIf="imageURL && imageURL !== ''; else noImage">
+    <span>
+      <img [src]="imageURL" />
+    </span>
+  </div>
+  <div class="col-6 pl-0 addPublic">
+    <label for="">Descripción</label>
+    <textarea maxlength="100" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
+      [(ngModel)]="description"></textarea>
+    <span *ngIf="contator" style="float: right;font-variant: all-petite-caps;">{{contator}}/{{restante}}
+      caracteres</span>
+    <span>
+      <button class="btn btn-sm btn-success" [disabled]="readyImage === false" (click)="post()">Publicar</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()" [disabled]="!imageURL">Cambiar Imagen</button>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+.bg-gradient-default {
+  background: linear-gradient(150deg, #cf3a9e 15%, #ff6240 70%, #fbaa4f 94%) !important;
+}
+
+.text-danger {
+  font-variant: small-caps;
+  font-size: small;
+}
+
+.section-shaped {
+  position: inherit !important;
+}
+
+.section-shaped .shape-style-1.shape-default {
+  background: linear-gradient(150deg,
+      #cf3a9e 15%,
+      #ff6240 70%,
+      #fbaa4f 94%) !important;
+}
+
+.bg-grad {
+  background: linear-gradient(150deg, #de4583 15%, #f1884d 70%, #f1894e 94%) !important;
+}
+
+.top-im {
+  width: 17rem;
+  height: 17rem;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.present {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  padding: 0.5rem;
+
+  p {
+    margin-left: 15px;
+  }
+}
+
+.imgCover {
+  width: 150px;
+  height: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  min-height: 150px;
+  object-fit: cover;
+  cursor: grab;
+  border-radius: 50%;
+  margin: 0.5rem;
+}
+
+drag-scroll {
+  height: 160px;
+}
+
+.imageSlide {
+  max-width: 38rem;
+  min-width: 38rem;
+  max-height: 38rem;
+  min-height: 38rem;
+  height: 38rem;
+  width: 38rem;
+  object-fit: cover;
+}
