@@ -11,6 +11,7 @@ from apps.accounts import services as accounts_services
 
 # My validations
 from apps.food import validations as food_validations
+from apps.accounts import validations as accounts_validations
 
 # My services 
 
@@ -46,6 +47,10 @@ def new_food_run(data:dict, user:User):
             raise ValueError(str(_("Min value in total is 0 and max is 10000")))
     else:
         raise ValueError(str(_("total_volunteers is required")))
+    if data.get("execution_date") is not None:
+        execution_date = accounts_validations.validate_birth(data.get("execution_date"))
+    else:
+        raise ValueError(str(_("execution_date is required")))
     with transaction.atomic():
         try:
             food_run = food_models.FoodRun.objects.create(
@@ -57,6 +62,7 @@ def new_food_run(data:dict, user:User):
                 rest = total,
                 total_volunteers = total_volunteers,
                 rest_volunteers = total_volunteers,
+                execution_date = execution_date,
                 status = str('open')
             )
         except Exception as e:

@@ -19,6 +19,7 @@ class FoodRun(models.Model):
     total_volunteers = models.IntegerField(null=True) 
     rest_volunteers = models.IntegerField(null=True) 
     created_at = models.DateTimeField(auto_now_add=True)
+    execution_date = models.DateTimeField(auto_now_add=False,null=True)
     status = models.CharField(max_length=6,choices=STATUS, null=True)
 
     def __str__(self):

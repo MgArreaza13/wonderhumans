@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 import os
 
+from django.conf import settings
 from celery import Celery
 # from .celerybeat_schedule import CELERYBEAT_SCHEDULE
 
@@ -26,10 +27,13 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wonderhumans.settings.base")
 
 app = Celery('wonderhumans')
 app.config_from_object('django.conf:settings', namespace='CELERY')
-# app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()])
+# app.autodiscover_tasks(lambda: [n.name for n in apps.get_app_configs()]) -- No usare esta opcion
 # app.conf.update(CELERYBEAT_SCHEDULE=CELERYBEAT_SCHEDULE)
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
-
+# app.autodiscover_tasks(lambda: settings.INSTALLED_APPS) -- No usare esta opcion
+app.autodiscover_tasks()
+app.conf.update(
+	BROKER_URL = 'redis://localhost:6379', #Nota 6
+)
 @app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')

@@ -12,3 +12,7 @@ def test():
 	cuerpo = ""
 	print('Test Works!')
 	return 'Ready!'
+
+@shared_task
+def suma(x,y):
+	return x+y

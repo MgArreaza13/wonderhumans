@@ -43,6 +43,8 @@ class FoodRunView(APIView):
             return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # time = food.created_at + food.execution_date - timedelta()
+        # food_task.send_notification()
         serializer = food_serializers.FoodRunSerializers(food, many=False).data
         serializer['detail'] = str(_("You have register a food run correctly"))
         return Response(serializer, status=status.HTTP_201_CREATED)
