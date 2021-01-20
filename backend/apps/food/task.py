@@ -16,3 +16,8 @@ def test():
 @shared_task
 def suma(x,y):
 	return x+y
+
+@shared_task
+def notification_food(id_food):
+	print("This is a notification_food!")
+	return id_food

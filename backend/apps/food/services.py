@@ -77,15 +77,12 @@ def new_food_run(data:dict, user:User):
     execution_date = datetime.strptime(execution_date, "%Y-%m-%d %H:%M")
     # Time to add at timenow
     time_extra = execution_date - create_at
-    print(time_extra)
     # Time to rest at time_extra
     time_rest = (20*time_extra.total_seconds())/100
-    print(time_rest)
     time_to_add = time_extra - timedelta(seconds=time_rest)
-    print(time_to_add, time_to_add.total_seconds())
-    time = create_at + time_to_add
-    print(time, type(time))
-    food_task.suma.apply_async((2,2),countdown=int(time_to_add.total_seconds()))
+    time = time_to_add.total_seconds()
+    # time = create_at + time_to_add
+    food_task.notification_food.apply_async(([food_run.id]),countdown=int(time))
     return food_run
     
 

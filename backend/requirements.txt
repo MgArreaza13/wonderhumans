@@ -1,4 +1,4 @@
-amqp==2.5.1
+amqp==2.6.1
 anyjson==0.3.3
 astroid==2.3.3
 billiard==3.6.1.0
@@ -16,12 +16,15 @@ django-celery-email==2.0.2
 django-cors-headers==2.4.0
 django-rest-auth==0.9.5
 djangorestframework==3.10.2
+dnspython==1.16.0
+eventlet==0.30.0
 flower==0.9.7
+greenlet==1.0.0
 humanize==3.2.0
 idna==2.8
 importlib-metadata==0.23
 isort==4.3.21
-kombu==4.6.4
+kombu==4.6.11
 lazy-object-proxy==1.4.3
 Markdown==3.1.1
 mccabe==0.6.1
@@ -31,6 +34,7 @@ prometheus-client==0.8.0
 prompt-toolkit==3.0.8
 psycopg2==2.8.6
 pylint==2.4.4
+python-dateutil==2.8.1
 python-decouple==3.1
 pytz==2019.3
 qrcode==6.1
