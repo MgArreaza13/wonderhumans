@@ -39,3 +39,16 @@ def validate_volunteer(user:User,food:food_models.FoodRun):
     """
     if food_models.FoodVolunteer.objects.filter(user=user,food=food).exists():
         raise ValueError(str(_("Alredy you are voluenteer in this food run")))
+
+def validate_excuted_date(date:dict):
+    """
+        Method to put bitrh date a correct form
+
+        :param birth: date of brith
+        :type birth: dict
+        :return: bool
+    """
+    if type(date) is not dict:
+        raise ValueError(str(("Data date should be json, not str")))
+    date = str(date.get('year')) + '-' + str(date.get('month')) + '-' + str(date.get('day')) + ' ' + str(date.get("hour")) + ':' + str(date.get("minute"))
+    return date

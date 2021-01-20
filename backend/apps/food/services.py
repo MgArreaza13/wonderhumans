@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from django.db import transaction, IntegrityError, DatabaseError
 
+# From Python
+from datetime import datetime, timedelta
+
+# My Task
+from apps.food import task as food_task
+
 # My models
 from apps.food import models as food_models
 
@@ -11,7 +17,6 @@ from apps.accounts import services as accounts_services
 
 # My validations
 from apps.food import validations as food_validations
-from apps.accounts import validations as accounts_validations
 
 # My services 
 
@@ -48,7 +53,7 @@ def new_food_run(data:dict, user:User):
     else:
         raise ValueError(str(_("total_volunteers is required")))
     if data.get("execution_date") is not None:
-        execution_date = accounts_validations.validate_birth(data.get("execution_date"))
+        execution_date = food_validations.validate_excuted_date(data.get("execution_date"))
     else:
         raise ValueError(str(_("execution_date is required")))
     with transaction.atomic():
@@ -68,6 +73,19 @@ def new_food_run(data:dict, user:User):
         except Exception as e:
             print(e)
             raise ValueError(str(_("there was an error saving the food run")))
+    create_at = datetime.now()
+    execution_date = datetime.strptime(execution_date, "%Y-%m-%d %H:%M")
+    # Time to add at timenow
+    time_extra = execution_date - create_at
+    print(time_extra)
+    # Time to rest at time_extra
+    time_rest = (20*time_extra.total_seconds())/100
+    print(time_rest)
+    time_to_add = time_extra - timedelta(seconds=time_rest)
+    print(time_to_add, time_to_add.total_seconds())
+    time = create_at + time_to_add
+    print(time, type(time))
+    food_task.suma.apply_async((2,2),countdown=int(time_to_add.total_seconds()))
     return food_run
     
 

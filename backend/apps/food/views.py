@@ -17,9 +17,6 @@ from apps.food import services as food_services
 # My serializers
 from apps.food import serializers as food_serializers
 
-# My Task
-from apps.food import task as food_task
-from datetime import datetime, timedelta
 # My views
 
 class Test(APIView):

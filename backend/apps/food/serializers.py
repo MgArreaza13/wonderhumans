@@ -19,6 +19,7 @@ class FoodRunSerializers(serpy.Serializer):
     rest_volunteers = serpy.Field()
     status = serpy.Field()
     created_at = serpy.Field()
+    execution_date = serpy.Field()
 
     def get_image(self, obj):
         """
