@@ -73,16 +73,23 @@ def new_food_run(data:dict, user:User):
         except Exception as e:
             print(e)
             raise ValueError(str(_("there was an error saving the food run")))
-    create_at = datetime.now()
-    execution_date = datetime.strptime(execution_date, "%Y-%m-%d %H:%M")
-    # Time to add at timenow
-    time_extra = execution_date - create_at
-    # Time to rest at time_extra
-    time_rest = (20*time_extra.total_seconds())/100
-    time_to_add = time_extra - timedelta(seconds=time_rest)
-    time = time_to_add.total_seconds()
-    # time = create_at + time_to_add
-    food_task.notification_food.apply_async(([food_run.id]),countdown=int(time))
+    if data.get("invitation_message") is not None:
+        food_validations.validate_length('Invitation Message',data.get("invitation_message"),10,100)
+        food_run.invitation_message = data.get("invitation_message")
+        food_run.save()
+
+    """Calculations to perform the scheduled task"""
+
+    # create_at = datetime.now()
+    # execution_date = datetime.strptime(execution_date, "%Y-%m-%d %H:%M")
+    # # Time to add at timenow
+    # time_extra = execution_date - create_at
+    # # Time to rest at time_extra
+    # time_rest = (20*time_extra.total_seconds())/100
+    # time_to_add = time_extra - timedelta(seconds=time_rest)
+    # time = time_to_add.total_seconds()
+    # # time = create_at + time_to_add
+    # food_task.notification_food.apply_async(([food_run.id]),countdown=int(time))
     return food_run
     
 

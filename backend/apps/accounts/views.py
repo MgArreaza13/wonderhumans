@@ -208,3 +208,22 @@ class ManagementMyHomelessProfileViewSet (APIView):
 		# serializer = accounts_serializers.HomelessProfileSerializers(profile, many=False).data
 		# print(serializer)
 		return Response(profile, status=status.HTTP_200_OK)
+
+class CodeHomelessProfile(APIView):
+	"""
+		Service for seach homeless profile by code
+	"""
+
+	permission_classes = [permissions.IsAuthenticated]
+
+	def get(self, request, code):
+		try:
+			homeless = accounts_services.GetHomelessProfile(code)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = accounts_serializers.HomelessProfileSerializers(homeless, many=False).data
+		return Response(serializer, status=status.HTTP_200_OK)

@@ -494,6 +494,7 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'show_email': p.show_email,
 				# Additional information personal
 				'occupation' : p.occupation,
+				'code': p.code,
 				'phone' : p.phone,
 				'address' : p.address,
 				'city' : p.city,
@@ -508,3 +509,15 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				values['photo'] = p.photo.url
 			data.append(values)
 		return data
+
+def GetHomelessProfile(code:str):
+	"""
+		Service for seach homeless profiles by code
+
+		: raise: ValueError
+	"""
+	try:
+		homeless = HomelessProfile.objects.get(code=code)
+	except HomelessProfile.DoesNotExist:
+		raise ValueError(_(str("No homless was found with that code")))
+	return homeless

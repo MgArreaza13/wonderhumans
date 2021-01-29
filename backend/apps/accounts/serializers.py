@@ -56,6 +56,7 @@ class HomelessProfileSerializers(serpy.Serializer):
 	lastName = serpy.Field()
 	email = serpy.Field()
 	show_email = serpy.Field()
+	code = serpy.Field()
 	typeUser = serpy.Field()
 	photo = serpy.MethodField('get_photo')
 	# Additional information personal
