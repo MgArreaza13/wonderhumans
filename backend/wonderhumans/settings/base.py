@@ -207,11 +207,16 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
+
+# EMAIL_HOST = 'b7000615.ferozo.com'
+# EMAIL_HOST_USER = 'musculando@b7000615.ferozo.com'
+# EMAIL_HOST_PASSWORD = 'Adolf5454@'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'b7000615.ferozo.com'
-EMAIL_HOST_USER = 'musculando@b7000615.ferozo.com'
-EMAIL_HOST_PASSWORD = 'Adolf5454@'
 EMAIL_PORT = 587
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
