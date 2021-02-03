@@ -52,6 +52,7 @@ class UserProfileSerializers(serpy.Serializer):
 
 class HomelessProfileSerializers(serpy.Serializer):
 	#userRegisterer = models.ForeignKey(User, on_delete=models.CASCADE, null= True)
+	id = serpy.Field()
 	firstName = serpy.Field()
 	lastName = serpy.Field()
 	email = serpy.Field()
