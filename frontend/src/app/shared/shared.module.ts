@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 // Pipes
 
@@ -14,18 +16,20 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ModalModule.forRoot()
-  ],
-  exports: [
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,  ],
-  declarations: [
-  ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ModalModule.forRoot(),
+        BsDatepickerModule
+    ],
+    exports: [
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SearchbarComponent],
+    declarations: [SearchbarComponent
+    ],
 })
-export class SharedModule {}
+export class SharedModule { }

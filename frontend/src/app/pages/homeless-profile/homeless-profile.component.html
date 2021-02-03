@@ -45,6 +45,8 @@
                     {{ homelessProfile?.firstName }}
                     {{ homelessProfile?.lastName }}
                   </h5>
+                  <small *ngIf="homelessProfile?.code" class="font-weight-bold text-center d-block">Código:
+                    {{ homelessProfile?.code }}</small>
                   <small *ngIf="homelessProfile?.email && homelessProfile?.show_email === true"
                     class="font-weight-bold text-center d-block">Email: {{ homelessProfile?.email }}</small>
                   <small *ngIf="homelessProfile?.phone" class="font-weight-bold text-center d-block">Phone Number:

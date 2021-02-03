@@ -67,36 +67,65 @@
             </div>
           </div>
         </li> -->
+
+
+
+        <!-- <li class="nav-item dropdown">
+          <div>
+            <div class="card">
+              <div class="input-group">
+                <input [(ngModel)]="term" (keyup)="onKey($event)" type="text" class="form-control">
+                <div class="input-group-append"><button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+              </div>
+              <div class="d-flex flex-row justify-content-between mb-2 cont" *ngIf="searchActive !== null" style="position: absolute;
+              width: 100%;
+              top: 4rem;
+          ">
+                <div class="d-flex flex-column p-3">
+                  <p class="mb-1" (click)="onClick(item)" clickable>sdfdfdsfds</p>
+                  <small class="text-muted">8 days remaining</small>
+                  <p>{{item}}</p>
+                </div>
+                <div class="price pt-3 pl-3"> <span class="mb-2">Fixed</span>
+                  <h5><span>$</span>1,500</h5>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </li> -->
         <li class="nav-item dropdown" *ngIf="!user">
-          <a class="nav-link " role="button" [routerLink]="['/login']">            
+          <a class="nav-link " role="button" [routerLink]="['/login']">
             <span class="nav-link-inner--text">Login</span>
           </a>
 
         </li>
         <li class="nav-item dropdown" *ngIf="user">
-          <a class="nav-link " role="button" [routerLink]="['/user-profile']">            
+          <a class="nav-link " role="button" [routerLink]="['/user-profile']">
             <span class="nav-link-inner--text">Profile</span>
           </a>
 
         </li>
         <li class="nav-item dropdown" *ngIf="user">
-          <a class="nav-link " role="button" [routerLink]="['/new-homeless']">            
+          <a class="nav-link " role="button" [routerLink]="['/new-homeless']">
             <span class="nav-link-inner--text">New Register Homeless</span>
           </a>
 
         </li>
         <li class="nav-item dropdown" *ngIf="!user">
-          <a class="nav-link " role="button" [routerLink]="['/register']">            
+          <a class="nav-link " role="button" [routerLink]="['/register']">
             <span class="nav-link-inner--text">Register</span>
           </a>
-        </li>      
+        </li>
         <li class="nav-item" *ngIf="user">
           <a class="nav-link nav-link-icon" role="button" [routerLink]="['/qr-reader']" data-toggle="tooltip">
             <span class="nav-link-inner--text d-lg-none">QR READER</span>
           </a>
         </li>
         <li class="nav-item dropdown" *ngIf="user">
-          <a class="nav-link " role="button" (click)="logout()" data-toggle="Logout">            
+          <a class="nav-link " role="button" (click)="logout()" data-toggle="Logout">
             <span class="nav-link-inner--text">Logout</span>
           </a>
         </li>
@@ -110,4 +139,5 @@
       </ul>
     </div>
   </div>
+
 </nav>

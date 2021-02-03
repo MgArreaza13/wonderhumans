@@ -6,75 +6,76 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  modalRef: BsModalRef;
-  public isCollapsed = true;
-  private lastPoppedUrl: string;
-  private yScrollStack: number[] = [];
+    modalRef: BsModalRef;
+    public isCollapsed = true;
+    private lastPoppedUrl: string;
+    private yScrollStack: number[] = [];
 
+    @Input('user') user;
+    values: any;
 
-  @Input('user') user ;
-
-  constructor(
-    public location: Location,
-    private router: Router,
-    private lsService: LocalStorageService,
-    private modalService: BsModalService,
-    private toastr: ToastrService) {
-  }
-
-  ngOnInit() {
-    this.router.events.subscribe((event) => {
-      this.isCollapsed = true;
-      if (event instanceof NavigationStart) {
-        if (event.url != this.lastPoppedUrl)
-          this.yScrollStack.push(window.scrollY);
-      } else if (event instanceof NavigationEnd) {
-        if (event.url == this.lastPoppedUrl) {
-          this.lastPoppedUrl = undefined;
-          window.scrollTo(0, this.yScrollStack.pop());
-        } else
-          window.scrollTo(0, 0);
-      }
-    });
-    this.location.subscribe((ev: PopStateEvent) => {
-      this.lastPoppedUrl = ev.url;
-    });
-  }
-
-  isHome() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-
-    if (titlee === '#/home') {
-      return true;
+    constructor(
+        public location: Location,
+        private router: Router,
+        private lsService: LocalStorageService,
+        private modalService: BsModalService,
+        private toastr: ToastrService) {
     }
-    else {
-      return false;
-    }
-  }
-  isDocumentation() {
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if (titlee === '#/documentation') {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
 
-  logout() {
-    this.user = null;
-    localStorage.removeItem('token');
-    localStorage.removeItem('wonderHumanUser');
-    // tslint:disable-next-line: no-unused-expression
-    this.router.navigateByUrl('/login');
-    this.toastr.success('Successful logout');
-  }
+    ngOnInit() {
+        this.router.events.subscribe((event) => {
+            this.isCollapsed = true;
+            if (event instanceof NavigationStart) {
+                if (event.url != this.lastPoppedUrl)
+                    this.yScrollStack.push(window.scrollY);
+            } else if (event instanceof NavigationEnd) {
+                if (event.url == this.lastPoppedUrl) {
+                    this.lastPoppedUrl = undefined;
+                    window.scrollTo(0, this.yScrollStack.pop());
+                } else
+                    window.scrollTo(0, 0);
+            }
+        });
+        this.location.subscribe((ev: PopStateEvent) => {
+            this.lastPoppedUrl = ev.url;
+        });
+    }
+
+    isHome() {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+
+        if (titlee === '#/home') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    isDocumentation() {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        if (titlee === '#/documentation') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    logout() {
+        this.user = null;
+        localStorage.removeItem('token');
+        localStorage.removeItem('wonderHumanUser');
+        // tslint:disable-next-line: no-unused-expression
+        this.router.navigateByUrl('/login');
+        this.toastr.success('Successful logout');
+    }
+
 }
