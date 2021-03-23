@@ -57,4 +57,8 @@ export class HomelessService {
     recentDonations(id) {
         return this.http.get(`${environment.apiRoot}/api/donations/cause/get/${id}`);
     }
+
+    searchHomeless(code) {
+        return this.http.get(`${environment.apiRoot}/api/accounts/homeless/code/${code}`);
+    }
 }
