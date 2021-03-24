@@ -1,3 +1,5 @@
+from django.utils.translation import gettext as _
+
 def validate_length(field:str, validate: str, min_length: int, max_length: int):
     """
         Method to verify min length or max legngth of any variable str
