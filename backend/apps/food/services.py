@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from django.db import transaction, IntegrityError, DatabaseError
 
+# From Python
+from datetime import datetime, timedelta
+
+# My Task
+from apps.food import task as food_task
+
 # My models
 from apps.food import models as food_models
 
@@ -46,6 +52,10 @@ def new_food_run(data:dict, user:User):
             raise ValueError(str(_("Min value in total is 0 and max is 10000")))
     else:
         raise ValueError(str(_("total_volunteers is required")))
+    if data.get("execution_date") is not None:
+        execution_date = food_validations.validate_excuted_date(data.get("execution_date"))
+    else:
+        raise ValueError(str(_("execution_date is required")))
     with transaction.atomic():
         try:
             food_run = food_models.FoodRun.objects.create(
@@ -57,11 +67,30 @@ def new_food_run(data:dict, user:User):
                 rest = total,
                 total_volunteers = total_volunteers,
                 rest_volunteers = total_volunteers,
+                execution_date = execution_date,
                 status = str('open')
             )
         except Exception as e:
             print(e)
             raise ValueError(str(_("there was an error saving the food run")))
+    if data.get("invitation_message") is not None:
+        food_validations.validate_length('Invitation Message',data.get("invitation_message"),10,100)
+        food_run.invitation_message = data.get("invitation_message")
+        food_run.save()
+
+    """Calculations to perform the scheduled task"""
+
+    create_at = datetime.now()
+    execution_date = datetime.strptime(execution_date, "%Y-%m-%d %H:%M")
+    # Time to add at timenow
+    time_extra = execution_date - create_at
+    # Time to rest at time_extra
+    time_rest = (20*time_extra.total_seconds())/100
+    time_to_add = time_extra - timedelta(seconds=time_rest)
+    time = time_to_add.total_seconds()
+    # time = create_at + time_to_add
+    print(time)
+    food_task.notification_food.apply_async(([food_run.id]),countdown=int(time))
     return food_run
     
 

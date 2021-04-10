@@ -19,6 +19,13 @@ from apps.food import serializers as food_serializers
 
 # My views
 
+class Test(APIView):
+    
+    def post(self,request):
+        tomorrow = datetime.utcnow() + timedelta(seconds=30)
+        food_task.test.delay()
+        return Response({'detail':'Todo correcto?'}, status=status.HTTP_200_OK)
+
 class FoodRunView(APIView):
     """
         Content CRUD services to Food Run
@@ -33,6 +40,8 @@ class FoodRunView(APIView):
             return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # time = food.created_at + food.execution_date - timedelta()
+        # food_task.send_notification()
         serializer = food_serializers.FoodRunSerializers(food, many=False).data
         serializer['detail'] = str(_("You have register a food run correctly"))
         return Response(serializer, status=status.HTTP_201_CREATED)

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
+from .managers import HomelessManager
 # Create your models here.
 
 TYPE_USER = (
@@ -29,6 +30,7 @@ class Profile(models.Model):
         return self.user.first_name + ' ' +self.user.last_name
 
 
+
 class HomelessProfile(models.Model):
     userRegisterer = models.ForeignKey(User, on_delete=models.CASCADE, null= True)
     firstName = models.CharField(max_length=100, blank=True)
@@ -38,6 +40,7 @@ class HomelessProfile(models.Model):
     typeUser = models.CharField(max_length=30, choices=TYPE_USER , null= True)
     photo = models.ImageField(upload_to='profile', blank=True, null=True)
     qr_code = models.URLField(max_length=100, blank=True, null=True)
+    code = models.SlugField(unique=True, max_length=15, null=True)
     # Additional information personal
     occupation = models.CharField(max_length=100, blank=True , null= True)
     phone = models.CharField(max_length=20, blank=True , null= True)
@@ -49,6 +52,10 @@ class HomelessProfile(models.Model):
     aboutYou = models.TextField(blank=True, null= True)
     location_detail = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
+
+    # Manager
+    objects = HomelessManager()
 
     def __str__(self):
         return self.firstName + ' ' +self.lastName

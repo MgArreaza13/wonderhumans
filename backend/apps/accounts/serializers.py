@@ -52,10 +52,12 @@ class UserProfileSerializers(serpy.Serializer):
 
 class HomelessProfileSerializers(serpy.Serializer):
 	#userRegisterer = models.ForeignKey(User, on_delete=models.CASCADE, null= True)
+	id = serpy.Field()
 	firstName = serpy.Field()
 	lastName = serpy.Field()
 	email = serpy.Field()
 	show_email = serpy.Field()
+	code = serpy.Field()
 	typeUser = serpy.Field()
 	photo = serpy.MethodField('get_photo')
 	# Additional information personal

@@ -15,10 +15,12 @@ class FoodRunSerializers(serpy.Serializer):
     image = serpy.MethodField('get_image')
     total = serpy.Field()
     rest = serpy.Field()
+    invitation_message = serpy.Field()
     total_volunteers = serpy.Field()
     rest_volunteers = serpy.Field()
     status = serpy.Field()
     created_at = serpy.Field()
+    execution_date = serpy.Field()
 
     def get_image(self, obj):
         """

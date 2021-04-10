@@ -8,6 +8,7 @@ urlpatterns = [
     path('create/', views.ManagementUserViewSet.as_view(), name='new_user'),
     path('profile/', views.ManagementUserProfileViewSet.as_view(), name='profile'),
     path('homelessProfile/', views.ManagementHomelessProfileViewSet.as_view(), name='homeless-profile'),
+    path('homeless/code/<str:code>', views.CodeHomelessProfile.as_view(), name='seach_homeless'),
     path('homelessProfile/edit/', views.ManagementHomelessProfileViewSet.as_view(), name='homeless-profile'),
     path('myHomelessProfile/', views.ManagementMyHomelessProfileViewSet.as_view(), name='my-homeless-profile'),
     path('homelessProfile/<int:id_homeless>', views.ManagementHomelessProfileViewSet.as_view(), name='homeless-profile-detail'),
