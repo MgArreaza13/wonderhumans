@@ -65,7 +65,7 @@
       </div>
       <div class="row justify-content-center ">
         <div class="col-12 order-lg-2">
-          <div class="form-row">
+          <div class="form-row" style="margin-bottom: 1.5rem;">
             <div class="form-group col-md-12">
               <label>Nombre del food run</label>
               <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="name">
@@ -73,19 +73,40 @@
 
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4" style="margin-bottom: 0;">
               <label>Monto a reunir</label>
               <input type="number" class="form-control" placeholder="Monto" [(ngModel)]="total">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3" style="margin-bottom: 0;">
               <label>Número de voluntarios</label>
               <input type="number" class="form-control" placeholder="Voluntarios" [(ngModel)]="volunteers">
+            </div>
+            <div class="form-group col-md-3" style="margin-bottom: 0;">
+              <label>Fecha de realización</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-birthday"></i></span>
+                </div>
+                <input [(ngModel)]="dateRe" class="form-control datepicker" placeholder="Ex: 24/10/2021" type="text"
+                  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
+              </div>
+            </div>
+            <div class="form-group col-md-2" style="margin-bottom: 0; margin-top: -12px;">
+              <ngb-timepicker [(ngModel)]="time" id="time"></ngb-timepicker>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label>Descripción</label>
               <textarea class="form-control" placeholder="Descripción" [(ngModel)]="description"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Mensaje de invitación</label>
+              <textarea class="form-control"
+                placeholder="Mensaje para mostrar a las personas que desean unirse como voluntario"
+                [(ngModel)]="invitation_message"></textarea>
             </div>
           </div>
         </div>

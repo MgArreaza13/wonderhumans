@@ -46,6 +46,7 @@ export class FoodRunDetailsComponent implements OnInit {
     isVolunter: boolean = false;
     isOwner: boolean = false;
     multiMedia: Object;
+    invitationMsg: any;
     constructor(
         private route: ActivatedRoute,
         private serviceFood: FoodRunService,
@@ -66,19 +67,28 @@ export class FoodRunDetailsComponent implements OnInit {
     getDetails() {
         this.user = JSON.parse(localStorage.getItem('wonderHumanUser'));
         this.spinner.show();
-        this.serviceFood.getFoodRu(this.idFood).subscribe((data) => {
-            this.dataDetails = data;
-            if (this.dataDetails.user.id === this.user['id']) {
-                this.isOwner = true;
-            } else {
-                this.isOwner = false;
-            }
-            this.donations();
-        }, error => {
-            console.log(error);
-            this.spinner.hide();
+        if (this.user != null) {
 
-        });
+            this.serviceFood.getFoodRu(this.idFood).subscribe((data) => {
+                this.dataDetails = data;
+                this.invitationMsg = this.dataDetails.invitation_message;
+                console.log(this.invitationMsg);
+                if (this.dataDetails.user.id === this.user['id']) {
+                    this.isOwner = true;
+                } else {
+                    this.isOwner = false;
+                }
+                this.donations();
+            }, error => {
+                console.log(error);
+                this.spinner.hide();
+
+            });
+        } else {
+            this.isOwner = false;
+            this.donations();
+            this.spinner.hide();
+        }
     }
 
     addMoreMulti() {
@@ -135,7 +145,7 @@ export class FoodRunDetailsComponent implements OnInit {
     volunterAdd() {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Deseas inscribirte como voluntario?',
+            text: (this.invitationMsg === null ? '¿Deseas inscribirte como voluntario?' : this.invitationMsg),
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

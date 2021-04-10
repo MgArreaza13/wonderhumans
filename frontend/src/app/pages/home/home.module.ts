@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 
 import { SectionsModule } from '../../sections/sections.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
     imports: [
@@ -15,10 +16,12 @@ import { SectionsModule } from '../../sections/sections.module';
         BrowserModule,
         FormsModule,
         RouterModule,
-        SectionsModule
+        SectionsModule,
+        SharedModule
+
     ],
-    declarations: [ HomeComponent ],
-    exports:[ HomeComponent ],
+    declarations: [HomeComponent,],
+    exports: [HomeComponent],
     providers: []
 })
 export class HomeModule { }
