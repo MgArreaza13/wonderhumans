@@ -23,7 +23,7 @@ services:
     stdin_open: true
     volumes:
       - ./frontend:/home/user/app/frontend
-      - ./frontend/node_modules:/home/user/app/frontend/node_modules
+      - /home/user/app/frontend/node_modules
     ports:
       - "4200:4200"
 
