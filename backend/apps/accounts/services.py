@@ -200,7 +200,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 	else:
 		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),6570)
 	else:
 		raise ValueError(str(_("Data of birth field is required")))
 	if data.get("occupation") is not None:
@@ -271,7 +271,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		show_email = accounts_validations.validate_show_email(data.get("show_email"))
 		profile.show_email = show_email
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),6570)
 		profile.dateOfBirth = birth
 	if data.get("occupation") is not None:
 		accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
@@ -325,7 +325,7 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	else:
 		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),4380)
 	else:
 		raise ValueError(str(_("Date of birth field is required")))
 	if data.get("occupation") is not None:
@@ -438,7 +438,7 @@ def update_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
 			profile.show_email = data.get("show_email")	
 		if data.get("dateOfBirth") is not None:
-			profile.dateOfBirth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+			profile.dateOfBirth = accounts_validations.validate_birth(data.get("dateOfBirth"),4380)
 		if data.get("occupation") is not None:
 			accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
 			profile.occupation = data.get("occupation")	

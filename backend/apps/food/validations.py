@@ -5,6 +5,9 @@ from django.utils.translation import gettext as _
 # My Models
 from apps.food import models as food_models
 
+# From Python
+from datetime import datetime, timedelta
+
 def validate_length(field:str, validate: str, min_length: int, max_length: int):
     """
         Method to verify min length or max legngth of any variable str
@@ -40,7 +43,7 @@ def validate_volunteer(user:User,food:food_models.FoodRun):
     if food_models.FoodVolunteer.objects.filter(user=user,food=food).exists():
         raise ValueError(str(_("Alredy you are voluenteer in this food run")))
 
-def validate_excuted_date(date:dict):
+def validate_excuted_date(date_base:dict):
     """
         Method to put bitrh date a correct form
 
@@ -48,7 +51,14 @@ def validate_excuted_date(date:dict):
         :type birth: dict
         :return: bool
     """
-    if type(date) is not dict:
+    if type(date_base) is not dict:
         raise ValueError(str(("Data date should be json, not str")))
-    date = str(date.get('year')) + '-' + str(date.get('month')) + '-' + str(date.get('day')) + ' ' + str(date.get("hour")) + ':' + str(date.get("minute"))
+    # Minimum date
+    deadline = datetime.now() + timedelta(hours=5)
+    print(deadline)
+    date = datetime(date_base.get('year'), date_base.get('month'), date_base.get('day'),date_base.get("hour"),date_base.get("minute"))
+    print(date)
+    if date < deadline:
+        raise ValueError(str(("Tthe minimum date is in 5 hours")))
+    date = str(date_base.get('year')) + '-' + str(date_base.get('month')) + '-' + str(date_base.get('day')) + ' ' + str(date_base.get("hour")) + ':' + str(date_base.get("minute"))
     return date
