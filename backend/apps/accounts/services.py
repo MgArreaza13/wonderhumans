@@ -110,7 +110,7 @@ def register_user(data: dict, user: accounts_models.User):
 	email = data.get('email')
 	# validate email
 	if email is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		accounts_validations.validate_email(email)
 	else:
 		raise ValueError(str(_("Email field is required")))
@@ -132,12 +132,12 @@ def register_user(data: dict, user: accounts_models.User):
 		raise ValueError(str(_("Password confirmation field is required")))
 	# validate first name
 	if data.get('first_name') is not None:
-		accounts_validations.validate_length('First Name',data.get('first_name'),3,10)
+		accounts_validations.validate_length('First Name',data.get('first_name'),3,25)
 	else:
 		raise ValueError(str(_("First name field is required")))
 	# validate last name
 	if data.get('last_name') is not None:
-		accounts_validations.validate_length('Last Name',data.get('last_name'),3,10)
+		accounts_validations.validate_length('Last Name',data.get('last_name'),3,25)
 	else:
 		raise ValueError(str(_("Last name confirmation field is required")))
 	if data.get('password1') != data.get('password2'):
@@ -191,7 +191,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		user.email = data.get("email")
 	user.save()
 	# valitation of data profile
@@ -261,7 +261,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		user.email = data.get("email")
 	user.save()
 	# Edit profile
@@ -283,6 +283,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		accounts_validations.validate_length("country",data.get("country"),4,25)
 		profile.country = data.get("country")
 	if data.get("aboutYou") is not None:
+		accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
 		profile.aboutYou = data.get("aboutYou")
 	if data.get("photo") is not None:
 		profile.photo = updateImage(data.get("photo"))
@@ -316,7 +317,7 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	else:
 		raise ValueError(str(_("Last Name field is required")))
 	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),3,75)
 		accounts_validations.validate_email(data.get("email"))
 	else:
 		raise ValueError(str(_("Email field is required")))
@@ -430,7 +431,7 @@ def update_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 			profile.lastName = data.get("lastName")	
 		if data.get("email") is not None:
-			accounts_validations.validate_length("Email",data.get("email"),0,300)
+			accounts_validations.validate_length("Email",data.get("email"),5,75)
 			if profile.email != data.get("email"):
 				accounts_validations.validate_email(data.get("email"))
 				profile.email = data.get("email")	

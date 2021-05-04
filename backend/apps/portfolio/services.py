@@ -37,7 +37,7 @@ def edit_portfolio(data:dict, user:User)->portfolio_models.HomelessPortfolio:
             raise ValueError(str(_("Do not have permission to edit this portfolio")))
         if data.get("details") is not None:
             if len(data.get("details")) >0:
-                if len(data.get("details"))<100:
+                if len(data.get("details"))<=100:
                     portfolio.details = data.get("details")
                 else:
                     raise ValueError(str(_("Field 'details' max  lenght is 100")))
