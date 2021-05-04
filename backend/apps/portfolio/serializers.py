@@ -15,9 +15,6 @@ class PortfolioSerializers(serpy.Serializer):
 
 
 	def get_image(self, obj):
-		print('********************************************')
-		print(obj)
-		print('********************************************')
 		"""
 			With this method obtain phone number of the user
 

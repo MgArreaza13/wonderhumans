@@ -55,10 +55,8 @@ def validate_excuted_date(date_base:dict):
         raise ValueError(str(("Data date should be json, not str")))
     # Minimum date
     deadline = datetime.now() + timedelta(hours=5)
-    print(deadline)
     date = datetime(date_base.get('year'), date_base.get('month'), date_base.get('day'),date_base.get("hour"),date_base.get("minute"))
-    print(date)
     if date < deadline:
-        raise ValueError(str(("Tthe minimum date is in 5 hours")))
+        raise ValueError(str(("The minimum date is in 5 hours")))
     date = str(date_base.get('year')) + '-' + str(date_base.get('month')) + '-' + str(date_base.get('day')) + ' ' + str(date_base.get("hour")) + ':' + str(date_base.get("minute"))
     return date
