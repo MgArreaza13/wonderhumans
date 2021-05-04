@@ -47,6 +47,7 @@ export class FoodRunDetailsComponent implements OnInit {
     isOwner: boolean = false;
     multiMedia: Object;
     invitationMsg: any;
+    disabledAdd: boolean;
     constructor(
         private route: ActivatedRoute,
         private serviceFood: FoodRunService,
@@ -71,6 +72,13 @@ export class FoodRunDetailsComponent implements OnInit {
 
             this.serviceFood.getFoodRu(this.idFood).subscribe((data) => {
                 this.dataDetails = data;
+                console.log(this.dataDetails.rest_volunteers)
+                const rest = this.dataDetails.rest_volunteers;
+                if (rest === 0) {
+                    this.disabledAdd = true
+                } else {
+                    this.disabledAdd = false
+                }
                 this.invitationMsg = this.dataDetails.invitation_message;
                 console.log(this.invitationMsg);
                 if (this.dataDetails.user.id === this.user['id']) {

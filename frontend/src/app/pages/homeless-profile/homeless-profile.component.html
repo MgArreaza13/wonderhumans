@@ -94,8 +94,9 @@
                       <!-- comments box -->
                       <div class="row">
                         <div class="col-12">
-                          <textarea maxlength="100" (keyup)="onKey($event)" name="comentarios" [(ngModel)]="comment"
-                            rows="5" id="text-comments" placeholder="Write your comments"></textarea>
+                          <textarea minlength="2" maxlength="255" (keyup)="onKey($event)" name="comentarios"
+                            [(ngModel)]="comment" rows="5" id="text-comments"
+                            placeholder="Write your comments"></textarea>
                           <section style="display: flex;
                           flex-direction: column;
                           align-items: flex-end;">
@@ -302,26 +303,45 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Name of cause</label>
-        <input type="text" class="form-control" aria-describedby="nameevent" placeholder="Enter name event"
-          [(ngModel)]="name" />
-        <small id="nameevent" class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.</small>
+        <input (keyup)="nameLength($event)" type="text" class="form-control" aria-describedby="nameevent"
+          placeholder="Enter name event" [(ngModel)]="name" />
+        <small *ngIf="nameNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*3 is
+          the
+          minimum characters allowed. </small>
+        <small *ngIf="nameNo === 'max'" id="nameevent" class="form-text text-muted" style="color: red !important;">*100
+          is the
+          maximum characters allowed. </small>
       </div>
       <div class="form-group">
         <label>Mount</label>
-        <input type="number" class="form-control" placeholder="$ 00,00" [(ngModel)]="total" />
+        <input (keyup)="totalLength($event)" type="number" class="form-control" placeholder="$ 00,00"
+          [(ngModel)]="total" />
+        <small *ngIf="mountNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*$10
+          is
+          the
+          minimum mount allowed. </small>
+        <small *ngIf="mountNo === 'max'" id="nameevent" class="form-text text-muted"
+          style="color: red !important;">*$9999999
+          is the
+          maximum mount allowed. </small>
       </div>
       <div class="form-group">
         <label>Description</label>
-        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Description"
-          [(ngModel)]="description" maxlength="100" (keyup)="onKey($event)"></textarea>
+        <textarea (keyup)="descLength($event)" name="" id="" cols="30" rows="4" class="form-control"
+          placeholder="Description" [(ngModel)]="description" maxlength="150" (keyup)="onKey($event)"></textarea>
+        <small *ngIf="descNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*3 is
+          the
+          minimum characters allowed. </small>
+        <small *ngIf="descNo === 'max'" id="nameevent" class="form-text text-muted" style="color: red !important;">*150
+          is the
+          maximum characters allowed. </small>
       </div>
       <section style="display: flex;
         flex-direction: column;
         align-items: flex-end;">
         <span *ngIf="contator" style="float: right;font-variant: small-caps;">{{contator}}/{{restante}}
           caracteres</span>
-        <button class="btn btn-success float-right" (click)="newEvent()">
+        <button class="btn btn-success float-right btn-sm" (click)="newEvent()" [disabled]="noValidate === true">
           Submit
         </button>
       </section>

@@ -35,8 +35,12 @@
           </div>
           <div class="row mt-3">
             <div class="col-12  align-items-center">
-              <button class="btn btn-sm float-right btn-success" (click)="volunterAdd()">Quiero ser un
+              <button [disabled]="disabledAdd === true" class="btn btn-sm float-right btn-success"
+                (click)="volunterAdd()">Quiero ser un
                 voluntario</button>
+
+              <small *ngIf="disabledAdd === true" style="color: #dc3545;font-weight: 600;">*Total de voluntarios
+                alcanzados</small>
             </div>
           </div>
         </div>

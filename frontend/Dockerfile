@@ -22,4 +22,5 @@ ADD frontend/ /home/user/app/frontend
 
 EXPOSE 4200
 
-CMD ng serve --host 0.0.0.0
+CMD ng serve --port 4200 --host 0.0.0.0 --poll 1
+

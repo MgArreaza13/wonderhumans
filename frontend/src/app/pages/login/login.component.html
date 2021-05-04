@@ -14,25 +14,6 @@
       <div class="row justify-content-center">
         <div class="col-lg-5">
           <div class="card bg-secondary shadow border-0">
-            <!-- <div class="card-header bg-white pb-5">
-              <div class="text-muted text-center mb-3">
-                <small>Sign in with</small>
-              </div>
-              <div class="btn-wrapper text-center">
-                <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon">
-                    <img src="./assets/img/icons/common/facebook.svg" />
-                  </span>
-                  <span class="btn-inner--text">Facebook</span>
-                </a>
-                <a href="javascript:void(0)" class="btn btn-neutral btn-icon">
-                  <span class="btn-inner--icon">
-                    <img src="./assets/img/icons/common/google.svg" />
-                  </span>
-                  <span class="btn-inner--text">Google</span>
-                </a>
-              </div>
-            </div> -->
             <div class="card-body px-lg-5 py-lg-5">
               <div class="text-center text-muted mb-4">
                 <small>Sign in with credentials</small>
@@ -89,13 +70,13 @@
                       (focus)="focus1 = true"
                       [ngClass]="{ 'is-invalid': f['password'].errors && f['password'].touched}"
                       (blur)="focus1 = false"
-                    />                    
+                    />
                   </div>
                   <section class="m-2 text-danger" *ngIf="f['password'].hasError('required') && (f['password'].touched || f['password'].dirty)">
                     *Required field
                   </section>
                   <section class="m-2 text-danger" *ngIf="f['password'].hasError('minlength')">
-                    *8 is the minimum characters allowed
+                    *5 is the minimum characters allowed
                   </section>
                   <section class="m-2 text-danger" *ngIf="f['password'].hasError('maxlength')">
                     *25 is the maximum characters allowed

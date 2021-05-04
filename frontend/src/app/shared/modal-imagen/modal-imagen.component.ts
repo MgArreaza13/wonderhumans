@@ -43,6 +43,7 @@ export class ModalImagenComponent implements OnInit {
     restanteC: number;
     editPortofolio: boolean = false;
     fir: boolean = false;
+    disabledBtn: boolean;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
@@ -62,6 +63,7 @@ export class ModalImagenComponent implements OnInit {
         }
         this.allData = this.data[0];
         this.ilike = this.allData.ilike;
+        this.disabledBtn = true;
 
     }
 
@@ -82,6 +84,12 @@ export class ModalImagenComponent implements OnInit {
         this.contatorC = event.target.value.length;
         if (this.contatorC <= 3500) {
             this.restanteC = 3500 - this.contatorC;
+        }
+        if (this.contatorC < 2) {
+            this.disabledBtn = true;
+        } else {
+            this.disabledBtn = false;
+
         }
     }
 
