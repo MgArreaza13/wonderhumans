@@ -238,7 +238,7 @@ export class ModalImagenComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 this.feedService.deleteFeed(id).subscribe((data) => {
                     this.toastr.success('Eliminación satisfactoria');
                     this.spinner.hide();
@@ -269,7 +269,7 @@ export class ModalImagenComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 this.homelessService.deletePortfolio(this.data[0].id).subscribe((data) => {
                     this.toastr.success('Eliminación satisfactoria');
                     this.spinner.hide();

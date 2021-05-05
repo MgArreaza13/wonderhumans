@@ -151,6 +151,7 @@ export class FoodRunFormComponent implements OnInit {
                 hour: this.time.hour,
                 minute: this.time.minute
             };
+            console.log(this.dateRealiz)
             const fecha_choice = `${this.dateRe.day}/${this.dateRe.month}/${this.dateRe.year}`;
             const hoy = new Date();
             const isOr = this.validarFechaMenorActual(fecha_choice);

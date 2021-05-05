@@ -72,7 +72,7 @@ export class FoodRunDetailsComponent implements OnInit {
 
             this.serviceFood.getFoodRu(this.idFood).subscribe((data) => {
                 this.dataDetails = data;
-                console.log(this.dataDetails.rest_volunteers)
+                console.log(this.dataDetails)
                 const rest = this.dataDetails.rest_volunteers;
                 if (rest === 0) {
                     this.disabledAdd = true
@@ -80,7 +80,6 @@ export class FoodRunDetailsComponent implements OnInit {
                     this.disabledAdd = false
                 }
                 this.invitationMsg = this.dataDetails.invitation_message;
-                console.log(this.invitationMsg);
                 if (this.dataDetails.user.id === this.user['id']) {
                     this.isOwner = true;
                 } else {
@@ -122,7 +121,6 @@ export class FoodRunDetailsComponent implements OnInit {
 
     getMoreMulti() {
         this.serviceFood.getMultimedia(this.idFood).subscribe(async (data) => {
-            console.log(data);
             this.multiMedia = data;
             this.spinner.hide();
 
@@ -140,9 +138,9 @@ export class FoodRunDetailsComponent implements OnInit {
                     if (element.user.id === this.user['id']) {
                         this.isVolunter = true;
                     }
+                    console.log(element.photo)
                 });
             }
-            console.log(this.dataVol)
             this.getMoreMulti();
         }, error => {
             console.log(error)
@@ -160,13 +158,12 @@ export class FoodRunDetailsComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 const body = {
                     id_food_run: this.idFood
                 };
                 this.spinner.show();
                 this.serviceFood.newVol(body).subscribe(data => {
-                    console.log(data);
                     this.spinner.hide();
                     this.toastr.success('Ud se ha registrado satisfactoriamente como voluntario');
                     this.ngOnInit();
@@ -265,11 +262,9 @@ export class FoodRunDetailsComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
-
+            if (!result.dismiss) {
                 this.spinner.show();
                 this.serviceFood.deleteFoodRund(this.idFood).subscribe((data) => {
-                    console.log(data);
                     this.toastr.success('Eliminación exitosa');
                     this.spinner.hide();
                     this.router.navigateByUrl('/food-run');
