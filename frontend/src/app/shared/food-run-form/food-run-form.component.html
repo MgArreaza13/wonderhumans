@@ -84,7 +84,7 @@
         <div class="col-12 order-lg-2">
           <div class="form-row" style="margin-bottom: 1.5rem;">
             <div class="form-group col-md-12">
-              <label>Nombre del food run</label>
+              <label>Food run name</label>
               <input (keyup)="nameLength($event)" type="text" class="form-control" placeholder="Nombre"
                 [(ngModel)]="name" minlength="5" maxlength="100">
               <small *ngIf="nameNo === 'min'" id="nameevent" class="form-text text-muted"
@@ -100,8 +100,8 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-4" style="margin-bottom: 0;">
-              <label>Monto a reunir</label>
-              <input (keyup)="totalLength($event)" type="number" class="form-control" placeholder="Monto"
+              <label>Amount to collect</label>
+              <input (keyup)="totalLength($event)" type="number" class="form-control" placeholder="Mount"
                 [(ngModel)]="total">
               <small *ngIf="mountNo === 'min'" id="nameevent" class="form-text text-muted"
                 style="color: red !important;">*$0
@@ -114,7 +114,7 @@
                 maximum mount allowed. </small>
             </div>
             <div class="form-group col-md-3" style="margin-bottom: 0;">
-              <label>Número de voluntarios</label>
+              <label>Number of volunteers</label>
               <input type="number" pattern="[\d]{9}" (keyup)="volLength($event)" class="form-control"
                 placeholder="Voluntarios" [(ngModel)]="volunteers">
               <small *ngIf="volNo === 'min'" id="nameevent" class="form-text text-muted"
@@ -128,12 +128,12 @@
                 maximum volunteers allowed. </small>
             </div>
             <div class="form-group col-md-3" style="margin-bottom: 0;">
-              <label>Fecha de realización</label>
+              <label>Date of realization</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-birthday"></i></span>
                 </div>
-                <input [(ngModel)]="dateRe" class="form-control datepicker" placeholder="Ex: 24/10/2021" type="text"
+                <input [(ngModel)]="dateRe" class="form-control datepicker" placeholder="Ex: /**/**/****" type="text"
                   ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
               </div>
             </div>
@@ -144,9 +144,9 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label>Descripción</label>
+              <label>Description</label>
               <textarea minlength="5" maxlength="300" (keyup)="desLength($event)" class="form-control"
-                placeholder="Descripción" [(ngModel)]="description"></textarea>
+                placeholder="Description" [(ngModel)]="description"></textarea>
               <small *ngIf="desNo === 'min'" id="nameevent" class="form-text text-muted"
                 style="color: red !important;">*5 is
                 the
@@ -159,9 +159,8 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label>Mensaje de invitación</label>
-              <textarea class="form-control"
-                placeholder="Mensaje para mostrar a las personas que desean unirse como voluntario"
+              <label>Invitation message</label>
+              <textarea class="form-control" placeholder="Message to show people who want to join as a volunteer"
                 [(ngModel)]="invitation_message"></textarea>
             </div>
           </div>

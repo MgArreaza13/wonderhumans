@@ -1,7 +1,7 @@
 <div class="row">
   <ng-template #noImage>
     <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px;min-height: 30rem;">
-      <h5>Añade una imagen para tu publicación</h5>
+      <h5>Add an image for your post</h5>
       <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
       <!-- <img *ngIf="croppedImage" [src]="croppedImage" /> -->
       <div class="imagen-para-archivo">
@@ -20,14 +20,14 @@
     </span>
   </div>
   <div class="col-6 pl-0 addPublic">
-    <label for="">Descripción</label>
+    <label for="">Description</label>
     <textarea maxlength="100" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
       [(ngModel)]="description"></textarea>
     <span *ngIf="contator" style="float: right;font-variant: all-petite-caps;">{{contator}}/{{restante}}
-      caracteres</span>
+      characters</span>
     <span>
-      <button class="btn btn-sm btn-success" [disabled]="readyImage === false" (click)="post()">Publicar</button>
-      <button class="btn btn-sm btn-info" (click)="changeImg()" [disabled]="!imageURL">Cambiar Imagen</button>
+      <button class="btn btn-sm btn-success" [disabled]="readyImage === false" (click)="post()">Post</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()" [disabled]="!imageURL">Change image</button>
     </span>
   </div>
 </div>

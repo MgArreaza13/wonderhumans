@@ -51,7 +51,7 @@
         <button class="iconsbtn" (click)="doVote()"><i class="ni ni-favourite-28"
             [ngClass]="{'red': ilike === 'true'}"></i></button>
       </span>
-      <p style="padding: 0.5rem;">Le gusta a {{allData.likes}} personas</p>
+      <p style="padding: 0.5rem;">{{allData.likes}} people like it</p>
       <span style="display: flex;
         width: 100%;
         justify-content: space-between;
@@ -61,14 +61,14 @@
           <span *ngIf="contatorC" style="float: left;
           font-variant: all-petite-caps;
           margin-left: 5px;">{{contatorC}}/{{restanteC}}
-            caracteres</span>
+            characters</span>
           <textarea maxlength="3500" (keyup)="onKeyC($event)"
-            style="width: 100%; max-height: 50px; border:none; resize: none;" placeholder="  Escribe tu comentario"
+            style="width: 100%; max-height: 50px; border:none; resize: none;" placeholder="  Write your comments"
             [(ngModel)]="comment"></textarea>
 
         </span>
         <button style="max-height: 50px;" class="btn btn-success btn-sm" (click)="publicar(allData)"
-          [disabled]="disabledBtn === true">Publicar</button>
+          [disabled]="disabledBtn === true">Post</button>
       </span>
     </section>
   </div>
@@ -78,7 +78,7 @@
 <div class="row" *ngIf="type === 'add'">
   <ng-template #noImage>
     <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px;min-height: 30rem;">
-      <h5>Añade una imagen para tu publicación</h5>
+      <h5>Add an image for your post</h5>
       <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
       <!-- <img *ngIf="croppedImage" [src]="croppedImage" /> -->
       <div class="imagen-para-archivo">
@@ -96,7 +96,7 @@
         [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
         (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
       </image-cropper>
-      <button class="btn btn-sm btn-success mb-2" (click)="ready()" *ngIf="croppedImage">Listo</button>
+      <button class="btn btn-sm btn-success mb-2" (click)="ready()" *ngIf="croppedImage">Ready</button>
     </div>
   </ng-template>
   <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
@@ -105,14 +105,14 @@
     </span>
   </div>
   <div class="col-6 pl-0 addPublic">
-    <label for="">Descripción</label>
+    <label for="">Description</label>
     <textarea maxlength="65000" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
       [(ngModel)]="description"></textarea>
     <span *ngIf="contator" style="float: right;font-variant: all-petite-caps;">{{contator}}/{{restante}}
-      caracteres</span>
+      characters</span>
     <span>
-      <button class="btn btn-sm btn-success" (click)="upload()" [disabled]="readyImage === false">Publicar</button>
-      <button class="btn btn-sm btn-info" (click)="changeImg()">Cambiar Imagen</button>
+      <button class="btn btn-sm btn-success" (click)="upload()" [disabled]="readyImage === false">Post</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()">Change image</button>
     </span>
   </div>
 </div>
@@ -120,7 +120,7 @@
 <div class="row" *ngIf="type === 'edit'">
   <ng-template #noImage>
     <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px; height: 30rem;">
-      <h6 style="text-align: center;">Escoge una nueva imagen para tu publicación</h6>
+      <h6 style="text-align: center;">Choose a new image for your publication</h6>
 
       <div class="imagen-para-archivo">
         <span>
@@ -137,7 +137,7 @@
         [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
         (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
       </image-cropper>
-      <button class="btn btn-sm btn-success" (click)="ready()" *ngIf="croppedImage">Listo</button>
+      <button class="btn btn-sm btn-success" (click)="ready()" *ngIf="croppedImage">Ready</button>
     </div>
   </ng-template>
   <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
@@ -146,14 +146,14 @@
     </span>
   </div>
   <div class="col-6 pl-0 addPublic">
-    <label for="">Descripción</label>
+    <label for="">Description</label>
     <textarea maxlength="65000" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
       [(ngModel)]="description"></textarea>
     <span *ngIf="contator" style="float: right;font-variant: all-petite-caps;">{{contator}}/{{restante}}
-      caracteres</span>
+      characters</span>
     <span>
-      <button class="btn btn-sm btn-success" (click)="edit()">Editar</button>
-      <button class="btn btn-sm btn-info" (click)="changeImg()">Cambiar Imagen</button>
+      <button class="btn btn-sm btn-success" (click)="edit()">Edit</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()">Change image</button>
     </span>
   </div>
 </div>
@@ -177,7 +177,7 @@
   <ng-template #editPorf>
     <div *ngIf="fir === false" class="col-12 pr-0  addI"
       style="max-height: 100%;padding-left: 0px; height: 30rem;padding: 16px;">
-      <h6 style="text-align: center;">Escoge una nueva imagen para tu publicación</h6>
+      <h6 style="text-align: center;">Choose a new image for your publication</h6>
 
       <div class="imagen-para-archivo">
         <span>
@@ -194,7 +194,7 @@
         [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
         (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
       </image-cropper>
-      <button class="btn btn-sm btn-success" (click)="editar()" *ngIf="croppedImage">Listo</button>
+      <button class="btn btn-sm btn-success" (click)="editar()" *ngIf="croppedImage">Ready</button>
     </div>
     <div class="col-12 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''">
       <span style="padding: 2rem;
@@ -203,7 +203,7 @@
       align-items: baseline;">
         <button (click)="readyEdit()" class="btn btn-sm btn-success" style="position: absolute;
         margin: 1rem;
-        right: 15px;bottom: 0;">Listo</button>
+        right: 15px;bottom: 0;">Ready</button>
         <img [src]="imageURL" />
       </span>
 
