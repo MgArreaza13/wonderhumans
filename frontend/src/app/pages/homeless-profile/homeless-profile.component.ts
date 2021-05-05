@@ -65,6 +65,10 @@ export class HomelessProfileComponent implements OnInit {
     homelessPhoto: any;
     contator: any;
     restante: number;
+    noValidate: boolean;
+    descNo: string;
+    nameNo: string;
+    mountNo: string;
     constructor(
         private modalService: NgbModal,
         private homelessService: HomelessService,
@@ -202,8 +206,8 @@ export class HomelessProfileComponent implements OnInit {
 
     onKey(event) {
         this.contator = event.target.value.length;
-        if (this.contator <= 100) {
-            this.restante = 100 - this.contator;
+        if (this.contator <= 150) {
+            this.restante = 150 - this.contator;
         }
     }
 
@@ -213,7 +217,8 @@ export class HomelessProfileComponent implements OnInit {
             (data: any) => {
                 console.log(data)
                 this.eventsList = data;
-                this.eventsList.forEach(element => {
+                for (let index = 0; index < this.eventsList.length; index++) {
+                    const element = this.eventsList[index];
                     this.dataCauses.push(
                         {
                             id: element.id,
@@ -225,7 +230,8 @@ export class HomelessProfileComponent implements OnInit {
                             porcentage: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)) * 100 / Number(element.total)
                         }
                     )
-                });
+                }
+
 
             },
             error => {
@@ -281,10 +287,55 @@ export class HomelessProfileComponent implements OnInit {
 
     }
 
+    nameLength(ev) {
+        console.log(ev.target.value.length)
+        const lengthName = ev.target.value.length;
+        if (lengthName < 3) {
+            this.noValidate = true;
+            this.nameNo = 'min';
+        } else if (lengthName > 100) {
+            this.nameNo = 'max';
+            this.noValidate = true;
+
+        } else {
+            this.noValidate = false;
+            this.nameNo = null;
+        }
+    }
+    descLength(ev) {
+        console.log(ev.target.value.length)
+        const lengthDesc = ev.target.value.length;
+        if (lengthDesc < 3) {
+            this.noValidate = true;
+            this.descNo = 'min';
+        } else if (lengthDesc > 150) {
+            this.noValidate = true;
+            this.descNo = 'max';
+        } else {
+            this.noValidate = false;
+            this.descNo = null;
+        }
+    }
+    totalLength(ev) {
+        console.log(Number(ev.target.value));
+        const lengthMount = Number(ev.target.value);
+        if (lengthMount < 10) {
+            this.noValidate = true;
+            this.mountNo = 'min';
+        } else if (lengthMount > 9999999) {
+            this.noValidate = true;
+            this.mountNo = 'max';
+        } else {
+            this.noValidate = false;
+            this.mountNo = null;
+        }
+    }
+
     newEvent() {
         if (this.name === undefined || this.description === undefined || this.total === undefined) {
             this.toastr.error('Empty fields');
         } else {
+
             this.createEvent(this.idHomeless);
         }
     }
@@ -305,7 +356,7 @@ export class HomelessProfileComponent implements OnInit {
                 this.total = '';
                 this.description = '';
                 this.name = '';
-                await this.getEventList(this.idHomeless);
+                this.getEventList(this.idHomeless);
             },
             async error => {
                 console.log(error);

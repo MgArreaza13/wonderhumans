@@ -1,15 +1,17 @@
-FROM node:8.13.0
+FROM node:10.13
 
 RUN mkdir -p /home/user/app/frontend
 WORKDIR /home/user/app/frontend
+
+# RUN npm install -g @angular/cli
+RUN npm i -g @angular/cli \
+    && npm i -g typescript
 
 # install app dependencies
 COPY frontend/package.json /home/user/app/frontend
 COPY frontend/package-lock.json /home/user/app/frontend
 
-# RUN npm install -g @angular/cli
-RUN npm i -g @angular/cli \
-    && npm i -g typescript
+WORKDIR /home/user/app/frontend
 
 RUN npm install
 
@@ -20,4 +22,5 @@ ADD frontend/ /home/user/app/frontend
 
 EXPOSE 4200
 
-CMD ng serve --host 0.0.0.0
+CMD ng serve --port 4200 --host 0.0.0.0 --poll 1
+

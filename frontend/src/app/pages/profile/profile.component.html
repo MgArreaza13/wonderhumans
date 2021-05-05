@@ -28,8 +28,7 @@
             <div class="col-lg-4 col-md-12 col-sm-12 order-md-1 order-xs-1 order-sm-1 order-lg-2">
               <div class="card-profile-image">
                 <a href="javascript:void(0)">
-                  <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
-                    *ngIf="imageUrl === null" class="rounded-circle">
+                  <img [src]="imgDef" *ngIf="imageUrl === null" class="rounded-circle">
                   <img [src]="imageUrl" class="imageU" *ngIf="imageUrl !== null">
                 </a>
               </div>
@@ -85,8 +84,8 @@
                     (indexChanged)="onIndexChanged($event)" (reachesLeftBound)="leftBoundStat($event)"
                     (reachesRightBound)="rightBoundStat($event)" (snapAnimationFinished)="onSnapAnimationFinished()"
                     (dragStart)="onDragStart()" (dragEnd)="onDragEnd()" #nav>
-                    <img style="border: 2px solid lightgray;" routerLink="/homeless-profile/{{item.id}}"
-                      drag-scroll-item src="{{item.photo}}" />
+                    <img id="imageHom" style="border: 2px solid lightgray;cursor: pointer;"
+                      routerLink="/homeless-profile/{{item.id}}" drag-scroll-item src="{{item.photo}}" />
 
                     <p style="line-height: 0.7;
                       font-size: small;

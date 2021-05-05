@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
     dataHom = [];
     environmentHomeless: string;
     feedData: any = [];
+    imgDef: string;
     constructor(
         private userService: UserService,
         private modalService: BsModalService,
@@ -46,6 +47,7 @@ export class ProfileComponent implements OnInit {
         this.getProfile();
         this.getMyHomelessProfile();
         this.getAllFeeds();
+        this.imgDef = 'https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png';
     }
 
     clickItem(item) {

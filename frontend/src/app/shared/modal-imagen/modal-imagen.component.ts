@@ -43,6 +43,7 @@ export class ModalImagenComponent implements OnInit {
     restanteC: number;
     editPortofolio: boolean = false;
     fir: boolean = false;
+    disabledBtn: boolean;
     constructor(
         public bsModalRef: BsModalRef,
         private feedService: FeedService,
@@ -62,6 +63,7 @@ export class ModalImagenComponent implements OnInit {
         }
         this.allData = this.data[0];
         this.ilike = this.allData.ilike;
+        this.disabledBtn = true;
 
     }
 
@@ -82,6 +84,12 @@ export class ModalImagenComponent implements OnInit {
         this.contatorC = event.target.value.length;
         if (this.contatorC <= 3500) {
             this.restanteC = 3500 - this.contatorC;
+        }
+        if (this.contatorC < 2) {
+            this.disabledBtn = true;
+        } else {
+            this.disabledBtn = false;
+
         }
     }
 
@@ -230,7 +238,7 @@ export class ModalImagenComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 this.feedService.deleteFeed(id).subscribe((data) => {
                     this.toastr.success('Eliminación satisfactoria');
                     this.spinner.hide();
@@ -261,7 +269,7 @@ export class ModalImagenComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 this.homelessService.deletePortfolio(this.data[0].id).subscribe((data) => {
                     this.toastr.success('Eliminación satisfactoria');
                     this.spinner.hide();

@@ -105,7 +105,7 @@
                       </section>
                       <section class="m-2 text-danger"
                         *ngIf="f['last_name'].hasError('maxlength') && (f['last_name'].touched || f['last_name'].dirty)">
-                        *25 is the maximum characters allowed
+                        *10 is the maximum characters allowed
                       </section>
                     </div>
                   </div>
@@ -129,7 +129,7 @@
                       </section>
                       <section class="m-2 text-danger"
                         *ngIf="f['first_name'].hasError('maxlength') && (f['first_name'].touched || f['first_name'].dirty)">
-                        *25 is the maximum characters allowed
+                        *10 is the maximum characters allowed
                       </section>
 
                     </div>
@@ -152,7 +152,7 @@
                       </section>
                       <section class="m-2 text-danger"
                         *ngIf="f['password1'].hasError('minlength') && (f['password1'].touched || f['password1'].dirty)">
-                        *8 is the minimum characters allowed
+                        *5 is the minimum characters allowed
                       </section>
                       <section class="m-2 text-danger"
                         *ngIf="f['password1'].hasError('maxlength') && (f['password1'].touched || f['password1'].dirty)">

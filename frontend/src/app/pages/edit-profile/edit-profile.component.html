@@ -191,7 +191,7 @@
                     f['city'].hasError('maxlength') &&
                     (f['city'].touched || f['city'].dirty)
                   ">
-                  *25 is the maximum characters allowed
+                  *15 is the maximum characters allowed
                 </section>
               </div>
             </div>
@@ -280,6 +280,18 @@
                     (f['aboutYou'].touched || f['aboutYou'].dirty)
                   ">
                   *Required field
+                </section>
+                <section class="m-2 text-danger" *ngIf="
+                f['aboutYou'].hasError('minlength') &&
+                (f['aboutYou'].touched || f['aboutYou'].dirty)
+              ">
+                  *3 is the minimum characters allowed
+                </section>
+                <section class="m-2 text-danger" *ngIf="
+                f['aboutYou'].hasError('maxlength') &&
+                (f['aboutYou'].touched || f['aboutYou'].dirty)
+              ">
+                  *25 is the maximum characters allowed
                 </section>
               </div>
             </div>

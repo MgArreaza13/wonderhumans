@@ -23,8 +23,12 @@
           <div class="row row-grid justify-content-center align-items-center">
             <div class="col-12" *ngIf="dataVol !== null else noVol">
               <drag-scroll #nav drag-scroll-y-disabled="true" [scrollbar-hidden]="true">
-                <img class="imgCover" drag-scroll-item src="{{environmentY}}{{item.photo}}"
-                  *ngFor="let item of dataVol" />
+                <span *ngFor="let item of dataVol">
+                  <img class="imgCover" *ngIf="item.photo === null"
+                    src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" alt="">
+                  <img class="imgCover" *ngIf="item.photo !== null" drag-scroll-item
+                    src="{{environmentY}}{{item.photo}}" />
+                </span>
 
               </drag-scroll>
             </div>
@@ -35,8 +39,12 @@
           </div>
           <div class="row mt-3">
             <div class="col-12  align-items-center">
-              <button class="btn btn-sm float-right btn-success" (click)="volunterAdd()">Quiero ser un
+              <button [disabled]="disabledAdd === true" class="btn btn-sm float-right btn-success"
+                (click)="volunterAdd()">Quiero ser un
                 voluntario</button>
+
+              <small *ngIf="disabledAdd === true" style="color: #dc3545;font-weight: 600;">*Total de voluntarios
+                alcanzados</small>
             </div>
           </div>
         </div>
@@ -53,7 +61,7 @@
                 <button class="btn btn-sm float-right btn-danger" (click)="deleteFoodRun()"><i
                     class="fa fa-trash"></i></button>
               </span>
-              <span *ngIf="isVolunter === true" style="margin-left: 0.5rem;">
+              <span *ngIf="isVolunter === true || isOwner === true" style="margin-left: 0.5rem;">
                 <button class="btn btn-sm float-right btn-success" (click)="addMoreMulti()"><i
                     class="fa fa-plus"></i></button>
               </span>

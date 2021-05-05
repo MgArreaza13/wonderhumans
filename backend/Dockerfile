@@ -10,16 +10,21 @@ RUN apt-get update && apt-get install gcc build-essential libpq-dev -y && \
     python3 -m pip install --no-cache-dir pip-tools
 
 # install python dependencies
-ADD *requirements.in /home/user/app/backend/
-RUN pip-compile requirements.in > requirements.txt && \
-    pip-compile dev-requirements.in > dev-requirements.txt
+# ADD *requirements.in /home/user/app/backend/
+# RUN pip-compile requirements.in > requirements.txt && \
+#     pip-compile dev-requirements.in > dev-requirements.txt
 
-RUN pip install -r requirements.txt && \
-    pip install -r dev-requirements.txt
+# RUN pip install -r requirements.txt && \
+#     pip install -r dev-requirements.txt
+
+
+ADD backend/requirements.txt /home/user/app/backend/
+
+RUN pip install -r requirements.txt
 
 # Clean the house
-RUN apt-get purge libpq-dev -y && apt-get autoremove -y && \
-    rm /var/lib/apt/lists/* rm -rf /var/cache/apt/*
+# RUN apt-get purge libpq-dev -y && apt-get autoremove -y && \
+#     rm /var/lib/apt/lists/* rm -rf /var/cache/apt/*
 
 ADD backend/ /home/user/app/backend
 

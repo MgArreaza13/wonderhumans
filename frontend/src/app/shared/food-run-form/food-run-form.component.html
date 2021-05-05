@@ -40,26 +40,43 @@
       </button>
     </div>
     <div class="px-4">
+
       <div class="row justify-content-center mb-2">
         <div class="col-lg-3 order-lg-2">
-          <div class="card-profile-image">
+          <div class="card-profile-image" style="margin: 0.5rem;">
+            <div *ngIf="imageURL && imageURL" style="    position: absolute;
+            z-index: 11;
+            right: 0;">
+              <button class="btn-danger btn-sm" (click)="remove()" style="padding: 0;
+              width: 1.8rem;
+              height: 1.8rem;
+              border-radius: 100px;
+              box-shadow: none;
+              border: 1px solid #d2bdbd;
+              background: #f75573;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <span *ngIf="imageURL && imageURL !== ''; else noImage">
+              <img [src]="imageURL" class="imageU" style="    filter: drop-shadow(2px 4px 6px grey);
+              cursor: pointer;" />
+            </span>
             <ng-template #noImage>
               <div class="imagen-para-archivo">
                 <span>
                   <label for="boton-archivo" *ngIf="data === undefined">
-                    <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" class="imageU" />
+                    <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" class="imageU" style="    filter: drop-shadow(2px 4px 6px grey);
+                    cursor: pointer;" />
                   </label>
                   <label for="boton-archivo" *ngIf="data !== undefined">
-                    <img src="{{environmentY}}{{data.image}}" class="imageU" />
+                    <img src="{{environmentY}}{{data.image}}" class="imageU" style="    filter: drop-shadow(2px 4px 6px grey);
+                    cursor: pointer;" />
                   </label>
 
                   <input id="boton-archivo" type="file" accept="image/*" (change)="showPreview($event)" />
                 </span>
               </div>
             </ng-template>
-            <span *ngIf="imageURL && imageURL !== ''; else noImage">
-              <img [src]="imageURL" class="imageU" />
-            </span>
           </div>
         </div>
       </div>
@@ -68,18 +85,47 @@
           <div class="form-row" style="margin-bottom: 1.5rem;">
             <div class="form-group col-md-12">
               <label>Nombre del food run</label>
-              <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="name">
+              <input (keyup)="nameLength($event)" type="text" class="form-control" placeholder="Nombre"
+                [(ngModel)]="name" minlength="5" maxlength="100">
+              <small *ngIf="nameNo === 'min'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*5 is
+                the
+                minimum characters allowed. </small>
+              <small *ngIf="nameNo === 'max'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*100
+                is the
+                maximum characters allowed. </small>
             </div>
 
           </div>
           <div class="form-row">
             <div class="form-group col-md-4" style="margin-bottom: 0;">
               <label>Monto a reunir</label>
-              <input type="number" class="form-control" placeholder="Monto" [(ngModel)]="total">
+              <input (keyup)="totalLength($event)" type="number" class="form-control" placeholder="Monto"
+                [(ngModel)]="total">
+              <small *ngIf="mountNo === 'min'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*$0
+                is
+                the
+                minimum mount allowed. </small>
+              <small *ngIf="mountNo === 'max'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*$9999999
+                is the
+                maximum mount allowed. </small>
             </div>
             <div class="form-group col-md-3" style="margin-bottom: 0;">
               <label>Número de voluntarios</label>
-              <input type="number" class="form-control" placeholder="Voluntarios" [(ngModel)]="volunteers">
+              <input type="number" pattern="[\d]{9}" (keyup)="volLength($event)" class="form-control"
+                placeholder="Voluntarios" [(ngModel)]="volunteers">
+              <small *ngIf="volNo === 'min'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*0
+                is
+                the
+                minimum volunteers allowed. </small>
+              <small *ngIf="volNo === 'max'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*10000
+                is the
+                maximum volunteers allowed. </small>
             </div>
             <div class="form-group col-md-3" style="margin-bottom: 0;">
               <label>Fecha de realización</label>
@@ -93,12 +139,22 @@
             </div>
             <div class="form-group col-md-2" style="margin-bottom: 0; margin-top: -12px;">
               <ngb-timepicker [(ngModel)]="time" id="time"></ngb-timepicker>
+
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label>Descripción</label>
-              <textarea class="form-control" placeholder="Descripción" [(ngModel)]="description"></textarea>
+              <textarea minlength="5" maxlength="300" (keyup)="desLength($event)" class="form-control"
+                placeholder="Descripción" [(ngModel)]="description"></textarea>
+              <small *ngIf="desNo === 'min'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*5 is
+                the
+                minimum characters allowed. </small>
+              <small *ngIf="desNo === 'max'" id="nameevent" class="form-text text-muted"
+                style="color: red !important;">*100
+                is the
+                maximum characters allowed. </small>
             </div>
           </div>
           <div class="form-row">
