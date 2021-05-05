@@ -173,7 +173,7 @@ export class FoodRunFormComponent implements OnInit {
                             invitation_message: this.invitation_message
                         };
                         this.foodService.newFoodRund(body).subscribe((data) => {
-                            this.toastr.success('Registro satisfactorio');
+                            this.toastr.success('Successful registration');
                             this.spinner.hide();
                             this.cerrarModal();
                         }, err => {
@@ -194,7 +194,7 @@ export class FoodRunFormComponent implements OnInit {
                                 invitation_message: this.invitation_message
                             };
                             this.foodService.editFoodRund(body).subscribe((data) => {
-                                this.toastr.success('Edición exitosa');
+                                this.toastr.success('Successful update');
                                 this.spinner.hide();
                                 this.cerrarModal();
                             }, err => {
@@ -222,7 +222,7 @@ export class FoodRunFormComponent implements OnInit {
                                 invitation_message: this.invitation_message
                             };
                             this.foodService.editFoodRund(body).subscribe((data) => {
-                                this.toastr.success('Edición exitosa');
+                                this.toastr.success('Successful update');
                                 this.spinner.hide();
                                 this.cerrarModal();
                             }, err => {

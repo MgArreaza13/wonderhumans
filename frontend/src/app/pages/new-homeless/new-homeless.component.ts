@@ -220,7 +220,7 @@ export class NewHomelessComponent implements OnInit {
         this.homelessService.newHomeless(dataHomeless).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
-                this.toastr.success('Registro satisfactorio');
+                this.toastr.success('Successful registration');
                 await this.router.navigateByUrl('/user-profile');
             },
             async err => {
@@ -251,7 +251,7 @@ export class NewHomelessComponent implements OnInit {
         this.homelessService.editHomeless(body).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
-                this.toastr.success('Actualización satisfactoria');
+                this.toastr.success('Successful update');
                 await this.router.navigateByUrl('/user-profile');
             },
             async err => {

@@ -150,13 +150,13 @@ export class FoodRunDetailsComponent implements OnInit {
 
     volunterAdd() {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: (this.invitationMsg === null ? '¿Deseas inscribirte como voluntario?' : this.invitationMsg),
+            title: 'Are you sure?',
+            text: (this.invitationMsg === null ? 'Do you want to sign up as a volunteer?' : this.invitationMsg),
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
             if (!result.dismiss) {
                 const body = {
@@ -165,7 +165,7 @@ export class FoodRunDetailsComponent implements OnInit {
                 this.spinner.show();
                 this.serviceFood.newVol(body).subscribe(data => {
                     this.spinner.hide();
-                    this.toastr.success('Ud se ha registrado satisfactoriamente como voluntario');
+                    this.toastr.success('You have successfully registered as a volunteer');
                     this.ngOnInit();
                 }, error => {
                     console.log(error);
@@ -254,18 +254,18 @@ export class FoodRunDetailsComponent implements OnInit {
 
     deleteFoodRun() {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Deseas eliminar este food run?',
+            title: 'Are you sure?',
+            text: 'Do you want to remove this?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
             if (!result.dismiss) {
                 this.spinner.show();
                 this.serviceFood.deleteFoodRund(this.idFood).subscribe((data) => {
-                    this.toastr.success('Eliminación exitosa');
+                    this.toastr.success('Successful removal');
                     this.spinner.hide();
                     this.router.navigateByUrl('/food-run');
                 }, err => {

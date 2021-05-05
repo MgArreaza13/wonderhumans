@@ -132,7 +132,7 @@ export class ModalImagenComponent implements OnInit {
                 description: this.description
             };
             this.feedService.newFeed(body).subscribe((data) => {
-                this.toastr.success('Registro satisfactorio');
+                this.toastr.success('Successful registration');
                 this.spinner.hide();
                 this.cerrarModal();
                 this.ngOnInit();
@@ -155,7 +155,7 @@ export class ModalImagenComponent implements OnInit {
             };
             this.feedService.newCom(data.id, body).subscribe((res) => {
                 this.spinner.hide();
-                this.toastr.success('Publicación exitosa');
+                this.toastr.success('Successful posting');
                 this.cerrarModal();
                 this.ngOnInit();
             }, err => {
@@ -216,7 +216,7 @@ export class ModalImagenComponent implements OnInit {
             description: this.description
         };
         this.feedService.editFeed(body).subscribe((data) => {
-            this.toastr.success('Actualización satisfactoria');
+            this.toastr.success('Successful update');
             this.spinner.hide();
             this.cerrarModal();
             this.ngOnInit();
@@ -230,17 +230,17 @@ export class ModalImagenComponent implements OnInit {
 
     deleteFeed(id) {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¿Desea eliminar este feed?",
+            title: 'Are you sure?',
+            text: "Do you want to remove this?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
             if (!result.dismiss) {
                 this.feedService.deleteFeed(id).subscribe((data) => {
-                    this.toastr.success('Eliminación satisfactoria');
+                    this.toastr.success('Successful removal');
                     this.spinner.hide();
                     this.cerrarModal();
                     this.ngOnInit();
@@ -261,17 +261,17 @@ export class ModalImagenComponent implements OnInit {
 
     deletePortfolio() {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¿Desea eliminar esta imagen?",
+            title: 'Are you sure?',
+            text: "Do you want to remove this?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
             if (!result.dismiss) {
                 this.homelessService.deletePortfolio(this.data[0].id).subscribe((data) => {
-                    this.toastr.success('Eliminación satisfactoria');
+                    this.toastr.success('Successful removal');
                     this.spinner.hide();
                     this.cerrarModal();
                     this.ngOnInit();
@@ -310,7 +310,7 @@ export class ModalImagenComponent implements OnInit {
         console.log(body)
         this.homelessService.editPortfolio(body).subscribe((data) => {
             this.spinner.hide();
-            this.toastr.success('Actualización satisfactoria');
+            this.toastr.success('Successful update');
             this.cerrarModal();
 
         }, err => {
