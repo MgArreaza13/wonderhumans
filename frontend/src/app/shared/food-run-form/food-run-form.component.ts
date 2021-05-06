@@ -142,7 +142,7 @@ export class FoodRunFormComponent implements OnInit {
 
         this.imageURL = (this.data !== undefined && this.imageURL === null) ? 'noImage' : this.imageURL;
         if (this.imageURL === null || this.name === null || this.total === null || this.volunteers === null || this.description === null || this.time === null || this.dateRe === null) {
-            this.toastr.error('Error, debe ingresar todos los datos');
+            this.toastr.error('Error, you must enter all data');
         } else {
             this.dateRealiz = {
                 day: this.dateRe.day,
@@ -158,7 +158,9 @@ export class FoodRunFormComponent implements OnInit {
             if (isOr === false) {
                 const hoyT = `${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
                 if (fecha_choice === hoyT) {
+                    console.log('soy hoy')
                     this.dateNo = true;
+                    this.toastr.error('Date must be higher than current');
                 } else {
                     this.spinner.show();
                     this.dateNo = false;

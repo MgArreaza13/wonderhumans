@@ -85,8 +85,8 @@
           <div class="form-row" style="margin-bottom: 1.5rem;">
             <div class="form-group col-md-12">
               <label>Food run name</label>
-              <input (keyup)="nameLength($event)" type="text" class="form-control" placeholder="Nombre"
-                [(ngModel)]="name" minlength="5" maxlength="100">
+              <input (keyup)="nameLength($event)" type="text" class="form-control" placeholder="Name" [(ngModel)]="name"
+                minlength="5" maxlength="100">
               <small *ngIf="nameNo === 'min'" id="nameevent" class="form-text text-muted"
                 style="color: red !important;">*5 is
                 the
