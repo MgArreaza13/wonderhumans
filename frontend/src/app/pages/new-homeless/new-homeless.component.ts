@@ -35,6 +35,7 @@ export class NewHomelessComponent implements OnInit {
     environmentY = environment.apiRoot;
     imageEdit: string;
     date: { day: number; month: number; year: number; };
+    maxdate: { year: number; month: number; day: number; };
     constructor(
         private formBuilder: FormBuilder,
         private spinner: NgxSpinnerService,
@@ -47,6 +48,12 @@ export class NewHomelessComponent implements OnInit {
     }
 
     ngOnInit() {
+        const current = new Date();
+        this.maxdate = {
+            year: current.getFullYear() - 12,
+            month: current.getMonth() + 1,
+            day: current.getDate() + 1
+        };
         if (!this.idHomeless) {
 
             this.initForm();

@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SearchbarComponent } from './searchbar/searchbar.component';
-
+import { ListEventsComponent } from './list-events/list-events.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 // Pipes
 
 
@@ -22,14 +23,16 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
         FormsModule,
         ReactiveFormsModule,
         ModalModule.forRoot(),
-        BsDatepickerModule
+        BsDatepickerModule,
+        Ng2SearchPipeModule
     ],
     exports: [
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        SearchbarComponent],
-    declarations: [SearchbarComponent
+        SearchbarComponent,
+        ListEventsComponent],
+    declarations: [SearchbarComponent, ListEventsComponent
     ],
 })
 export class SharedModule { }

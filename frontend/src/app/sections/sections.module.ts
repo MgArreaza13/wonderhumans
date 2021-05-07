@@ -45,6 +45,6 @@ import { NgbdModalContent } from './modal/modal.component';
         NouisliderModule,
         JwBootstrapSwitchNg2Module
     ],
-    exports: [SectionsComponent, NucleoSectionComponent]
+    exports: [SectionsComponent, NucleoSectionComponent, ButtonsSectionComponent, CrsSectionComponent, TabsSectionComponent, InputsSectionComponent]
 })
 export class SectionsModule { }

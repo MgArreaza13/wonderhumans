@@ -120,10 +120,22 @@
                       <div class="row">
                         <h3 class="text-center w-100">Portfolio</h3>
                       </div>
-                      <div class="row">
+                      <div class="row" *ngIf="portfolio">
                         <div class="col-sm" *ngFor="let item of portfolio">
                           <img style="box-shadow: 1px 1px 7px #808080e0;" src="{{imageUrl}}{{ item.image }}"
                             (click)="openModal2(item.image, item.id)" class="img-portfolio" />
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="portfolio === null">
+                        <div class="col-sm">
+                          <span
+                            style="display: flex; justify-content: flex-end; align-items: center;width: 100%;padding: 1rem">
+                            <button class="btn btn-icon btn-3  btn-success btn-around btn-sm" type="button">
+                              <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
+                              <span class="btn-inner--text">Add portfolio</span>
+                            </button>
+
+                          </span>
                         </div>
                       </div>
                     </ng-template>
@@ -137,7 +149,7 @@
                         <p class="mb-0 description">"{{ homelessProfile?.aboutYou }}"</p>
                         <footer class="blockquote-footer">About homeless</footer>
                       </blockquote>
-                      <div class="table-responsive-sm" *ngIf="dataCauses.length !== 0 else noCause">
+                      <div class="table-responsive-sm" *ngIf="eventsList !== null else noCause">
                         <table class="table">
                           <caption>Cause list</caption>
                           <thead>
@@ -149,14 +161,14 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let item of dataCauses">
+                            <tr *ngFor="let item of eventsList">
                               <td>{{item.name}}</td>
                               <td>${{item.total}}</td>
                               <td>
-                                <progressbar [max]="item.total" [animate]="true" [value]="item.acumulado" type="success"
-                                  style="height: 1rem;
+                                <progressbar [max]="item.total" [animate]="true" [value]="item.total - item.rest"
+                                  type="success" style="height: 1rem;
                                 margin-top: 0.3rem;">
-                                  <b style="color: black;">{{item.porcentage}}%</b>
+                                  <b style="color: black;">{{(item.total - item.rest) *100 / item.total}}%</b>
                                 </progressbar>
                               </td>
                               <td class="text-nowrap text-center">

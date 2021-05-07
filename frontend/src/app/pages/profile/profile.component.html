@@ -24,7 +24,7 @@
     <div class="container">
       <div class="card card-profile shadow mt--300">
         <div class="px-4">
-          <div class="row justify-content-center">
+          <div class="row justify-content-center p-2">
             <div class="col-lg-4 col-md-12 col-sm-12 order-md-1 order-xs-1 order-sm-1 order-lg-2">
               <div class="card-profile-image">
                 <a href="javascript:void(0)">
@@ -36,35 +36,44 @@
             <div
               class="col-lg-4 order-lg-3 order-md-3 order-sm-3 order-xs-3 text-lg-right align-self-lg-center col-md-12 col-sm-12 ">
               <div class="card-profile-actions d-flex justify-content-center mt-xs-4">
-                <a [routerLink]="['/new-homeless']" class="btn btn-sm btn-info " *ngIf="profile">Register new
-                  homeless</a>
-                <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default ">Message</a> -->
-                <a [routerLink]="['/food-run']" class="btn btn-sm btn-success" *ngIf="profile">Add food run</a>
+
+                <button *ngIf="profile" [routerLink]="['/edit-profile']"
+                  class="btn btn-icon btn-3 btn-warning btn-around btn-sm" type="button">
+                  <span class="btn-inner--icon"><i class="fa fa-edit"></i></span>
+                  <span class="btn-inner--text">Edit profile</span>
+                </button>
+                <button *ngIf="profile" [routerLink]="['/new-homeless']"
+                  class="btn btn-icon btn-3 btn-outline-info btn-around btn-sm" type="button">
+                  <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
+                  <span class="btn-inner--text">new
+                    homeless</span>
+                </button>
               </div>
             </div>
             <div class="col-lg-4 order-lg-1 order-md-2 order-sm-2 order-xs-2 col-md-12 col-sm-12 mt-md-7 mt-lg-0">
               <div class="card-profile-stats d-flex justify-content-center">
-                <div>
-                  <span class="heading">0</span>
-                  <span class="description">Friends</span>
-                </div>
-                <div>
-                  <span class="heading">0</span>
-                  <span class="description">Donations</span>
-                </div>
-                <div>
-                  <span class="heading">0</span>
-                  <span class="description">Volunteer</span>
-                </div>
+
+                <button *ngIf="profile" [routerLink]="['/food-run']"
+                  class="btn btn-icon btn-3 btn-success btn-around btn-sm" type="button">
+                  <span class="btn-inner--icon"><i class="fa fa-eye"></i></span>
+                  <span class="btn-inner--text">Food run</span>
+                </button>
+                <button [routerLink]="['/list-events']" routerLinkActive="router-link-active" *ngIf="profile"
+                  class="btn btn-icon btn-3  btn-outline-warning btn-around btn-sm" type="button">
+                  <span class="btn-inner--icon"><i class="fa fa-list"></i></span>
+                  <span class="btn-inner--text">Events
+                    list</span>
+                </button>
               </div>
             </div>
           </div>
-          <div class="text-center mt-5">
-            <h3>{{user.first_name}} {{user.last_name}}
+          <div class="text-center mt-5 " style="margin-top: 5rem !important;">
+            <h3 class="mt-5">{{user.first_name}} {{user.last_name}}
             </h3>
-            <a [routerLink]="['/edit-profile']" class="btn btn-sm btn-warning " *ngIf="profile">Edit profile</a>
+
             <ng-container *ngIf="profile">
-              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{profile.phone}}</div>
+              <div class="h6 font-weight-300"><i class="ni location_pin mr-2"
+                  *ngIf="profile.phone"></i>{{profile.phone}}</div>
               <div class="h6 font-weight-300" *ngIf="profile.show_email === true"><i
                   class="ni location_pin mr-2"></i>{{user.email}}</div>
               <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>{{profile.country}} - {{profile.city}}
@@ -106,33 +115,11 @@
           </div>
           <div class="text-center">
             <div class="row justify-content-center">
-              <section class="pb-5">
+              <section class="pb-5" style="padding-top: 0.5rem !important;">
                 <div class="container">
-                  <div class="row">
+                  <div class="row mb-4">
                     <h5 class="w-100"><i class="ni ni-album-2"></i> Publications</h5>
                   </div>
-                  <!-- <div *ngFor="let item of feedData" class="col-md-3 col-lg-3" style="display: flex;
-justify-content: center;
-align-items: center;margin:0.5em">
-  <span style="">
-
-    <div class="span-cua ih-item square effect13 bottom_to_top" style="widht:100%;box-shadow: 1px 1px 7px #808080e0;
-  "><a>
-        <div class="img" style="display: contents;"><img src="{{environmentHomeless}}{{item.image}}"
-            alt="img" (click)="openModalWithComponent(item)"></div>
-        <div class="info" (click)="openModalWithComponent(item)">
-          <h3 style="display: flex;
-            justify-content: center; background-color: transparent;">
-            <p style="font-size: large; font-weight: 700;"><i class="ni ni-chat-round"></i>
-              {{item.total_comments}}</p>
-            <p style="font-size: large; font-weight: 700;"><i class="ni ni-favourite-28"></i>
-              {{item.total_likes}}</p>
-          </h3>
-
-        </div>
-      </a></div>
-  </span>
-</div> -->
                   <div class="row" style="justify-content: center;">
 
                     <div class="grid-container">
@@ -158,47 +145,9 @@ align-items: center;margin:0.5em">
                               alt="san francisco"></a>
 
                         </div>
-
                       </article>
-
-
-
                     </div>
-                    <!-- end grid container -->
                   </div>
-
-                  <!-- <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let homeless of userHomeless" >
-                        <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                          <div class="mainflip">
-                            <div class="frontside">
-                              <div class="card">
-                                <div class="card-body text-center">
-                                  <p><img class=" img-fluid"
-                                      src="https://images.unsplash.com/photo-1509059852496-f3822ae057bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1112&q=80"
-                                      alt="card image"></p>
-                                  <h4 class="card-title">{{homeless.firstName}} {{homeless.lastName}}</h4>
-                                  <p class="card-text">{{homeless.occupation}}</p>
-                                  <p class="card-text">{{homeless.phone}}</p>
-                                  <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="backside">
-                              <div class="card">
-                                <div class="card-body text-center mt-4">
-                                  <h4 class="card-title">{{homeless.firstName}} {{homeless.lastName}}</h4>
-                                  <p class="card-text">{{homeless.aboutYou}}</p>
-                                  <div>
-                                    <a routerLink="/homeless-profile/{{homeless.id}}" class="btn btn-sm btn-warning">Ver profile</a>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-
                 </div>
               </section>
             </div>

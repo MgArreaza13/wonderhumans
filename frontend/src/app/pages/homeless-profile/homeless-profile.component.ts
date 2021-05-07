@@ -48,7 +48,7 @@ export class HomelessProfileComponent implements OnInit {
         locale: 'en'
     };
     modalRef: BsModalRef;
-    portfolio: any;
+    portfolio = null;
     eventsList: any;
     donationsList: any;
     closeResult: string;
@@ -215,22 +215,22 @@ export class HomelessProfileComponent implements OnInit {
         this.dataCauses.length = 0;
         this.homelessService.getEventsDonations(id).subscribe(
             (data: any) => {
-                console.log(data)
-                this.eventsList = data;
-                for (let index = 0; index < this.eventsList.length; index++) {
-                    const element = this.eventsList[index];
-                    this.dataCauses.push(
-                        {
-                            id: element.id,
-                            name: element.name,
-                            total: Number(element.total),
-                            rest: (element.rest === '') ? Number(element.total) : Number(element.rest),
-                            acumulado: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)),
-                            // tslint:disable-next-line: max-line-length
-                            porcentage: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)) * 100 / Number(element.total)
-                        }
-                    )
-                }
+                this.eventsList = (data.length === 0) ? null : data;
+                console.log(this.eventsList)
+                // for (let index = 0; index < this.eventsList.length; index++) {
+                //     const element = this.eventsList[index];
+                //     this.dataCauses.push(
+                //         {
+                //             id: element.id,
+                //             name: element.name,
+                //             total: Number(element.total),
+                //             rest: (element.rest === '') ? Number(element.total) : Number(element.rest),
+                //             acumulado: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)),
+                //             // tslint:disable-next-line: max-line-length
+                //             porcentage: (Number(element.total) - Number((element.rest === '') ? Number(element.total) : element.rest)) * 100 / Number(element.total)
+                //         }
+                //     )
+                // }
 
 
             },
@@ -244,7 +244,8 @@ export class HomelessProfileComponent implements OnInit {
     getPortfolioList(id) {
         this.homelessService.getPortfolio(id).subscribe(
             (data: any) => {
-                this.portfolio = data;
+                this.portfolio = (data.length === 0) ? null : data;
+                console.log(this.portfolio)
 
             },
             error => {
@@ -288,7 +289,6 @@ export class HomelessProfileComponent implements OnInit {
     }
 
     nameLength(ev) {
-        console.log(ev.target.value.length)
         const lengthName = ev.target.value.length;
         if (lengthName < 3) {
             this.noValidate = true;
@@ -303,7 +303,6 @@ export class HomelessProfileComponent implements OnInit {
         }
     }
     descLength(ev) {
-        console.log(ev.target.value.length)
         const lengthDesc = ev.target.value.length;
         if (lengthDesc < 3) {
             this.noValidate = true;
@@ -317,7 +316,6 @@ export class HomelessProfileComponent implements OnInit {
         }
     }
     totalLength(ev) {
-        console.log(Number(ev.target.value));
         const lengthMount = Number(ev.target.value);
         if (lengthMount < 10) {
             this.noValidate = true;
@@ -379,7 +377,6 @@ export class HomelessProfileComponent implements OnInit {
     }
 
     openModal2(img, idPort) {
-        console.log(this.portfolio)
         const initialState = {
 
             data: [

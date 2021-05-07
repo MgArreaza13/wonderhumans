@@ -59,16 +59,30 @@
 
         </div>
       </div>
+      <span style="display: flex; justify-content: flex-end; align-items: center;width: 100%;padding: 1rem">
+
+        <button [routerLink]="['/list-events']" class="btn btn-icon btn-3  btn-neutral btn-around" type="button">
+          <span class="btn-inner--icon"><i class="fa fa-list"></i></span>
+          <span class="btn-inner--text">All events</span>
+        </button>
+      </span>
       <div class="row " style="justify-content: space-between">
-        <div class="card" style=" border-radius: 20px;margin:12px" *ngFor="let item of foodRunsData">
+        <div class="card" style=" border-radius: 20px;margin:12px; max-width: 17rem;"
+          *ngFor="let item of foodRunsData | slice:0:3">
           <img class="card-img-top top-im" src="{{environmentY}}{{item.image}}" alt="Card image">
           <div class="card-body">
             <h4 class="card-title">{{item.name}}</h4>
             <p class="card-text">Amount to raise: {{item.total | currency}}</p>
-            <a routerLink="/details-food-run/{{item.id}}" class="btn btn-primary btn-block btn-sm">See details</a>
+            <button routerLink="/details-food-run/{{item.id}}"
+              class="btn btn-icon btn-3  btn-outline-primary btn-around btn-sm btn-block" type="button">
+              <span class="btn-inner--icon"><i class="fa fa-eye"></i></span>
+              <span class="btn-inner--text">See details</span>
+            </button>
           </div>
         </div>
+
       </div>
+
     </div>
   </section>
 </main>

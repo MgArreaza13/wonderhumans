@@ -128,13 +128,21 @@
                 maximum volunteers allowed. </small>
             </div>
             <div class="form-group col-md-3" style="margin-bottom: 0;">
-              <label>Date of realization</label>
+              <span class="d-flex" style="justify-content: space-between;">
+
+                <label>Date of realization</label>
+                <button id="toolDate" type="button" class="btn btn-danger btn-sm"
+                  ngbTooltip="The completion date must be greater than the current date" [autoClose]="true"
+                  triggers="manual" #t="ngbTooltip" (click)="t.open()">
+                  <i class="fa fa-info"></i>
+                </button>
+              </span>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-birthday"></i></span>
                 </div>
-                <input [(ngModel)]="dateRe" class="form-control datepicker" placeholder="Ex: /**/**/****" type="text"
-                  ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
+                <input [minDate]="mindate" [(ngModel)]="dateRe" class="form-control datepicker"
+                  placeholder="Ex: /**/**/****" type="text" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" />
               </div>
             </div>
             <div class="form-group col-md-2" style="margin-bottom: 0; margin-top: -12px;">
