@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 # My models
 from apps.portfolio import models as portfolio_models
+from apps.accounts import models as accounts_models
 
 def updateImage(ur):
     import base64
@@ -13,6 +14,37 @@ def updateImage(ur):
     format, imgstr = ur.split(';base64,')  # format ~= data:image/X,
     ext = format.split('/')[-1]  # guess file extension
     return ContentFile(base64.b64decode(imgstr), name='profileimg.' + ext)
+
+
+def create(data:dict,homeless:int, user:User)->portfolio_models.HomelessPortfolio:
+    """
+        Method to create a portfolio
+
+        :param data: content data to update
+        :type data: dict
+        :param homoless: id of homoless
+        :type data: int
+        :param user: user that register homeless and portfolio
+        :type user: User
+        :raise: ValueError
+        :return: dict portfolio
+    """
+    try:
+        homeless = accounts_models.HomelessProfile.objects.get(id=homeless)
+    except accounts_models.HomelessProfile.DoesNotExist:
+        raise ValueError(str(_("the homless does not exist")))
+    if data.get("photo") is None:
+        raise ValueError("The field photo is required")
+    try:
+        portfolio = portfolio_models.HomelessPortfolio.objects.create(
+                homeless = homeless,
+                userRegisterer = user,
+                image = updateImage(data.get("photo"))
+            )
+    except Exception as e:
+        print(e)
+        raise ValueError(str(_("An error occurred while saving the portfolio")))
+    return portfolio
 
 def getPortfolio(id_homeless: int)->dict:
     data = portfolio_models.HomelessPortfolio.objects.filter(homeless__id = id_homeless)

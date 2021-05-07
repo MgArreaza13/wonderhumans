@@ -30,6 +30,18 @@ class ManagementPortfolioViewSet (APIView):
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = portfolio_serializers.PortfolioSerializers(portfolios, many=True).data
 		return Response(serializer, status=status.HTTP_200_OK)
+	
+	def post(self, request, id_homeless):
+		try:
+			portfolio = portfolio_services.create(request.data,id_homeless,request.user)
+		except ValueError as e:
+			return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = portfolio_serializers.PortfolioSerializers(portfolio, many=False).data
+		return Response(serializer, status=status.HTTP_201_CREATED)
 
 	def put(self, request):
 		try:
