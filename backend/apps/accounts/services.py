@@ -316,11 +316,6 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 	else:
 		raise ValueError(str(_("Last Name field is required")))
-	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),3,75)
-		accounts_validations.validate_email(data.get("email"))
-	else:
-		raise ValueError(str(_("Email field is required")))
 	if data.get("show_email") is not None:
 		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
 	else:
@@ -356,7 +351,6 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			firstName = data.get("firstName"),
 			lastName = data.get("lastName"),
 			typeUser = typeUser,
-			email = data.get("email"),
 			show_email = data.get("show_email"),
 			#Additional information personal
 			occupation = data.get("occupation"),
@@ -374,7 +368,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	if data.get("photo") is not None:
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
-		print(profile.photo)
+	if data.get("email") is not None:
+		accounts_validations.validate_length("Email",data.get("email"),3,75)
+		accounts_validations.validate_email(data.get("email"))
+		profile.email = data.get("email")
 	url = 'homeless-profile/' + str(profile.id)
 	saveQrCode(url,str(profile.id))
 	profile.qr_code = 'media/qrCodes/' + str(profile.id)+ '.png'
