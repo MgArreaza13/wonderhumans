@@ -492,6 +492,7 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'firstName': p.firstName,
 				'lastName' : p.lastName,
 				'email' : p.email,
+				'qr_code': p.qr_code,
 				'show_email': p.show_email,
 				# Additional information personal
 				'occupation' : p.occupation,
