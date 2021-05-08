@@ -221,12 +221,12 @@
                       placeholder="Ex: Jhon@example.com" type="email" />
                   </div>
                 </div>
-                <section class="m-2 text-danger" *ngIf="
+                <!-- <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('required') &&
                     (f['email'].touched || f['email'].dirty)
                   ">
                   *Required field
-                </section>
+                </section> -->
                 <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('email') &&
                     (f['email'].touched || f['email'].dirty)

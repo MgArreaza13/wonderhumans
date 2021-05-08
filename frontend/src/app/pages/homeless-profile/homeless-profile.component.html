@@ -46,8 +46,8 @@
                     {{ homelessProfile?.lastName }}
                   </h5>
                   <button style="margin: .5rem auto; display: block;background: #ee5461;border-color: transparent;"
-                    (click)="openModal3('/media/qrCodes/2.png')" class="btn btn-icon btn-3  btn-info btn-around btn-sm"
-                    type="button">
+                    (click)="openModal3(homelessProfile?.qr_code)"
+                    class="btn btn-icon btn-3  btn-info btn-around btn-sm" type="button">
                     <span class="btn-inner--icon"><i class="fa fa-qrcode"></i></span>
                     <span class="btn-inner--text">QR CODE</span>
                   </button>

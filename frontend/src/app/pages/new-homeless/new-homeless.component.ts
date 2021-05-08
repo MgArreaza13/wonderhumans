@@ -94,7 +94,7 @@ export class NewHomelessComponent implements OnInit {
                 Validators.maxLength(25),
             ]],
             email: [(dataUser) ? dataUser.email : '', [
-                Validators.required, Validators.email
+                Validators.email
             ]],
             occupation: [(dataUser) ? dataUser.occupation : '', [
                 Validators.required,

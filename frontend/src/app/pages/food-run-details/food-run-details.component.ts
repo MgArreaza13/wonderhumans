@@ -191,7 +191,6 @@ export class FoodRunDetailsComponent implements OnInit {
             if (!result.dismiss) {
                 this.spinner.show();
                 this.serviceFood.deleteVol(this.idFood).subscribe(data => {
-                    console.log(data)
                     this.spinner.hide();
                     this.toastr.success('Successful removal');
                     this.getVol();

@@ -308,7 +308,6 @@ export class ModalImagenComponent implements OnInit {
             photo: this.imageURL,
             id: this.data[0].id
         };
-        console.log(body)
         this.homelessService.editPortfolio(body).subscribe((data) => {
             this.spinner.hide();
             this.toastr.success('Successful update');
@@ -333,8 +332,6 @@ export class ModalImagenComponent implements OnInit {
                 description: this.description
             };
             const id = this.data[0].id;
-            console.log(body)
-            console.log(id)
             this.homelessService.newPortfolio(body, id).subscribe((data) => {
                 this.toastr.success('Successful registration');
                 this.spinner.hide();

@@ -389,7 +389,7 @@ export class HomelessProfileComponent implements OnInit {
 
             data: [
                 {
-                    img: img,
+                    img: `/${img}`,
                 }
             ],
             type: 'viewQr'
