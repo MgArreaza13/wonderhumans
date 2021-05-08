@@ -18,6 +18,7 @@ export class ListEventsComponent implements OnInit {
     term;
     valor = '';
     showMsg: boolean;
+    p: number = 1;
     constructor(
         private router: Router,
         private spinner: NgxSpinnerService,

@@ -209,4 +209,53 @@
 
     </div>
   </ng-template>
+
+
+</div>
+<div class="row" *ngIf="type === 'addPortfolio'">
+  <ng-template #noImage>
+    <div class="col-6 pr-0  addI" style="max-height: 100%;padding-left: 0px;min-height: 30rem;">
+      <h5>Add an image for your post</h5>
+      <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
+      <!-- <img *ngIf="croppedImage" [src]="croppedImage" /> -->
+      <div class="imagen-para-archivo">
+        <span>
+          <label for="boton-archivo">
+            <img class="imgI" *ngIf="croppedImage" [src]="croppedImage" />
+            <img class="imgI" *ngIf="!croppedImage" [src]="imageDefaul" />
+
+            <input id="boton-archivo" type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+          </label>
+        </span>
+
+      </div>
+      <image-cropper *ngIf="show === true" [backgroundColor]="Brown" [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true" [aspectRatio]="7 / 6" format="png" (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+      <button class="btn btn-sm btn-success mb-2" (click)="ready()" *ngIf="croppedImage">Ready</button>
+    </div>
+  </ng-template>
+  <div class="col-6 pr-0" style="max-height: 100%;" *ngIf="imageURL && imageURL !== ''; else noImage">
+    <span>
+      <img [src]="imageURL" />
+    </span>
+  </div>
+  <div class="col-6 pl-0 addPublic">
+    <label for="">Description</label>
+    <textarea maxlength="65000" (keyup)="onKey($event)" (focus)="focus = true" (blur)="focus = false"
+      [(ngModel)]="description"></textarea>
+    <span *ngIf="contator" style="float: right;font-variant: all-petite-caps;">{{contator}}/{{restante}}
+      characters</span>
+    <span>
+      <button class="btn btn-sm btn-success" (click)="addPor()" [disabled]="readyImage === false">Post</button>
+      <button class="btn btn-sm btn-info" (click)="changeImg()">Change image</button>
+    </span>
+  </div>
+</div>
+<div class="row" *ngIf="type === 'viewQr'" style="padding: 1rem;justify-content: center;">
+  <div class="col-7 col-xs-6 col-md-7 col-lg-7 col-xl-7 pr-0">
+    <img [src]="img" alt="">
+  </div>
+
 </div>

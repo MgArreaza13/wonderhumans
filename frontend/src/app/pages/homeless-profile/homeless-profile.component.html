@@ -45,6 +45,12 @@
                     {{ homelessProfile?.firstName }}
                     {{ homelessProfile?.lastName }}
                   </h5>
+                  <button style="margin: .5rem auto; display: block;background: #ee5461;border-color: transparent;"
+                    (click)="openModal3('/media/qrCodes/2.png')" class="btn btn-icon btn-3  btn-info btn-around btn-sm"
+                    type="button">
+                    <span class="btn-inner--icon"><i class="fa fa-qrcode"></i></span>
+                    <span class="btn-inner--text">QR CODE</span>
+                  </button>
                   <small *ngIf="homelessProfile?.code" class="font-weight-bold text-center d-block">Code:
                     {{ homelessProfile?.code }}</small>
                   <small *ngIf="homelessProfile?.email && homelessProfile?.show_email === true"
@@ -58,6 +64,7 @@
                     {{ homelessProfile?.occupation }}</small>
                   <small *ngIf="homelessProfile?.location_detail" class="font-weight-bold text-center d-block">Location:
                     {{ homelessProfile?.location_detail }}</small>
+
                 </div>
                 <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row" type="pills"
                   id="navCustom2">
@@ -120,17 +127,20 @@
                       <div class="row">
                         <h3 class="text-center w-100">Portfolio</h3>
                       </div>
-                      <div class="row" *ngIf="portfolio">
-                        <div class="col-sm" *ngFor="let item of portfolio">
+                      <div class="row p-4" *ngIf="portfolio">
+                        <div class="col-sm" *ngFor="let item of portfolio" style="    display: flex;
+                        align-items: center;
+                        justify-content: center;">
                           <img style="box-shadow: 1px 1px 7px #808080e0;" src="{{imageUrl}}{{ item.image }}"
                             (click)="openModal2(item.image, item.id)" class="img-portfolio" />
                         </div>
                       </div>
-                      <div class="row" *ngIf="portfolio === null">
+                      <div class="row">
                         <div class="col-sm">
                           <span
                             style="display: flex; justify-content: flex-end; align-items: center;width: 100%;padding: 1rem">
-                            <button class="btn btn-icon btn-3  btn-success btn-around btn-sm" type="button">
+                            <button (click)="addPortfolio()" class="btn btn-icon btn-3  btn-success btn-around btn-sm"
+                              type="button">
                               <span class="btn-inner--icon"><i class="fa fa-plus"></i></span>
                               <span class="btn-inner--text">Add portfolio</span>
                             </button>

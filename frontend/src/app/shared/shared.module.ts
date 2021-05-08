@@ -7,6 +7,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { ListEventsComponent } from './list-events/list-events.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
 // Pipes
 
 
@@ -24,7 +25,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
         ReactiveFormsModule,
         ModalModule.forRoot(),
         BsDatepickerModule,
-        Ng2SearchPipeModule
+        Ng2SearchPipeModule,
+        NgxPaginationModule
     ],
     exports: [
         HttpClientModule,

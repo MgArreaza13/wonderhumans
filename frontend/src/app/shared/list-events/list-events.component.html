@@ -59,7 +59,8 @@
         </button>
       </div>
       <div class="row p-4">
-        <div class="col-md-3 mb-3" *ngFor="let item of foodRunsData | filter:term">
+        <div class="col-md-3 mb-3"
+          *ngFor="let item of foodRunsData | filter:term | paginate: { itemsPerPage: 8, currentPage: p }">
           <div id="item" class="card bg-default shadow border-0" clickable *ngIf="item">
             <img [src]="environmentY+item.image" class="imL card-img-top">
             <blockquote class="card-blockquote">
@@ -79,9 +80,11 @@
               </button>
             </blockquote>
           </div>
-
-
         </div>
+      </div>
+      <div class="row">
+
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </section>

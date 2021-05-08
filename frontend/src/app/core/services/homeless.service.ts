@@ -61,4 +61,8 @@ export class HomelessService {
     searchHomeless(code) {
         return this.http.get(`${environment.apiRoot}/api/accounts/homeless/code/${code}`);
     }
+
+    newPortfolio(body, id) {
+        return this.http.post(`${environment.apiRoot}/api/portfolio/create/${id}`, body);
+    }
 }
