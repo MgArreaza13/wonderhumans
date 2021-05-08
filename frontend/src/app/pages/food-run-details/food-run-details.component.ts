@@ -43,7 +43,7 @@ export class FoodRunDetailsComponent implements OnInit {
     bsModalRef: BsModalRef;
     dataDonations: Object;
     user: any;
-    isVolunter: boolean = false;
+    isVolunter: boolean;
     isOwner: boolean = false;
     multiMedia: Object;
     invitationMsg: any;
@@ -137,6 +137,8 @@ export class FoodRunDetailsComponent implements OnInit {
                 this.dataVol.forEach(element => {
                     if (element.user.id === this.user['id']) {
                         this.isVolunter = true;
+                    } else {
+                        this.isVolunter = false;
                     }
                     console.log(element.photo)
                 });
@@ -167,6 +169,34 @@ export class FoodRunDetailsComponent implements OnInit {
                     this.spinner.hide();
                     this.toastr.success('You have successfully registered as a volunteer');
                     this.ngOnInit();
+                }, error => {
+                    console.log(error);
+                    this.toastr.error(error.error.detail);
+                    this.spinner.hide();
+
+                });
+            }
+        });
+    }
+    volunterDel() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to stop volunteering?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (!result.dismiss) {
+                this.spinner.show();
+                this.serviceFood.deleteVol(this.idFood).subscribe(data => {
+                    console.log(data)
+                    this.spinner.hide();
+                    this.toastr.success('Successful removal');
+                    this.getVol();
+                    this.isVolunter = false;
+                    this.disabledAdd = false;
                 }, error => {
                     console.log(error);
                     this.toastr.error(error.error.detail);

@@ -20,6 +20,9 @@ export class FoodRunService {
     deleteFoodRund(id) {
         return this.http.delete(`${environment.apiRoot}/api/food/get/${id}`);
     }
+    deleteVol(id) {
+        return this.http.delete(`${environment.apiRoot}/api/food/delete/volunteer/${id}`);
+    }
     newVol(body) {
         return this.http.post(`${environment.apiRoot}/api/food/new/volunteer/`, body);
     }
