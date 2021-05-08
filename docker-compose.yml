@@ -17,9 +17,10 @@ services:
     image: "redis:alpine"
 
   frontend:
-    build:
-      dockerfile: frontend/Dockerfile
-      context: .
+    image: "mgarreaza13/wonderhumans_frontend:v2"
+    # build:
+    #   dockerfile: frontend/Dockerfile
+    #   context: .
     stdin_open: true
     volumes:
       - ./frontend:/home/user/app/frontend
