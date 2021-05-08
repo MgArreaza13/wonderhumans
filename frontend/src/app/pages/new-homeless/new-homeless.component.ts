@@ -185,7 +185,9 @@ export class NewHomelessComponent implements OnInit {
             this.newHomeless = {} as NewHomeless;
             this.newHomeless.firstName = this.newHomelessForm.get('firstName').value;
             this.newHomeless.lastName = this.newHomelessForm.get('lastName').value;
-            this.newHomeless.email = this.newHomelessForm.get('email').value;
+            if (this.newHomelessForm.get('email').value !== '') {
+                this.newHomeless.email = this.newHomelessForm.get('email').value;
+            }
             this.newHomeless.occupation = this.newHomelessForm.get('occupation').value;
             this.newHomeless.city = this.newHomelessForm.get('city').value;
             this.newHomeless.country = this.newHomelessForm.get('country').value;
