@@ -15,6 +15,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { QrReaderComponent } from './pages/qr-reader/qr-reader.component';
 import { FoodRunListComponent } from './pages/food-run-list/food-run-list.component';
 import { FoodRunDetailsComponent } from './pages/food-run-details/food-run-details.component';
+import { ListEventsComponent } from './shared/list-events/list-events.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'food-run', component: FoodRunListComponent },
     { path: 'details-food-run/:idFood', component: FoodRunDetailsComponent },
+    { path: 'list-events', component: ListEventsComponent },
     { path: '', redirectTo: 'landing', pathMatch: 'full' }
 ];
 

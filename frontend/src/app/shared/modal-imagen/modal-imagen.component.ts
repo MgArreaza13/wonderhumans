@@ -53,13 +53,14 @@ export class ModalImagenComponent implements OnInit {
         private homelessService: HomelessService) { }
 
     ngOnInit(): void {
-
         this.getComments();
-        const img = this.data[0].img;
-        if (img.includes('https')) {
-            this.img = img;
-        } else {
-            this.img = `${base_url}${img}`;
+        const img = (this.data[0].img !== undefined) ? this.data[0].img : null;
+        if (img !== null) {
+            if (img.includes('https')) {
+                this.img = img;
+            } else {
+                this.img = `${base_url}${img}`;
+            }
         }
         this.allData = this.data[0];
         this.ilike = this.allData.ilike;
@@ -307,7 +308,6 @@ export class ModalImagenComponent implements OnInit {
             photo: this.imageURL,
             id: this.data[0].id
         };
-        console.log(body)
         this.homelessService.editPortfolio(body).subscribe((data) => {
             this.spinner.hide();
             this.toastr.success('Successful update');
@@ -320,5 +320,29 @@ export class ModalImagenComponent implements OnInit {
             this.cerrarModal();
 
         })
+    }
+
+    addPor() {
+        if (this.imageURL === undefined || this.description === '') {
+            this.toastr.error('Error, debe ingresar todos los datos');
+        } else {
+            this.spinner.show();
+            const body = {
+                photo: this.imageURL,
+                description: this.description
+            };
+            const id = this.data[0].id;
+            this.homelessService.newPortfolio(body, id).subscribe((data) => {
+                this.toastr.success('Successful registration');
+                this.spinner.hide();
+                this.cerrarModal();
+                this.ngOnInit();
+            }, err => {
+                console.log(err);
+                this.spinner.hide();
+                this.toastr.error(err.error.detail);
+                this.cerrarModal();
+            });
+        }
     }
 }

@@ -27,20 +27,26 @@ export class SearchbarComponent implements OnInit {
     }
 
     onKey(event: any) {
+        console.log(event)
         this.values = event.target.value;
     }
 
     onClick() {
         console.log(this.term);
         this.searchService.searchHomeless(this.term).subscribe(data => {
-            console.log(data);
             this.dataHomeless = data;
             this.searchActive = true;
             this.imageUrl = (data['photo']) ? `${environment.apiRoot}${data['photo']}` : null;
         }, error => {
-            this.toastr.error(error.error.detail)
-            console.log(error)
-        })
+            this.toastr.error(error.error.detail);
+            console.log(error);
+            this.term = '';
+            setTimeout(() => {
+                this.searchActive = null;
+            }, 2000);
+            this.searchActive = false;
+
+        });
     }
 
     getData(item) {
@@ -51,6 +57,7 @@ export class SearchbarComponent implements OnInit {
         this.router.navigateByUrl(`homeless-profile/${id}`);
         this.searchActive = null;
         this.term = '';
+
     }
 
 }

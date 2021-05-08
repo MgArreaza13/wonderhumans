@@ -39,8 +39,12 @@
           </div>
           <div class="row mt-3">
             <div class="col-12  align-items-center">
-              <button [disabled]="disabledAdd === true" class="btn btn-sm float-right btn-success"
-                (click)="volunterAdd()">I want to be a volunteer</button>
+
+              <button *ngIf="isVolunter === false || dataVol === null" [disabled]="disabledAdd === true"
+                class="btn btn-sm float-right btn-success" (click)="volunterAdd()">I want to be a volunteer</button>
+
+              <button *ngIf="isVolunter === true" class="btn btn-sm float-right btn-danger" (click)="volunterDel()">I
+                don't want to volunteer</button>
 
               <small *ngIf="disabledAdd === true" style="color: #dc3545;font-weight: 600;">*Total volunteers
                 achieved</small>

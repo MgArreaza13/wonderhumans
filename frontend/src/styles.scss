@@ -138,3 +138,20 @@ Full screen Modal
   height: 100px !important;
   overflow: hidden;
 }
+
+#toolDate {
+  height: 18px !important;
+  width: 18px !important;
+  font-size: small !important;
+  line-height: 0 !important;
+  text-align: center !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  filter: drop-shadow(2px 4px 2px #9e9e9e96) !important;
+  background: #e75365 !important;
+  border-color: #e75365 !important;
+}
+
+.btn-around {
+  border-radius: 30px !important;
+}

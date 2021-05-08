@@ -28,6 +28,7 @@ export class FoodRunFormComponent implements OnInit {
     mountNo: string;
     volNo: string;
     dateNo: boolean;
+    mindate;
     constructor(
         public bsModalRef: BsModalRef,
         private spinner: NgxSpinnerService,
@@ -37,6 +38,13 @@ export class FoodRunFormComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        const current = new Date();
+        this.mindate = {
+            year: current.getFullYear(),
+            month: current.getMonth() + 1,
+            day: current.getDate() + 1
+        };
+        console.log(this.mindate)
         if (this.data !== undefined) {
             this.name = this.data.name;
             this.volunteers = this.data.total_volunteers;
@@ -158,7 +166,6 @@ export class FoodRunFormComponent implements OnInit {
             if (isOr === false) {
                 const hoyT = `${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
                 if (fecha_choice === hoyT) {
-                    console.log('soy hoy')
                     this.dateNo = true;
                     this.toastr.error('Date must be higher than current');
                 } else {
@@ -238,7 +245,6 @@ export class FoodRunFormComponent implements OnInit {
                 }
             } else {
                 this.dateNo = true;
-                console.log('errorrrrrrrrrrrrrrr');
                 this.toastr.error('Error, la fecha deber ser mayor a la actual')
             }
 

@@ -34,7 +34,6 @@ export class CausesDetailsComponent implements OnInit {
             amount: this.monto
         };
         this.serviceDonation.newDonation(body).subscribe((data) => {
-            console.log(data);
             this.toastr.success('Successful donation');
             this.spinner.hide();
             this.cerrarModal();
@@ -49,7 +48,7 @@ export class CausesDetailsComponent implements OnInit {
         this.spinner.show();
         this.serviceDonation.recentDonations(this.causes.id).subscribe(
             (data) => {
-                this.donations = data['donations'];
+                this.donations = (data['donations'].length !== 0) ? data['donations'] : null;
                 this.spinner.hide();
                 console.log(this.donations);
             }, error => {

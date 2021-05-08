@@ -18,7 +18,7 @@
             </button>
           </div>
         </div>
-        <div class="d-flex flex-row justify-content-between mb-2 cont" *ngIf="searchActive !== null"
+        <div class="d-flex flex-row justify-content-between mb-2 cont" *ngIf="searchActive === true"
           style="position: relative;width: 100%;top: 1rem;">
           <div class="d-flex flex-column p-3">
             <a (click)="select(dataHomeless.id)" clickable>
@@ -30,6 +30,22 @@
               display: inline-flex;
               align-items: center;">{{dataHomeless.firstName}} {{dataHomeless.lastName}}
                 <small class="text-muted d-block ml-2">{{dataHomeless.city}}</small>
+              </p>
+            </a>
+          </div>
+
+        </div>
+        <div class="d-flex flex-row justify-content-between mb-2 cont" *ngIf="searchActive === false"
+          style="position: relative;width: 100%;top: 1rem;">
+          <div class="d-flex flex-column p-3">
+            <a clickable>
+              <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png" alt="" style="display: inline-flex;
+              width: 2rem;
+              border-radius: 50px;
+              height: 2rem;">
+              <p class="mb-1" style="margin-left: 10px;
+              display: inline-flex;
+              align-items: center;">No results
               </p>
             </a>
           </div>

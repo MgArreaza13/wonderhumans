@@ -116,12 +116,20 @@
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group" [ngClass]="{ focused: focus === true }">
-                  <label for="">Birthdate</label>
+                  <span class="d-flex" style="justify-content: space-between;">
+
+                    <label for="">Birthdate</label>
+                    <button id="toolDate" type="button" class="btn btn-danger btn-sm"
+                      ngbTooltip="The allowed date birth is 12 years ago" [autoClose]="true" triggers="manual"
+                      #t="ngbTooltip" (click)="t.open()">
+                      <i class="fa fa-info"></i>
+                    </button>
+                  </span>
                   <div class="input-group input-group-alternative mb-4">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-birthday"></i></span>
                     </div>
-                    <input [ngClass]="{
+                    <input [maxDate]="maxdate" [ngClass]="{
                         'is-invalid':
                           f['dateOfBirth'].errors && f['dateOfBirth'].touched
                       }" formControlName="dateOfBirth" class="form-control form-control-alternative datepicker"
@@ -213,12 +221,12 @@
                       placeholder="Ex: Jhon@example.com" type="email" />
                   </div>
                 </div>
-                <section class="m-2 text-danger" *ngIf="
+                <!-- <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('required') &&
                     (f['email'].touched || f['email'].dirty)
                   ">
                   *Required field
-                </section>
+                </section> -->
                 <section class="m-2 text-danger" *ngIf="
                     f['email'].hasError('email') &&
                     (f['email'].touched || f['email'].dirty)

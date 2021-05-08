@@ -9,14 +9,15 @@
       <h5 class="title">Details of the cause</h5>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Name: <b>{{causes.name}}</b></li>
+        <li class="list-group-item">Description: <b>{{causes.description}}</b></li>
         <li class="list-group-item">Total to collect: <b>{{causes.total | currency}}</b></li>
-        <li class="list-group-item">Cumulative total: <b>{{causes.acumulado | currency}}</b></li>
+        <li class="list-group-item">Cumulative total: <b>{{causes.total - causes.rest | currency}}</b></li>
         <li class="list-group-item">Remaining total: <b>{{causes.rest | currency}}</b></li>
         <li class="list-group-item">Progress:
 
-          <progressbar [max]="causes.total" [animate]="true" [value]="causes.acumulado" type="success" style="height: 1rem;
+          <progressbar [max]="causes.total" [animate]="true" [value]="causes.total - causes.rest" type="success" style="height: 1rem;
                                   margin-top: 0.3rem;">
-            <b style="color: black;">{{causes.porcentage}}%</b>
+            <b style="color: black;">{{(causes.total - causes.rest) *100 / causes.total}}%</b>
           </progressbar>
         </li>
       </ul>
@@ -41,6 +42,16 @@
             <input type="text" class="form-control form-control-alternative form-control-sm" id="inputZip">
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">Address</label>
+            <input type="text" class="form-control form-control-alternative form-control-sm" id="inputCity">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputZip">ZIP CODE</label>
+            <input type="text" class="form-control form-control-alternative form-control-sm" id="inputZip">
+          </div>
+        </div>
         <div class="form-group">
           <label for="formGroupExampleInput">Mount</label>
 
@@ -54,7 +65,7 @@
 
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12" *ngIf="donations !== null">
       <h5 class="title">Latest donations to this cause</h5>
       <span *ngFor="let item of donations | slice:0:5"
         style="display: flex;flex-flow: row;align-items: baseline;justify-content: left;margin: 1.5rem;">
@@ -72,6 +83,8 @@
       </span>
 
     </div>
+
+
   </div>
 
 </div>

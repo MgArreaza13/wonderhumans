@@ -26,6 +26,7 @@ export class EditProfileComponent implements OnInit {
     imageDefaul: string;
     focus;
     restante: number;
+    mindate: { year: number; month: number; day: number; };
     constructor(
         private userService: UserService,
         private formBuilder: FormBuilder,
@@ -39,6 +40,12 @@ export class EditProfileComponent implements OnInit {
     ngOnInit() {
         this.user = JSON.parse(localStorage.getItem('wonderHumanUser'));
         this.getProfile();
+        const current = new Date();
+        this.mindate = {
+            year: current.getFullYear() - 18,
+            month: current.getMonth() + 1,
+            day: current.getDate() + 1
+        };
     }
 
     onKey(event) {

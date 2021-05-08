@@ -10,15 +10,16 @@ export class FoodRunService {
     constructor(private http: HttpClient) { }
 
     newFoodRund(body) {
-        console.log(body)
         return this.http.post(`${environment.apiRoot}/api/food/new/`, body);
     }
     editFoodRund(body) {
-        console.log(body)
         return this.http.put(`${environment.apiRoot}/api/food/edit/`, body);
     }
     deleteFoodRund(id) {
         return this.http.delete(`${environment.apiRoot}/api/food/get/${id}`);
+    }
+    deleteVol(id) {
+        return this.http.delete(`${environment.apiRoot}/api/food/delete/volunteer/${id}`);
     }
     newVol(body) {
         return this.http.post(`${environment.apiRoot}/api/food/new/volunteer/`, body);
