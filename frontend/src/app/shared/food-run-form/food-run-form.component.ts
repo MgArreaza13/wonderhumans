@@ -166,7 +166,6 @@ export class FoodRunFormComponent implements OnInit {
             if (isOr === false) {
                 const hoyT = `${hoy.getDate()}/${hoy.getMonth() + 1}/${hoy.getFullYear()}`;
                 if (fecha_choice === hoyT) {
-                    console.log('soy hoy')
                     this.dateNo = true;
                     this.toastr.error('Date must be higher than current');
                 } else {
@@ -246,7 +245,6 @@ export class FoodRunFormComponent implements OnInit {
                 }
             } else {
                 this.dateNo = true;
-                console.log('errorrrrrrrrrrrrrrr');
                 this.toastr.error('Error, la fecha deber ser mayor a la actual')
             }
 

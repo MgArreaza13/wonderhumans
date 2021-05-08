@@ -40,7 +40,6 @@ export class DonationFoodRunComponent implements OnInit {
             amount: this.monto
         };
         this.foodService.newDonation(body).subscribe((data) => {
-            console.log(data);
             this.toastr.success('Successful donation');
             this.spinner.hide();
             this.cerrarModal();

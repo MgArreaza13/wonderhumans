@@ -34,7 +34,6 @@ export class SearchbarComponent implements OnInit {
     onClick() {
         console.log(this.term);
         this.searchService.searchHomeless(this.term).subscribe(data => {
-            console.log(data);
             this.dataHomeless = data;
             this.searchActive = true;
             this.imageUrl = (data['photo']) ? `${environment.apiRoot}${data['photo']}` : null;
@@ -44,7 +43,6 @@ export class SearchbarComponent implements OnInit {
             this.term = '';
             setTimeout(() => {
                 this.searchActive = null;
-                console.log('object')
             }, 2000);
             this.searchActive = false;
 

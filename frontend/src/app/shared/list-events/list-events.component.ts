@@ -38,7 +38,6 @@ export class ListEventsComponent implements OnInit {
     getFoodRuns() {
         this.spinner.show();
         this.foodService.getFoodRuns().subscribe((data) => {
-            console.log(data);
             this.foodRunsData = data;
             this.spinner.hide();
         }, err => {

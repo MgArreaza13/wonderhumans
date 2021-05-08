@@ -327,7 +327,6 @@ export class ModalImagenComponent implements OnInit {
         if (this.imageURL === undefined || this.description === '') {
             this.toastr.error('Error, debe ingresar todos los datos');
         } else {
-            console.log('jhjk')
             this.spinner.show();
             const body = {
                 photo: this.imageURL,

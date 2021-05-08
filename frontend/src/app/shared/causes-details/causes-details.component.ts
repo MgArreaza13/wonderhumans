@@ -34,7 +34,6 @@ export class CausesDetailsComponent implements OnInit {
             amount: this.monto
         };
         this.serviceDonation.newDonation(body).subscribe((data) => {
-            console.log(data);
             this.toastr.success('Successful donation');
             this.spinner.hide();
             this.cerrarModal();
