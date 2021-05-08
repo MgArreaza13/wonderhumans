@@ -68,3 +68,7 @@ db/*
 !backend/media/.gitkeep
 backend/media/profile/
 backend/media/
+
+#frontend
+
+frontend/dist
