@@ -30,7 +30,7 @@
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:latest as build
+FROM node:10.13 as build
 
 
 RUN mkdir -p /home/user/app/frontend
