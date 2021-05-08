@@ -110,7 +110,7 @@ def register_user(data: dict, user: accounts_models.User):
 	email = data.get('email')
 	# validate email
 	if email is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		accounts_validations.validate_email(email)
 	else:
 		raise ValueError(str(_("Email field is required")))
@@ -132,12 +132,12 @@ def register_user(data: dict, user: accounts_models.User):
 		raise ValueError(str(_("Password confirmation field is required")))
 	# validate first name
 	if data.get('first_name') is not None:
-		accounts_validations.validate_length('First Name',data.get('first_name'),3,10)
+		accounts_validations.validate_length('First Name',data.get('first_name'),3,25)
 	else:
 		raise ValueError(str(_("First name field is required")))
 	# validate last name
 	if data.get('last_name') is not None:
-		accounts_validations.validate_length('Last Name',data.get('last_name'),3,10)
+		accounts_validations.validate_length('Last Name',data.get('last_name'),3,25)
 	else:
 		raise ValueError(str(_("Last name confirmation field is required")))
 	if data.get('password1') != data.get('password2'):
@@ -191,7 +191,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		user.email = data.get("email")
 	user.save()
 	# valitation of data profile
@@ -200,7 +200,7 @@ def create_profile(data: dict, user: accounts_models.User) -> Profile :
 	else:
 		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),6570)
 	else:
 		raise ValueError(str(_("Data of birth field is required")))
 	if data.get("occupation") is not None:
@@ -261,7 +261,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 		user.last_name = data.get("lastName")
 	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
+		accounts_validations.validate_length("Email",data.get("email"),5,75)
 		user.email = data.get("email")
 	user.save()
 	# Edit profile
@@ -271,7 +271,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		show_email = accounts_validations.validate_show_email(data.get("show_email"))
 		profile.show_email = show_email
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),6570)
 		profile.dateOfBirth = birth
 	if data.get("occupation") is not None:
 		accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
@@ -283,6 +283,7 @@ def change_profile(data: dict, user: accounts_models.User) -> Profile:
 		accounts_validations.validate_length("country",data.get("country"),4,25)
 		profile.country = data.get("country")
 	if data.get("aboutYou") is not None:
+		accounts_validations.validate_length("About You",data.get("aboutYou"),4,100)
 		profile.aboutYou = data.get("aboutYou")
 	if data.get("photo") is not None:
 		profile.photo = updateImage(data.get("photo"))
@@ -315,17 +316,12 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 		accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 	else:
 		raise ValueError(str(_("Last Name field is required")))
-	if data.get("email") is not None:
-		accounts_validations.validate_length("Email",data.get("email"),0,300)
-		accounts_validations.validate_email(data.get("email"))
-	else:
-		raise ValueError(str(_("Email field is required")))
 	if data.get("show_email") is not None:
 		data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
 	else:
 		raise ValueError(str(_("Show email field is required")))
 	if data.get("dateOfBirth") is not None:
-		birth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+		birth = accounts_validations.validate_birth(data.get("dateOfBirth"),4380)
 	else:
 		raise ValueError(str(_("Date of birth field is required")))
 	if data.get("occupation") is not None:
@@ -355,7 +351,6 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			firstName = data.get("firstName"),
 			lastName = data.get("lastName"),
 			typeUser = typeUser,
-			email = data.get("email"),
 			show_email = data.get("show_email"),
 			#Additional information personal
 			occupation = data.get("occupation"),
@@ -373,7 +368,10 @@ def create_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 	if data.get("photo") is not None:
 		#accounts_validations.validate_length('Photo',data.get("photo"),0,300)
 		profile.photo = updateImage(data.get("photo"))
-		print(profile.photo)
+	if data.get("email") is not None:
+		accounts_validations.validate_length("Email",data.get("email"),3,75)
+		accounts_validations.validate_email(data.get("email"))
+		profile.email = data.get("email")
 	url = 'homeless-profile/' + str(profile.id)
 	saveQrCode(url,str(profile.id))
 	profile.qr_code = 'media/qrCodes/' + str(profile.id)+ '.png'
@@ -430,7 +428,7 @@ def update_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			accounts_validations.validate_length("Last Name",data.get("lastName"),3,25)
 			profile.lastName = data.get("lastName")	
 		if data.get("email") is not None:
-			accounts_validations.validate_length("Email",data.get("email"),0,300)
+			accounts_validations.validate_length("Email",data.get("email"),5,75)
 			if profile.email != data.get("email"):
 				accounts_validations.validate_email(data.get("email"))
 				profile.email = data.get("email")	
@@ -438,7 +436,7 @@ def update_homeless_profile(data: dict, user: accounts_models.User) -> Profile :
 			data["show_email"] = accounts_validations.validate_show_email(data.get("show_email"))
 			profile.show_email = data.get("show_email")	
 		if data.get("dateOfBirth") is not None:
-			profile.dateOfBirth = accounts_validations.validate_birth(data.get("dateOfBirth"))
+			profile.dateOfBirth = accounts_validations.validate_birth(data.get("dateOfBirth"),4380)
 		if data.get("occupation") is not None:
 			accounts_validations.validate_length("Occupation",data.get("occupation"),3,25)
 			profile.occupation = data.get("occupation")	
@@ -491,6 +489,7 @@ def filterMyHomelessProfile(user: accounts_models.User):
 				'firstName': p.firstName,
 				'lastName' : p.lastName,
 				'email' : p.email,
+				'qr_code': p.qr_code,
 				'show_email': p.show_email,
 				# Additional information personal
 				'occupation' : p.occupation,

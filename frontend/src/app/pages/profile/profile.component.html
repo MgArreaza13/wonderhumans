@@ -28,8 +28,7 @@
             <div class="col-lg-4 col-md-12 col-sm-12 order-md-1 order-xs-1 order-sm-1 order-lg-2">
               <div class="card-profile-image">
                 <a href="javascript:void(0)">
-                  <img src="https://pngimage.net/wp-content/uploads/2018/05/add-image-png-4.png"
-                    *ngIf="imageUrl === null" class="rounded-circle">
+                  <img [src]="imgDef" *ngIf="imageUrl === null" class="rounded-circle">
                   <img [src]="imageUrl" class="imageU" *ngIf="imageUrl !== null">
                 </a>
               </div>
@@ -46,15 +45,15 @@
             <div class="col-lg-4 order-lg-1 order-md-2 order-sm-2 order-xs-2 col-md-12 col-sm-12 mt-md-7 mt-lg-0">
               <div class="card-profile-stats d-flex justify-content-center">
                 <div>
-                  <span class="heading">22</span>
+                  <span class="heading">0</span>
                   <span class="description">Friends</span>
                 </div>
                 <div>
-                  <span class="heading">10</span>
+                  <span class="heading">0</span>
                   <span class="description">Donations</span>
                 </div>
                 <div>
-                  <span class="heading">89</span>
+                  <span class="heading">0</span>
                   <span class="description">Volunteer</span>
                 </div>
               </div>
@@ -72,7 +71,7 @@
               </div>
               <div class="h6 about-font"><i class="ni location_pin mr-2"></i>{{profile.aboutYou}}</div>
               <h5 *ngIf="userHomeless === null" style="padding: 1rem;
-              font-variant: all-small-caps;">Ud no tiene ningún homeless registrado</h5>
+              font-variant: all-small-caps;">You do not have any registered homeless</h5>
               <div class="row align" *ngIf="userHomeless !== null">
                 <div class="col-2 end">
                   <button (click)="moveLeft()" class="btn-arrow"><i class="fa fa-arrow-left"></i></button>
@@ -85,8 +84,8 @@
                     (indexChanged)="onIndexChanged($event)" (reachesLeftBound)="leftBoundStat($event)"
                     (reachesRightBound)="rightBoundStat($event)" (snapAnimationFinished)="onSnapAnimationFinished()"
                     (dragStart)="onDragStart()" (dragEnd)="onDragEnd()" #nav>
-                    <img style="border: 2px solid lightgray;" routerLink="/homeless-profile/{{item.id}}"
-                      drag-scroll-item src="{{item.photo}}" />
+                    <img id="imageHom" style="border: 2px solid lightgray;cursor: pointer;"
+                      routerLink="/homeless-profile/{{item.id}}" drag-scroll-item src="{{item.photo}}" />
 
                     <p style="line-height: 0.7;
                       font-size: small;
@@ -110,7 +109,7 @@
               <section class="pb-5">
                 <div class="container">
                   <div class="row">
-                    <h5 class="w-100"><i class="ni ni-album-2"></i> Publicaciones</h5>
+                    <h5 class="w-100"><i class="ni ni-album-2"></i> Publications</h5>
                   </div>
                   <!-- <div *ngFor="let item of feedData" class="col-md-3 col-lg-3" style="display: flex;
 justify-content: center;

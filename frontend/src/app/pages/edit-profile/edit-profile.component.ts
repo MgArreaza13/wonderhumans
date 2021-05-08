@@ -101,7 +101,7 @@ export class EditProfileComponent implements OnInit {
             city: [(dataUser) ? dataUser.city : '', [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(25),
+                Validators.maxLength(15),
             ]],
             country: [(dataUser) ? dataUser.country : '', [
                 Validators.required,
@@ -113,6 +113,8 @@ export class EditProfileComponent implements OnInit {
             ]],
             aboutYou: [(dataUser) ? dataUser.aboutYou : '', [
                 Validators.required,
+                Validators.minLength(4),
+                Validators.maxLength(100),
             ]],
             show_email: [(dataUser) ? dataUser.show_email : false],
             photo: [null],
@@ -122,27 +124,44 @@ export class EditProfileComponent implements OnInit {
     get f() { return this.profileForm.controls; }
 
 
-    onSubmit() {
-        const show = this.profileForm.get('show_email').value;
-        this.spinner.show();
-        this.submitted = true;
-        this.profile = {} as Profile;
-        this.profile.firstName = this.profileForm.get('firstName').value;
-        this.profile.lastName = this.profileForm.get('lastName').value;
-        this.profile.email = this.profileForm.get('email').value;
-        this.profile.occupation = this.profileForm.get('occupation').value;
-        this.profile.city = this.profileForm.get('city').value;
-        this.profile.country = this.profileForm.get('country').value;
-        this.profile.dateOfBirth = this.profileForm.get('dateOfBirth').value;
-        this.profile.aboutYou = this.profileForm.get('aboutYou').value;
-        this.profile.show_email = (show === true) ? 'True' : 'False';
-        this.profile.photo = this.imageURL;
-        if (this.hasProfile === false) {
-            this.createProfile(this.profile);
-        } else if (this.hasProfile === true) {
-            this.updateProfile(this.profile);
+    calcularEdad(fecha) {
+        const fecha_nacimiento = `${fecha.year}/${fecha.month}/${fecha.day}`;
+        const hoy = new Date();
+        const cumpleanos = new Date(fecha_nacimiento);
+        let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+        const m = hoy.getMonth() - cumpleanos.getMonth();
+        if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+            edad--;
         }
+        return edad;
+    }
 
+
+    onSubmit() {
+        const edad = this.calcularEdad(this.profileForm.get('dateOfBirth').value);
+        if (edad >= 18) {
+            const show = this.profileForm.get('show_email').value;
+            this.spinner.show();
+            this.submitted = true;
+            this.profile = {} as Profile;
+            this.profile.firstName = this.profileForm.get('firstName').value;
+            this.profile.lastName = this.profileForm.get('lastName').value;
+            this.profile.email = this.profileForm.get('email').value;
+            this.profile.occupation = this.profileForm.get('occupation').value;
+            this.profile.city = this.profileForm.get('city').value;
+            this.profile.country = this.profileForm.get('country').value;
+            this.profile.dateOfBirth = this.profileForm.get('dateOfBirth').value;
+            this.profile.aboutYou = this.profileForm.get('aboutYou').value;
+            this.profile.show_email = (show === true) ? 'True' : 'False';
+            this.profile.photo = this.imageURL;
+            if (this.hasProfile === false) {
+                this.createProfile(this.profile);
+            } else if (this.hasProfile === true) {
+                this.updateProfile(this.profile);
+            }
+        } else {
+            this.toastr.error('The allowed date birth is 18 years ago');
+        }
     }
 
     createProfile(profile) {

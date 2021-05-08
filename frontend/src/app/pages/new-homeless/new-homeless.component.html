@@ -195,7 +195,7 @@
                     f['city'].hasError('maxlength') &&
                     (f['city'].touched || f['city'].dirty)
                   ">
-                  *25 is the maximum characters allowed
+                  *15 is the maximum characters allowed
                 </section>
               </div>
             </div>
@@ -308,7 +308,7 @@
                   placeholder="Write something here"></textarea>
                 <span *ngIf="contatort"
                   style="float: right;font-variant: small-caps;margin-top: 0.3rem;">{{contatort}}/{{restantet}}
-                  caracteres</span>
+                  characters</span>
                 <section class="m-2 text-danger" *ngIf="
                       f['aboutYou'].hasError('required') &&
                       (f['aboutYou'].touched || f['aboutYou'].dirty)
@@ -333,7 +333,7 @@
               <div class="col-12">
                 <label for="">Portfolio</label>
                 <file-upload class="w-100" formControlName="portfolio"></file-upload>
-                <span style="float: right;font-variant: small-caps;">Máximo de fotos permitidas: 4</span>
+                <span style="float: right;font-variant: small-caps;">Maximum photos allowed: 4</span>
               </div>
             </div>
             <div class="row mt-5 mb-5 float-right">

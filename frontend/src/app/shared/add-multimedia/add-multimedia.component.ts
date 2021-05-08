@@ -91,7 +91,7 @@ export class AddMultimediaComponent implements OnInit {
         };
         this.foodRunService.newMultimedia(body).subscribe((data) => {
             console.log(data);
-            this.toastr.success('Registro satisfactorio');
+            this.toastr.success('Successful registration');
             this.spinner.hide();
             this.cerrarModal();
         }, error => {

@@ -1,6 +1,12 @@
+# From Django
 from django.contrib.auth import models as accounts_models
 from django.utils.translation import gettext as _
+
+# My Models
 from .models import Profile
+
+# From Python
+from datetime import datetime, timedelta
 
 def validate_email(email: str):
     """
@@ -76,15 +82,23 @@ def validate_user_profile(user:accounts_models.User):
         return True
     return False
 
-def validate_birth(birth:dict):
+def validate_birth(birth:dict,days:int):
     """
         Method to put bitrh date a correct form
 
         :param birth: date of brith
+        :param days: minimun date of birth
         :type birth: dict
+        :type days: int
         :return: bool
     """
     if type(birth) is not dict:
         raise ValueError(str(("Data birth should be json, not str")))
-    birth = str(birth.get('year')) + '-' + str(birth.get('month')) + '-' + str(birth.get('day'))
+    # birth = str(birth.get('year')) + '-' + str(birth.get('month')) + '-' + str(birth.get('day'))
+    # Minimum date of birth
+    deadline = datetime.now() - timedelta(days=days)
+    birth = datetime(birth.get('year'), birth.get('month'), birth.get('day'))
+    if birth > deadline:
+        years = int(days/365)
+        raise ValueError(str(("The allowed date birth is {} years ago").format(years)))
     return birth

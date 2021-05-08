@@ -97,7 +97,7 @@ export class NewHomelessComponent implements OnInit {
             city: [(dataUser) ? dataUser.city : '', [
                 Validators.required,
                 Validators.minLength(3),
-                Validators.maxLength(25),
+                Validators.maxLength(15),
             ]],
             country: [(dataUser) ? dataUser.country : '', [
                 Validators.required,
@@ -159,28 +159,45 @@ export class NewHomelessComponent implements OnInit {
         }
     }
 
+    calcularEdad(fecha) {
+        const fecha_nacimiento = `${fecha.year}/${fecha.month}/${fecha.day}`;
+        const hoy = new Date();
+        const cumpleanos = new Date(fecha_nacimiento);
+        let edad = hoy.getFullYear() - cumpleanos.getFullYear();
+        const m = hoy.getMonth() - cumpleanos.getMonth();
+        if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+            edad--;
+        }
+        return edad;
+    }
 
     submit(portfolio?) {
-        const show = this.newHomelessForm.get('show_email').value;
-        this.newHomeless = {} as NewHomeless;
-        this.newHomeless.firstName = this.newHomelessForm.get('firstName').value;
-        this.newHomeless.lastName = this.newHomelessForm.get('lastName').value;
-        this.newHomeless.email = this.newHomelessForm.get('email').value;
-        this.newHomeless.occupation = this.newHomelessForm.get('occupation').value;
-        this.newHomeless.city = this.newHomelessForm.get('city').value;
-        this.newHomeless.country = this.newHomelessForm.get('country').value;
-        this.newHomeless.dateOfBirth = (this.newHomelessForm.get('dateOfBirth').value);
-        this.newHomeless.aboutYou = this.newHomelessForm.get('aboutYou').value;
-        this.newHomeless.location_detail = this.newHomelessForm.get('location_detail').value;
-        this.newHomeless.show_email = (show === true) ? 'True' : 'False';
-        this.newHomeless.portfolio = (this.filesControl.value !== null) ? portfolio : null;
-        this.newHomeless.photo = (this.imageURL) ? this.imageURL : null;
-        if (!this.idHomeless) {
-            this.newHomelessCreate(this.newHomeless);
+        const edad = this.calcularEdad(this.newHomelessForm.get('dateOfBirth').value);
+        if (edad >= 12) {
+            const show = this.newHomelessForm.get('show_email').value;
+            this.newHomeless = {} as NewHomeless;
+            this.newHomeless.firstName = this.newHomelessForm.get('firstName').value;
+            this.newHomeless.lastName = this.newHomelessForm.get('lastName').value;
+            this.newHomeless.email = this.newHomelessForm.get('email').value;
+            this.newHomeless.occupation = this.newHomelessForm.get('occupation').value;
+            this.newHomeless.city = this.newHomelessForm.get('city').value;
+            this.newHomeless.country = this.newHomelessForm.get('country').value;
+            this.newHomeless.dateOfBirth = (this.newHomelessForm.get('dateOfBirth').value);
+            this.newHomeless.aboutYou = this.newHomelessForm.get('aboutYou').value;
+            this.newHomeless.location_detail = this.newHomelessForm.get('location_detail').value;
+            this.newHomeless.show_email = (show === true) ? 'True' : 'False';
+            this.newHomeless.portfolio = (this.filesControl.value !== null) ? portfolio : null;
+            this.newHomeless.photo = (this.imageURL) ? this.imageURL : null;
+            if (!this.idHomeless) {
+                this.newHomelessCreate(this.newHomeless);
 
+            } else {
+                this.editHomeless(this.newHomeless);
+            }
         } else {
-            this.editHomeless(this.newHomeless);
+            this.toastr.error('The allowed date birth is 12 years ago');
         }
+
     }
 
 
@@ -203,7 +220,7 @@ export class NewHomelessComponent implements OnInit {
         this.homelessService.newHomeless(dataHomeless).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
-                this.toastr.success('Registro satisfactorio');
+                this.toastr.success('Successful registration');
                 await this.router.navigateByUrl('/user-profile');
             },
             async err => {
@@ -234,7 +251,7 @@ export class NewHomelessComponent implements OnInit {
         this.homelessService.editHomeless(body).subscribe(
             async (data: any) => {
                 await this.spinner.hide();
-                this.toastr.success('Actualización satisfactoria');
+                this.toastr.success('Successful update');
                 await this.router.navigateByUrl('/user-profile');
             },
             async err => {

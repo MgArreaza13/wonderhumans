@@ -47,6 +47,7 @@ export class FoodRunDetailsComponent implements OnInit {
     isOwner: boolean = false;
     multiMedia: Object;
     invitationMsg: any;
+    disabledAdd: boolean;
     constructor(
         private route: ActivatedRoute,
         private serviceFood: FoodRunService,
@@ -71,8 +72,14 @@ export class FoodRunDetailsComponent implements OnInit {
 
             this.serviceFood.getFoodRu(this.idFood).subscribe((data) => {
                 this.dataDetails = data;
+                console.log(this.dataDetails)
+                const rest = this.dataDetails.rest_volunteers;
+                if (rest === 0) {
+                    this.disabledAdd = true
+                } else {
+                    this.disabledAdd = false
+                }
                 this.invitationMsg = this.dataDetails.invitation_message;
-                console.log(this.invitationMsg);
                 if (this.dataDetails.user.id === this.user['id']) {
                     this.isOwner = true;
                 } else {
@@ -114,7 +121,6 @@ export class FoodRunDetailsComponent implements OnInit {
 
     getMoreMulti() {
         this.serviceFood.getMultimedia(this.idFood).subscribe(async (data) => {
-            console.log(data);
             this.multiMedia = data;
             this.spinner.hide();
 
@@ -132,9 +138,9 @@ export class FoodRunDetailsComponent implements OnInit {
                     if (element.user.id === this.user['id']) {
                         this.isVolunter = true;
                     }
+                    console.log(element.photo)
                 });
             }
-            console.log(this.dataVol)
             this.getMoreMulti();
         }, error => {
             console.log(error)
@@ -144,23 +150,22 @@ export class FoodRunDetailsComponent implements OnInit {
 
     volunterAdd() {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: (this.invitationMsg === null ? '¿Deseas inscribirte como voluntario?' : this.invitationMsg),
+            title: 'Are you sure?',
+            text: (this.invitationMsg === null ? 'Do you want to sign up as a volunteer?' : this.invitationMsg),
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result) {
+            if (!result.dismiss) {
                 const body = {
                     id_food_run: this.idFood
                 };
                 this.spinner.show();
                 this.serviceFood.newVol(body).subscribe(data => {
-                    console.log(data);
                     this.spinner.hide();
-                    this.toastr.success('Ud se ha registrado satisfactoriamente como voluntario');
+                    this.toastr.success('You have successfully registered as a volunteer');
                     this.ngOnInit();
                 }, error => {
                     console.log(error);
@@ -249,20 +254,18 @@ export class FoodRunDetailsComponent implements OnInit {
 
     deleteFoodRun() {
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Deseas eliminar este food run?',
+            title: 'Are you sure?',
+            text: 'Do you want to remove this?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
+            confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result) {
-
+            if (!result.dismiss) {
                 this.spinner.show();
                 this.serviceFood.deleteFoodRund(this.idFood).subscribe((data) => {
-                    console.log(data);
-                    this.toastr.success('Eliminación exitosa');
+                    this.toastr.success('Successful removal');
                     this.spinner.hide();
                     this.router.navigateByUrl('/food-run');
                 }, err => {

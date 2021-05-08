@@ -22,6 +22,10 @@ def getComments(id_homeless: int):
 
 def createComment(data, id_homeless ,user):
 	comments = []
+	if data.get("comment") is not None:
+		accounts_validations.validate_length("Comment",data.get("comment"),2,255)
+	else:
+		raise ValueError(str(_("Comment is required")))
 	comment: str = data.get("comment", None)
 	try:
 		commentResult =  comments_models.Comment.objects.create(
@@ -50,7 +54,7 @@ def create_comment_feed(data:dict, id_feed:int, user:User)->comments_models.Comm
 		:return: comment_models.CommentFeed
 	"""
 	if data.get("comment") is not None:
-		accounts_validations.validate_length("Comment",data.get("comment"),0,255)
+		accounts_validations.validate_length("Comment",data.get("comment"),2,255)
 	else:
 		raise ValueError(str(_("Comment is required")))
 	with transaction.atomic():
@@ -109,7 +113,7 @@ def update_comment_feed(data:dict, user:User)->comments_models.CommentFeed:
 	try:
 		comment_feed = comments_models.CommentFeed.objects.get(user=user, id=data.get("id"))
 		if data.get("comment") is not None:
-			accounts_validations.validate_length("Comment",data.get("comment"),0,255)
+			accounts_validations.validate_length("Comment",data.get("comment"),2,255)
 		else:
 			raise ValueError(str(_("Comment is required")))
 		comment_feed.comment = data.get("comment")

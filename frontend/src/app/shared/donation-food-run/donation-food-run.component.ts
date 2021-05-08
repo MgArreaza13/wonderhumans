@@ -41,7 +41,7 @@ export class DonationFoodRunComponent implements OnInit {
         };
         this.foodService.newDonation(body).subscribe((data) => {
             console.log(data);
-            this.toastr.success('Donación exitosa');
+            this.toastr.success('Successful donation');
             this.spinner.hide();
             this.cerrarModal();
         }, error => {

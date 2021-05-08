@@ -37,7 +37,7 @@ def create_cause(data, id_homeless, user):
 	else:
 		raise ValueError(str(_("Total is required")))
 	if description is not None:
-		donations_validations.validate_length("Description",description,20,150)
+		donations_validations.validate_length("Description",description,10,150)
 	else:
 		raise ValueError(str(_("Descriprion is required")))
 	try:

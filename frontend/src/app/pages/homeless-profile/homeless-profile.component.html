@@ -33,7 +33,7 @@
               <div class="btn-wrapper text-center mt-3">
                 <button routerLink="/edit-homeless/{{idHomeless}}" id="add-event-btn" type="button"
                   class="btn btn-outline-warning btn-sm ">
-                  Editar homeless
+                  Homeless edit
                 </button>
               </div>
             </div>
@@ -45,7 +45,7 @@
                     {{ homelessProfile?.firstName }}
                     {{ homelessProfile?.lastName }}
                   </h5>
-                  <small *ngIf="homelessProfile?.code" class="font-weight-bold text-center d-block">Código:
+                  <small *ngIf="homelessProfile?.code" class="font-weight-bold text-center d-block">Code:
                     {{ homelessProfile?.code }}</small>
                   <small *ngIf="homelessProfile?.email && homelessProfile?.show_email === true"
                     class="font-weight-bold text-center d-block">Email: {{ homelessProfile?.email }}</small>
@@ -94,14 +94,15 @@
                       <!-- comments box -->
                       <div class="row">
                         <div class="col-12">
-                          <textarea maxlength="100" (keyup)="onKey($event)" name="comentarios" [(ngModel)]="comment"
-                            rows="5" id="text-comments" placeholder="Write your comments"></textarea>
+                          <textarea minlength="2" maxlength="255" (keyup)="onKey($event)" name="comentarios"
+                            [(ngModel)]="comment" rows="5" id="text-comments"
+                            placeholder="Write your comments"></textarea>
                           <section style="display: flex;
                           flex-direction: column;
                           align-items: flex-end;">
                             <span *ngIf="contator"
                               style="float: right;font-variant: small-caps;margin-bottom: 10px;">{{contator}}/{{restante}}
-                              caracteres</span>
+                              characters</span>
                             <button type="button" [disabled]="ifSendComment" (click)="newComment()"
                               class="btn btn-success float-right">
                               Send
@@ -134,17 +135,17 @@
                     <ng-template ngbTabContent>
                       <blockquote class="blockquote text-center">
                         <p class="mb-0 description">"{{ homelessProfile?.aboutYou }}"</p>
-                        <footer class="blockquote-footer">Acerca del homeless</footer>
+                        <footer class="blockquote-footer">About homeless</footer>
                       </blockquote>
                       <div class="table-responsive-sm" *ngIf="dataCauses.length !== 0 else noCause">
                         <table class="table">
-                          <caption>Lista de causas</caption>
+                          <caption>Cause list</caption>
                           <thead>
                             <tr>
-                              <th scope="col">Evento</th>
-                              <th scope="col">Meta</th>
-                              <th scope="col">Progreso</th>
-                              <th class="text-nowrap">Acciones</th>
+                              <th scope="col">Event</th>
+                              <th scope="col">Goal</th>
+                              <th scope="col">Progress</th>
+                              <th class="text-nowrap">Actions</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -160,7 +161,7 @@
                               </td>
                               <td class="text-nowrap text-center">
                                 <a style="color: #fb6340;cursor: pointer;" data-toggle="tooltip"
-                                  data-original-title="Ver" (click)="causeDetails(item)">Ver <i
+                                  data-original-title="Ver" (click)="causeDetails(item)">Details<i
                                     class="fa fa-eye text-inverse m-r-10"></i> </a>
 
                               </td>
@@ -170,7 +171,7 @@
                         </table>
                       </div>
                       <ng-template #noCause>
-                        <h5>No hay causas registradas</h5>
+                        <h5>There are no registered causes</h5>
                       </ng-template>
                       <!-- <button class="btn btn-warning float-right" (click)="open(classic)">
                         Show more
@@ -302,26 +303,45 @@
     <div class="modal-body">
       <div class="form-group">
         <label>Name of cause</label>
-        <input type="text" class="form-control" aria-describedby="nameevent" placeholder="Enter name event"
-          [(ngModel)]="name" />
-        <small id="nameevent" class="form-text text-muted">Lorem ipsum dolor sit amet consectetur adipisicing
-          elit.</small>
+        <input (keyup)="nameLength($event)" type="text" class="form-control" aria-describedby="nameevent"
+          placeholder="Enter name event" [(ngModel)]="name" />
+        <small *ngIf="nameNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*3 is
+          the
+          minimum characters allowed. </small>
+        <small *ngIf="nameNo === 'max'" id="nameevent" class="form-text text-muted" style="color: red !important;">*100
+          is the
+          maximum characters allowed. </small>
       </div>
       <div class="form-group">
         <label>Mount</label>
-        <input type="number" class="form-control" placeholder="$ 00,00" [(ngModel)]="total" />
+        <input (keyup)="totalLength($event)" type="number" class="form-control" placeholder="$ 00,00"
+          [(ngModel)]="total" />
+        <small *ngIf="mountNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*$10
+          is
+          the
+          minimum mount allowed. </small>
+        <small *ngIf="mountNo === 'max'" id="nameevent" class="form-text text-muted"
+          style="color: red !important;">*$9999999
+          is the
+          maximum mount allowed. </small>
       </div>
       <div class="form-group">
         <label>Description</label>
-        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Description"
-          [(ngModel)]="description" maxlength="100" (keyup)="onKey($event)"></textarea>
+        <textarea (keyup)="descLength($event)" name="" id="" cols="30" rows="4" class="form-control"
+          placeholder="Description" [(ngModel)]="description" maxlength="150" (keyup)="onKey($event)"></textarea>
+        <small *ngIf="descNo === 'min'" id="nameevent" class="form-text text-muted" style="color: red !important;">*3 is
+          the
+          minimum characters allowed. </small>
+        <small *ngIf="descNo === 'max'" id="nameevent" class="form-text text-muted" style="color: red !important;">*150
+          is the
+          maximum characters allowed. </small>
       </div>
       <section style="display: flex;
         flex-direction: column;
         align-items: flex-end;">
         <span *ngIf="contator" style="float: right;font-variant: small-caps;">{{contator}}/{{restante}}
-          caracteres</span>
-        <button class="btn btn-success float-right" (click)="newEvent()">
+          characters</span>
+        <button class="btn btn-success float-right btn-sm" (click)="newEvent()" [disabled]="noValidate === true">
           Submit
         </button>
       </section>
